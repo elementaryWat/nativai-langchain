@@ -16,7 +16,7 @@ const Chat: React.FC = () => {
     {
       role: "assistant",
       content:
-        "Hello, I'm RecruiterGPT and I am a technical recruiter. It's great to meet you today. To start off, could you tell me a bit about yourself?",
+        "Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const Chat: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: newMessage,
+          message: newMessage.content,
         }),
       });
       const data = await response.json();

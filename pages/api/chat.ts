@@ -22,7 +22,7 @@ export default async function handler(
     //create chain
     const chain = makeChatChain();
     const response = await chain.call({
-      message,
+      text: message,
       // chat_history: history || [],
     });
 

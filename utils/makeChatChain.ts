@@ -16,7 +16,7 @@ export const makeChatChain = () => {
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
     SystemMessagePromptTemplate.fromTemplate(SYSTEM_PROMPT),
     AIMessagePromptTemplate.fromTemplate(AI_PROMPT),
-    HumanMessagePromptTemplate.fromTemplate("{message}"),
+    HumanMessagePromptTemplate.fromTemplate("{text}"),
   ]);
   const chain = new LLMChain({
     prompt: chatPrompt,
