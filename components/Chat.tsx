@@ -27,27 +27,34 @@ const Chat: React.FC = () => {
       content: message,
     };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
-    // setLoading(true);
+    setLoading(true);
 
-    // try {
-    //   const completion = await openai.createChatCompletion({
-    //     model: "gpt-3.5-turbo",
-    //     messages: [...messages, newMessage],
-    //   });
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: newMessage,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
 
-    //   const assistantResponse: MessageType = {
-    //     role: "assistant",
-    //     content: completion.data.choices[0].message?.content as string,
-    //   };
+      // const assistantResponse: MessageType = {
+      //   role: "assistant",
+      //   content: completion.data.choices[0].message?.content as string,
+      // };
 
-    //   setMessages((prevMessages) => [...prevMessages, assistantResponse]);
-    //   setLoading(false);
-    // } catch (error) {
-    //   console.error(
-    //     "Error sending transcript to the Chat Completion API:",
-    //     error
-    //   );
-    // }
+      // setMessages((prevMessages) => [...prevMessages, assistantResponse]);
+      setLoading(false);
+    } catch (error) {
+      console.error(
+        "Error sending transcript to the Chat Completion API:",
+        error
+      );
+    }
   };
 
   return (
