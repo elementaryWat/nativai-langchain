@@ -1,0 +1,43 @@
+import { useState } from "react";
+import { IconButton } from "@mui/material";
+import { Mic, Stop } from "@mui/icons-material";
+import MicRecorder from "mic-recorder-to-mp3";
+
+const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+
+const AudioRecorder = ({ onStopRecording }) => {
+  const [isRecording, setIsRecording] = useState(false);
+
+  const startRecording = () => {
+    if (Mp3Recorder && !isRecording) {
+      Mp3Recorder.start()
+        .then(() => {
+          setIsRecording(true);
+        })
+        .catch((error) => console.error(error));
+    }
+  };
+
+  const stopRecording = () => {
+    if (isRecording) {
+      Mp3Recorder.stop()
+        .getMp3()
+        .then(async ([buffer, blob]) => {
+          setIsRecording(false);
+          onStopRecording(blob);
+        })
+        .catch((error) => console.error(error));
+    }
+  };
+
+  return (
+    <IconButton
+      onClick={isRecording ? stopRecording : startRecording}
+      color="primary"
+    >
+      {isRecording ? <Stop /> : <Mic />}
+    </IconButton>
+  );
+};
+
+export default AudioRecorder;
