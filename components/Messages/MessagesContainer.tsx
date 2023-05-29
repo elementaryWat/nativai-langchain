@@ -11,7 +11,7 @@ interface MessageContainerProps {
 const MessagesContainer = ({ messages, loading }: MessageContainerProps) => {
   return (
     <StyledMessagesContainer>
-      {messages.slice(1).map((message, index) => (
+      {messages.map((message, index) => (
         <Message key={index} content={message.content} role={message.role} />
       ))}
       {loading && <LoadingMessage />}

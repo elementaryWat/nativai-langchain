@@ -5,7 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { message } = req.body;
+  const { message, history } = req.body;
 
   console.log("message", message);
 
@@ -20,14 +20,13 @@ export default async function handler(
 
   try {
     //create chain
-    const chain = makeChatChain();
-    const response = await chain.call({
-      text: message,
-      // chat_history: history || [],
+    const { chain, memory } = makeChatChain();
+    const answer = await chain.call({
+      input: message,
     });
-
-    console.log("response", response);
-    res.status(200).json(response);
+    res.status(200).json({
+      response: answer.response,
+    });
   } catch (error: any) {
     console.log("error", error);
     res.status(500).json({ error: error.message || "Something went wrong" });

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Input from "./Input";
-import { Message as MessageType } from "../types/Message";
+import { Message as MessageType, MessageItem } from "../types/Message";
 // import openai from "../api/completionAPI";
 import MessagesContainer from "./Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "./styles";
@@ -8,29 +8,21 @@ import { Typography } from "@mui/material";
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([
-    {
-      role: "system",
-      content:
-        "You are a chatbot that conducts a screening interview with a software developer. Start by introducing yourself and by asking one question to get to know the candidate.",
-    },
-    {
-      role: "assistant",
-      content:
-        "Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?",
-    },
+    new MessageItem(
+      "assistant",
+      "Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?"
+    ),
   ]);
+  const [history, setHistory] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (message: string) => {
-    const newMessage: MessageType = {
-      role: "user",
-      content: message,
-    };
+    const newMessage = new MessageItem("user", message);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
+      const dataResponse = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,15 +31,14 @@ const Chat: React.FC = () => {
           message: newMessage.content,
         }),
       });
-      const data = await response.json();
-      console.log(data);
+      const { response, memory } = await dataResponse.json();
 
-      // const assistantResponse: MessageType = {
-      //   role: "assistant",
-      //   content: completion.data.choices[0].message?.content as string,
-      // };
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        new MessageItem("assistant", response),
+      ]);
+      setHistory(memory);
 
-      // setMessages((prevMessages) => [...prevMessages, assistantResponse]);
       setLoading(false);
     } catch (error) {
       console.error(
