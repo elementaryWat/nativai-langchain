@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { makeChatChain } from "../../utils/makeChatChain";
+import { makeFeedbackChain } from "../../utils/makeFeedBackChain";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,11 +22,17 @@ export default async function handler(
   try {
     //create chain
     const { chain, memory } = makeChatChain();
+    const feedbackChain = makeFeedbackChain();
     const answer = await chain.call({
       input: message,
     });
+    const proofReaded = await feedbackChain.call({
+      input: message,
+    });
+    console.log(proofReaded);
     res.status(200).json({
       response: answer.response,
+      proofreadResponse: proofReaded.response,
     });
   } catch (error: any) {
     console.log("error", error);

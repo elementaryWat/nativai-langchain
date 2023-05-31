@@ -44,7 +44,7 @@ export default function handler(req, res) {
           fs.createReadStream(tmpFile.name) as any,
           "whisper-1"
         );
-        console.log(resp.data.text);
+        console.log(resp.data);
 
         res.status(200).json({ transcription: resp.data.text });
 

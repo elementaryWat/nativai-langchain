@@ -2,7 +2,7 @@ import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { UpstashRedisChatMessageHistory } from "langchain/stores/message/upstash_redis";
 import { ChatOpenAI } from "langchain/chat_models/openai";
-import { createClient } from "redis";
+
 import {
   AIMessagePromptTemplate,
   ChatPromptTemplate,
