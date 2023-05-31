@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Input from "./Input";
+import Input from "../components/Input";
 import { Message as MessageType, MessageItem } from "../types/Message";
-// import openai from "../api/completionAPI";
-import MessagesContainer from "./Messages/MessagesContainer";
-import { ChatContainer, FixedInputContainer } from "./styles";
+import MessagesContainer from "../components/Messages/MessagesContainer";
+import { ChatContainer, FixedInputContainer } from "../components/styles";
 import { Typography } from "@mui/material";
 import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 
