@@ -5,6 +5,7 @@ import { Message as MessageType, MessageItem } from "../types/Message";
 import MessagesContainer from "./Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "./styles";
 import { Typography } from "@mui/material";
+import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([
@@ -32,6 +33,7 @@ const Chat: React.FC = () => {
         }),
       });
       const { response, memory } = await dataResponse.json();
+      await synthesizeSpeech(response);
 
       setMessages((prevMessages) => [
         ...prevMessages,
