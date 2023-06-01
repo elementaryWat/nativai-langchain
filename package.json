@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.7",
     "redis": "^4.6.6",
+    "reselect": "^4.1.8",
     "styled-components": "^5.3.11",
     "tmp": "^0.2.1",
     "tmp-promise": "^3.0.3"

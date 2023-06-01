@@ -7,19 +7,15 @@ import {
   StyledFormControl,
   Title,
 } from "./styled";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { setLevel } from "../../store/chatbot-config/chatbotConfigSlice";
+import { useChat } from "../../store/chatbot/useChat";
 
 const LevelSelect: React.FC = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const level = useSelector((state: RootState) => state.chatbotConfig.level);
+  const { levelConversation, setLevelConversation } = useChat();
 
   const handleLevelChange = (event) => {
     const selectedLevel = event.target.value as string;
-    setLevel(selectedLevel);
-    dispatch(setLevel(selectedLevel));
+    setLevelConversation(selectedLevel);
   };
 
   return (
@@ -30,7 +26,7 @@ const LevelSelect: React.FC = () => {
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={level}
+          value={levelConversation}
           onChange={handleLevelChange}
           label="Level"
         >
@@ -42,7 +38,7 @@ const LevelSelect: React.FC = () => {
           <MenuItem value={"C1"}>C1 - Advanced</MenuItem>
           <MenuItem value={"C2"}>C2 - Proficient</MenuItem>
         </Select>
-        {level && (
+        {levelConversation && (
           <StyledButton
             variant="contained"
             color="primary"

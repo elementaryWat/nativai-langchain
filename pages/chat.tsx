@@ -1,25 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../components/Input";
-import { Message as MessageType, MessageItem } from "../types/Message";
+import { MessageItem } from "../types/Message";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
 import { Typography } from "@mui/material";
 import { synthesizeSpeech } from "../utils/synthesizeSpeech";
+import { useChat } from "../store/chatbot/useChat";
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<MessageType[]>([
-    new MessageItem(
-      "assistant",
-      "Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?"
-    ),
-  ]);
-  const [history, setHistory] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { messages, loading, addMessage, addFeedBack, setLoadingStatus } =
+    useChat();
 
   const handleSubmit = async (message: string) => {
     const newMessage = new MessageItem("user", message);
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-    setLoading(true);
+    addMessage(newMessage);
+    setLoadingStatus(true);
 
     try {
       const dataResponse = await fetch("/api/chat", {
@@ -28,19 +23,16 @@ const Chat: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: newMessage.content,
+          message: messages[messages.length - 1],
+          response: newMessage.content,
         }),
       });
-      const { response, memory } = await dataResponse.json();
+      const { response, feedback } = await dataResponse.json();
       await synthesizeSpeech(response);
+      addMessage(new MessageItem("assistant", response));
+      addFeedBack(feedback);
 
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        new MessageItem("assistant", response),
-      ]);
-      setHistory(memory);
-
-      setLoading(false);
+      setLoadingStatus(false);
     } catch (error) {
       console.error(
         "Error sending transcript to the Chat Completion API:",
@@ -51,9 +43,9 @@ const Chat: React.FC = () => {
 
   return (
     <ChatContainer>
-      <Typography variant="h4" align="center">
+      {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
-      </Typography>
+      </Typography> */}
       <MessagesContainer messages={messages} loading={loading} />
       <FixedInputContainer>
         <Input onSubmit={handleSubmit} />

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import chatbotConfig from "./chatbot-config/chatbotConfigSlice";
+import chatbotsSlice from "./chatbot/chatbotSlice";
 
 export const store = configureStore({
   reducer: {
-    chatbotConfig: chatbotConfig.reducer,
+    chatbot: chatbotsSlice.reducer,
   },
 });
 

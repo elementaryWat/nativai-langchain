@@ -12,7 +12,12 @@ const MessagesContainer = ({ messages, loading }: MessageContainerProps) => {
   return (
     <StyledMessagesContainer>
       {messages.map((message, index) => (
-        <Message key={index} content={message.content} role={message.role} />
+        <Message
+          key={index}
+          content={message.content}
+          role={message.role}
+          feedback={message.feedback}
+        />
       ))}
       {loading && <LoadingMessage />}
     </StyledMessagesContainer>

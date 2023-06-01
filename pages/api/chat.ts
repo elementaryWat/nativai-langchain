@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { message, history } = req.body;
+  const { message, response } = req.body;
 
   console.log("message", message);
 
@@ -24,15 +24,16 @@ export default async function handler(
     const { chain, memory } = makeChatChain();
     const feedbackChain = makeFeedbackChain();
     const answer = await chain.call({
-      input: message,
+      input: response,
     });
-    const proofReaded = await feedbackChain.call({
-      input: message,
+    const feedback = await feedbackChain.call({
+      message,
+      response,
     });
-    console.log(proofReaded);
+    console.log(feedback);
     res.status(200).json({
       response: answer.response,
-      proofreadResponse: proofReaded.response,
+      feedback: JSON.parse(feedback.text),
     });
   } catch (error: any) {
     console.log("error", error);
