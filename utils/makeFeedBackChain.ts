@@ -4,7 +4,7 @@ import { PromptTemplate } from "langchain/prompts";
 import { OpenAI } from "langchain/llms/openai";
 
 export const makeFeedbackChain = () => {
-  const model = new OpenAI({ temperature: 0 });
+  const model = new OpenAI({ temperature: 0, timeout: 15000 });
   const prompt = PromptTemplate.fromTemplate(
     `Act like an english teacher that gives feedback for improving my english skills based on the response to a message.
     Message: # {message} #.
