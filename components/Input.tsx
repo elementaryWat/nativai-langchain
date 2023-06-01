@@ -47,6 +47,7 @@ const Input: React.FC<InputProps> = ({ onSubmit }) => {
           fullWidth
           value={message}
           label="Type your message"
+          multiline
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
