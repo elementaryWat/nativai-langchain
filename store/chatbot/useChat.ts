@@ -31,12 +31,11 @@ export const useChat = () => {
       }
       dispatch(addMessageAction(message));
     },
-    [dispatch]
+    [dispatch, messages]
   );
 
   const addFeedBack = useCallback(
     (feedback: FeedBack) => {
-      console.log(feedback);
       dispatch(addFeedBackToLastMessage({ feedback }));
     },
     [dispatch]

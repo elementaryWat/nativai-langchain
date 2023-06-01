@@ -3,7 +3,6 @@ import Input from "../components/Input";
 import { MessageItem } from "../types/Message";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
-import { Typography } from "@mui/material";
 import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 
@@ -23,7 +22,7 @@ const Chat: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: messages[messages.length - 1],
+          message: messages[messages.length - 1].content,
           response: newMessage.content,
         }),
       });
