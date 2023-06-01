@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ChatContainer = styled("div")`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 `;
 
 export const StyledMessagesContainer = styled("div")`
