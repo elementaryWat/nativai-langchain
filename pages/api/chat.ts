@@ -23,13 +23,10 @@ export default async function handler(
     //create chain
     const { chain, memory } = makeChatChain();
     const feedbackChain = makeFeedbackChain();
-    const answer = await chain.call({
-      input: response,
-    });
-    const feedback = await feedbackChain.call({
-      message,
-      response,
-    });
+    const [answer, feedback] = await Promise.all([
+      chain.call({ input: response }),
+      feedbackChain.call({ message, response }),
+    ]);
     console.log(feedback);
     res.status(200).json({
       response: answer.response,

@@ -21,6 +21,7 @@ export const makeChatChain = () => {
   const chat = new ChatOpenAI({
     modelName: "gpt-3.5-turbo",
     temperature: 0,
+    timeout: 15000,
   });
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
     SystemMessagePromptTemplate.fromTemplate(SYSTEM_PROMPT),
