@@ -11,13 +11,13 @@ import {
   SystemMessagePromptTemplate,
 } from "langchain/prompts";
 
-const SYSTEM_PROMPT = `The following is a friendly conversation between a human and an AI. The AI is a helpful AI assistant that helps the human to practice English talking about the chosen topic. The answers of the AI are short and concise with at most two sentences.`;
+const SYSTEM_PROMPT = `The following is a friendly conversation between a human and an AI. 
+The AI, a helpful assistant, aids the human in practicing English the discussing chosen topics.
+The AI's responses are brief and concise, limited to a maximum of two sentences.
+Also the responses are designed to facilitate and prolong the conversation.`;
 const AI_INTRODUCTION = `Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?`;
 
 export const makeChatChain = () => {
-  //   import { BufferMemory, ConversationChain, MessagesPlaceholder } from "langchain";
-  // import { ChatOpenAI } from "langchain/chat_models/openai";
-  // import { HumanChatMessage } from "langchain/schema";
   const chat = new ChatOpenAI({
     modelName: "gpt-3.5-turbo",
     temperature: 0,
@@ -27,7 +27,7 @@ export const makeChatChain = () => {
     SystemMessagePromptTemplate.fromTemplate(SYSTEM_PROMPT),
     AIMessagePromptTemplate.fromTemplate(AI_INTRODUCTION),
     new MessagesPlaceholder("history"),
-    HumanMessagePromptTemplate.fromTemplate("{input}"),
+    HumanMessagePromptTemplate.fromTemplate("{text}"),
   ]);
   const memory = new BufferMemory({
     returnMessages: true,

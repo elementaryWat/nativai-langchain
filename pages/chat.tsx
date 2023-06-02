@@ -7,7 +7,13 @@ import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 
 const Chat: React.FC = () => {
-  const { messages, addMessage, addFeedBack, setLoadingStatus } = useChat();
+  const {
+    messages,
+    levelConversation,
+    addMessage,
+    addFeedBack,
+    setLoadingStatus,
+  } = useChat();
 
   const handleSubmit = async (message: string) => {
     addMessage({
@@ -18,7 +24,7 @@ const Chat: React.FC = () => {
     setLoadingStatus(true);
 
     try {
-      const { response } = await postChat(message);
+      const { response } = await postChat(message, levelConversation);
       await synthesizeSpeech(response);
       addMessage({
         role: "assistant",

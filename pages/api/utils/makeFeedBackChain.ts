@@ -10,7 +10,7 @@ export const makeFeedbackChain = () => {
     Message: # {message} #.
     Response: # {response} #.
     Give me feedback on grammar and vocabulary for the response.
-    Also give me a score in the 0 to 10 range.
+    Also give me a score that reflects the english level of the response using the MCER standard.
     Provide the output in a JSON format with this keys: feedback, score
     `
   );

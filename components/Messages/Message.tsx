@@ -1,9 +1,10 @@
 import { CircularProgress } from "@mui/material";
 import { useState } from "react";
-import { IconButton, Popover, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import { Message as MessageType } from "../../types/Message";
 import { MessageBubble, MessageContainer } from "./styled";
+import FeedbackPopover from "./FeedbackPopover";
 
 const Message = ({ content, role, feedback, loadingFeedback }: MessageType) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -33,25 +34,13 @@ const Message = ({ content, role, feedback, loadingFeedback }: MessageType) => {
               >
                 <FeedbackIcon />
               </IconButton>
-              <Popover
+              <FeedbackPopover
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
-              >
-                <Typography sx={{ p: 2 }}>
-                  Feedback: {feedback.feedback}
-                  Score: {feedback.score}
-                </Typography>
-              </Popover>
+                feedback={feedback}
+              />
             </>
           )
         )}

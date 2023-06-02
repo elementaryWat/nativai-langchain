@@ -22,10 +22,10 @@ const LevelSelect: React.FC = () => {
     <PageContainer>
       <Title>Choose your English level</Title>
       <StyledFormControl variant="standard">
-        <InputLabel id="demo-simple-select-standard-label">Level</InputLabel>
+        <InputLabel id="level">Level</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
+          labelId="level"
+          id="select-level"
           value={levelConversation}
           onChange={handleLevelChange}
           label="Level"

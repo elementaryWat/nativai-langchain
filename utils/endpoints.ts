@@ -1,4 +1,4 @@
-export const postChat = async (response: string) => {
+export const postChat = async (response: string, levelConversation: string) => {
   try {
     const dataResponse = await fetch("/api/chat", {
       method: "POST",
@@ -7,6 +7,7 @@ export const postChat = async (response: string) => {
       },
       body: JSON.stringify({
         response,
+        level: levelConversation,
       }),
     });
     return await dataResponse.json();
