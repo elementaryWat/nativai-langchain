@@ -1,4 +1,32 @@
+import { Box } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
+
+export const StyledMessagesContainer = styled("div")`
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+`;
+
+export const MessageBubble = styled(Box)(
+  ({ role }: { role: "user" | "system" | "assistant" }) => ({
+    display: "flex",
+    justifyContent: "space-between",
+    background: role === "user" ? "#4caf50" : "#f1f1f1",
+    padding: "10px 20px",
+    borderRadius: "20px",
+    color: role === "user" ? "white" : "black",
+    marginBottom: "10px",
+    width: "80%",
+  })
+);
+
+export const MessageContainer = styled(Box)(
+  ({ role }: { role: "user" | "system" | "assistant" }) => ({
+    display: "flex",
+    justifyContent: role === "user" ? "flex-end" : "flex-start",
+    width: "100%",
+  })
+);
 
 const loadingAnimation = keyframes`
   0%, 80%, 100% {

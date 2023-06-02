@@ -6,12 +6,6 @@ export const ChatContainer = styled("div")`
   height: calc(var(--vh, 1vh) * 100);
 `;
 
-export const StyledMessagesContainer = styled("div")`
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-`;
-
 export const FixedInputContainer = styled("div")`
   display: flex;
   align-items: center;

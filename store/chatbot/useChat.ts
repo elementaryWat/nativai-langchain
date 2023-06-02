@@ -26,10 +26,10 @@ export const useChat = () => {
 
   const addMessage = useCallback(
     (message: MessageType) => {
+      dispatch(addMessageAction(message));
       if (message.role === "user") {
         dispatch(setLastUserMessageIndex(messages.length));
       }
-      dispatch(addMessageAction(message));
     },
     [dispatch, messages]
   );
@@ -38,7 +38,7 @@ export const useChat = () => {
     (feedback: FeedBack) => {
       dispatch(addFeedBackToLastMessage({ feedback }));
     },
-    [dispatch]
+    [dispatch, messages]
   );
 
   const setLoadingStatus = useCallback(

@@ -1,23 +1,14 @@
-import { Message as MessageType } from "../../types/Message";
-import { StyledMessagesContainer } from "../styles";
+import { useChat } from "../../store/chatbot/useChat";
 import LoadingMessage from "./LoadingMessage";
 import Message from "./Message";
+import { StyledMessagesContainer } from "./styled";
 
-interface MessageContainerProps {
-  messages: MessageType[];
-  loading: boolean;
-}
-
-const MessagesContainer = ({ messages, loading }: MessageContainerProps) => {
+const MessagesContainer = () => {
+  const { messages, loading } = useChat();
   return (
     <StyledMessagesContainer>
       {messages.map((message, index) => (
-        <Message
-          key={index}
-          content={message.content}
-          role={message.role}
-          feedback={message.feedback}
-        />
+        <Message key={index} {...message} />
       ))}
       {loading && <LoadingMessage />}
     </StyledMessagesContainer>

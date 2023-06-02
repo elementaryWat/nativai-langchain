@@ -1,37 +1,37 @@
 import React from "react";
 import Input from "../components/Input";
-import { MessageItem } from "../types/Message";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
 import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
+import { postChat, postFeedback } from "../utils/endpoints";
 
 const Chat: React.FC = () => {
-  const { messages, loading, addMessage, addFeedBack, setLoadingStatus } =
-    useChat();
+  const { messages, addMessage, addFeedBack, setLoadingStatus } = useChat();
 
   const handleSubmit = async (message: string) => {
-    const newMessage = new MessageItem("user", message);
-    addMessage(newMessage);
+    addMessage({
+      role: "user",
+      content: message,
+      loadingFeedback: false,
+    });
     setLoadingStatus(true);
 
     try {
-      const dataResponse = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: messages[messages.length - 1].content,
-          response: newMessage.content,
-        }),
-      });
-      const { response, feedback } = await dataResponse.json();
+      const { response } = await postChat(message);
       await synthesizeSpeech(response);
-      addMessage(new MessageItem("assistant", response));
-      addFeedBack(feedback);
-
+      addMessage({
+        role: "assistant",
+        content: response,
+        loadingFeedback: false,
+      });
       setLoadingStatus(false);
+
+      const { feedback } = await postFeedback(
+        messages[messages.length - 1].content,
+        message
+      );
+      addFeedBack(feedback);
     } catch (error) {
       console.error(
         "Error sending transcript to the Chat Completion API:",
@@ -45,7 +45,7 @@ const Chat: React.FC = () => {
       {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
       </Typography> */}
-      <MessagesContainer messages={messages} loading={loading} />
+      <MessagesContainer />
       <FixedInputContainer>
         <Input onSubmit={handleSubmit} />
       </FixedInputContainer>
