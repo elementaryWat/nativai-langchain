@@ -4,7 +4,7 @@ import { Button, FormControl, Grid, InputLabel, Select } from "@mui/material";
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   height: 100%;
   color: white;
