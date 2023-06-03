@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store";
+import "../globals.css";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

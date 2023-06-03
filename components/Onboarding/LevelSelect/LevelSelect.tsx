@@ -3,11 +3,11 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 import { useRouter } from "next/router";
 import {
   PageContainer,
-  StyledButton,
   StyledFormControl,
-  Title,
-} from "./styled";
-import { useChat } from "../../store/chatbot/useChat";
+  StyledInputLabel,
+  StyledSelect,
+} from "../styled";
+import { useChat } from "../../../store/chatbot/useChat";
 
 const LevelSelect: React.FC = () => {
   const router = useRouter();
@@ -20,25 +20,23 @@ const LevelSelect: React.FC = () => {
 
   return (
     <PageContainer>
-      <Title>Choose your English level</Title>
-      <StyledFormControl variant="standard">
-        <InputLabel id="level">Level</InputLabel>
-        <Select
+      <StyledFormControl>
+        <StyledInputLabel id="level">Choose your level</StyledInputLabel>
+        <StyledSelect
+          defaultValue=""
           labelId="level"
-          id="select-level"
           value={levelConversation}
           onChange={handleLevelChange}
-          label="Level"
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+          <MenuItem value="">Choose your English level</MenuItem>
           <MenuItem value={"B1"}>B1 - Intermediate</MenuItem>
           <MenuItem value={"B2"}>B2 - Upper intermediate</MenuItem>
           <MenuItem value={"C1"}>C1 - Advanced</MenuItem>
           <MenuItem value={"C2"}>C2 - Proficient</MenuItem>
-        </Select>
-        {levelConversation && (
+        </StyledSelect>
+      </StyledFormControl>
+
+      {/* {levelConversation && (
           <StyledButton
             variant="contained"
             color="primary"
@@ -46,8 +44,7 @@ const LevelSelect: React.FC = () => {
           >
             Start Conversation
           </StyledButton>
-        )}
-      </StyledFormControl>
+        )} */}
     </PageContainer>
   );
 };

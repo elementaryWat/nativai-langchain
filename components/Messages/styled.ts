@@ -11,10 +11,10 @@ export const MessageBubble = styled(Box)(
   ({ role }: { role: "user" | "system" | "assistant" }) => ({
     display: "flex",
     justifyContent: "space-between",
-    background: role === "user" ? "#4caf50" : "#f1f1f1",
+    background: role === "user" ? "#f1f1f1" : "#6e45ff",
     padding: "10px 20px",
     borderRadius: "20px",
-    color: role === "user" ? "white" : "black",
+    color: role === "user" ? "black" : "white",
     marginBottom: "10px",
     width: "80%",
   })
