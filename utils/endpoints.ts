@@ -1,4 +1,9 @@
-export const postChat = async (response: string, levelConversation: string) => {
+export const postChat = async (
+  chatId: string,
+  message: string,
+  levelConversation: string,
+  topicConversation: string
+) => {
   try {
     const dataResponse = await fetch("/api/chat", {
       method: "POST",
@@ -6,8 +11,10 @@ export const postChat = async (response: string, levelConversation: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        response,
+        chatId,
+        message,
         level: levelConversation,
+        topic: topicConversation,
       }),
     });
     return await dataResponse.json();
@@ -31,6 +38,25 @@ export const postFeedback = async (message: string, response: string) => {
         message,
         response,
       }),
+    });
+    return await dataResponse.json();
+  } catch (error) {
+    console.error("Error sending transcript to the Feedback API:", error);
+    throw error;
+  }
+};
+
+export const saveChatbotConfig = async (chatBotConfig: {
+  topic: string;
+  level: string;
+}) => {
+  try {
+    const dataResponse = await fetch("/api/saveConfigToFb", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(chatBotConfig),
     });
     return await dataResponse.json();
   } catch (error) {

@@ -6,26 +6,33 @@ import {
   StyledInputLabel,
   StyledSelect,
 } from "../styled";
+import { useChat } from "../../../store/chatbot/useChat";
+import { TOPICS } from "../../../utils/const";
 
 const TopicSelect: React.FC = () => {
+  const { topicConversation, setTopicConversation } = useChat();
+
+  const handleTopicChange = (event) => {
+    const selectedTopic = event.target.value as string;
+    setTopicConversation(selectedTopic);
+  };
+
   return (
     <PageContainer>
       <StyledFormControl>
         <StyledInputLabel id="level">Choose a topic</StyledInputLabel>
-        <StyledSelect defaultValue="" placeholder="Choose a topic">
+        <StyledSelect
+          value={topicConversation}
+          onChange={handleTopicChange}
+          defaultValue=""
+          placeholder="Choose a topic"
+        >
           <MenuItem value="">Choose a topic for conversation</MenuItem>
-          <MenuItem value="greetings">Greetings and Introductions</MenuItem>
-          <MenuItem value="family-friends">Family and Friends</MenuItem>
-          <MenuItem value="work-studies">Work and Studies</MenuItem>
-          <MenuItem value="travels">Travels and Tourism</MenuItem>
-          <MenuItem value="culture">Culture and Entertainment</MenuItem>
-          <MenuItem value="news">Current Events and News</MenuItem>
-          <MenuItem value="hobbies">Hobbies and Interests</MenuItem>
-          <MenuItem value="wellness">Health and Wellness</MenuItem>
-          <MenuItem value="tech">Technology and Science</MenuItem>
-          <MenuItem value="environment">
-            Environment and Sustainability
-          </MenuItem>
+          {Object.keys(TOPICS).map((topicKey) => (
+            <MenuItem key={topicKey} value={topicKey}>
+              {TOPICS[topicKey]}
+            </MenuItem>
+          ))}
         </StyledSelect>
       </StyledFormControl>
     </PageContainer>

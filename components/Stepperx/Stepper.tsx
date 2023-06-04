@@ -13,7 +13,7 @@ interface StepperxProps {
   stepComponents: React.ReactNode[];
   activeStep: number;
   setActiveStep: (currentStep: number) => void;
-  nextHandlers?: ((stepIndex: number) => void)[];
+  nextHandlers?: (((stepIndex: number) => Promise<void>) | null)[];
 }
 
 const Stepperx: React.FC<StepperxProps> = ({
@@ -49,7 +49,7 @@ const Stepperx: React.FC<StepperxProps> = ({
     <Container
       maxWidth="xl"
       sx={{
-        height: "calc(var(--vh, 1vh) * 100)",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

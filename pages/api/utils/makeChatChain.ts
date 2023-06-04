@@ -8,23 +8,50 @@ import {
   ChatPromptTemplate,
   HumanMessagePromptTemplate,
   MessagesPlaceholder,
+  PromptTemplate,
   SystemMessagePromptTemplate,
 } from "langchain/prompts";
+import {
+  AI_INTRODUCTION_PROMPT,
+  INTRODUCTIONS,
+  SYSTEM_PROMPT,
+  TOPICS,
+} from "../../../utils/const";
 
-const SYSTEM_PROMPT = `The following is a friendly conversation between a human and an AI. 
-The AI, a helpful assistant, aids the human in practicing English the discussing chosen topics.
-The AI's responses are brief and concise, limited to a maximum of two sentences.
-Also the responses are designed to facilitate and prolong the conversation.`;
-const AI_INTRODUCTION = `Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?`;
-
-export const makeChatChain = () => {
+export const makeChatChain = async (
+  chatId: string,
+  levelConversation: string,
+  topicConversation: string
+) => {
   const chat = new ChatOpenAI({
     modelName: "gpt-3.5-turbo",
     temperature: 0,
     timeout: 15000,
   });
+
+  const promptSystem = new PromptTemplate({
+    template: SYSTEM_PROMPT,
+    inputVariables: ["topic", "level"],
+  });
+
+  const SYSTEM_CONFIG = await promptSystem.format({
+    level: levelConversation,
+    topic: TOPICS[topicConversation],
+  });
+
+  const promptIntroduction = new PromptTemplate({
+    template: AI_INTRODUCTION_PROMPT,
+    inputVariables: ["topic", "intro"],
+  });
+
+  const AI_INTRODUCTION = await promptIntroduction.format({
+    topic: TOPICS[topicConversation],
+    intro: INTRODUCTIONS[topicConversation],
+  });
+  console.log();
+
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
-    SystemMessagePromptTemplate.fromTemplate(SYSTEM_PROMPT),
+    SystemMessagePromptTemplate.fromTemplate(SYSTEM_CONFIG),
     AIMessagePromptTemplate.fromTemplate(AI_INTRODUCTION),
     new MessagesPlaceholder("history"),
     HumanMessagePromptTemplate.fromTemplate("{text}"),
@@ -33,7 +60,7 @@ export const makeChatChain = () => {
     returnMessages: true,
     memoryKey: "history",
     chatHistory: new UpstashRedisChatMessageHistory({
-      sessionId: "memory", // Or some other unique identifier for the conversation
+      sessionId: chatId, // Or some other unique identifier for the conversation
       sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
       config: {
         url: "https://helping-clam-36296.upstash.io",

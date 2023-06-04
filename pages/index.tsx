@@ -6,13 +6,17 @@ import GettingStarted from "../components/Onboarding/GettingStarted/GettingStart
 import LevelSelect from "../components/Onboarding/LevelSelect/LevelSelect";
 import { PageContainer } from "../components/Onboarding/styled";
 import { useRouter } from "next/router";
+import { useChat } from "../store/chatbot/useChat";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
+  // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Level Select", "Topic Select"];
+  const { getInitialMessage, topicConversation } = useChat();
 
-  const goToChat = () => {
+  const goToChat = async () => {
+    await getInitialMessage();
     router.push("/chat");
   };
   const nextHandlers = [null, null, goToChat];

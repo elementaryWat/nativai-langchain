@@ -8,8 +8,10 @@ import { postChat, postFeedback } from "../utils/endpoints";
 
 const Chat: React.FC = () => {
   const {
+    chatId,
     messages,
     levelConversation,
+    topicConversation,
     addMessage,
     addFeedBack,
     setLoadingStatus,
@@ -24,7 +26,12 @@ const Chat: React.FC = () => {
     setLoadingStatus(true);
 
     try {
-      const { response } = await postChat(message, levelConversation);
+      const { response } = await postChat(
+        chatId,
+        message,
+        levelConversation,
+        topicConversation
+      );
       await synthesizeSpeech(response);
       addMessage({
         role: "assistant",

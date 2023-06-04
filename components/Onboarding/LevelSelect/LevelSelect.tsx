@@ -1,6 +1,5 @@
 import React from "react";
-import { InputLabel, MenuItem, Select } from "@mui/material";
-import { useRouter } from "next/router";
+import { MenuItem } from "@mui/material";
 import {
   PageContainer,
   StyledFormControl,
@@ -10,7 +9,6 @@ import {
 import { useChat } from "../../../store/chatbot/useChat";
 
 const LevelSelect: React.FC = () => {
-  const router = useRouter();
   const { levelConversation, setLevelConversation } = useChat();
 
   const handleLevelChange = (event) => {
@@ -35,16 +33,6 @@ const LevelSelect: React.FC = () => {
           <MenuItem value={"C2"}>C2 - Proficient</MenuItem>
         </StyledSelect>
       </StyledFormControl>
-
-      {/* {levelConversation && (
-          <StyledButton
-            variant="contained"
-            color="primary"
-            onClick={() => router.push("/chat")}
-          >
-            Start Conversation
-          </StyledButton>
-        )} */}
     </PageContainer>
   );
 };

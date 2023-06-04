@@ -5,21 +5,21 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { response, level } = req.body;
+  const { message, chatId, level, topic } = req.body;
   console.log(level);
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
-  if (!response) {
+  if (!message) {
     return res.status(400).json({ message: "No message in the request" });
   }
 
   try {
-    const { chain, memory } = makeChatChain();
+    const { chain, memory } = await makeChatChain(chatId, level, topic);
     console.log(memory.chatHistory);
-    const answer = await chain.call({ text: response });
+    const answer = await chain.call({ text: message });
 
     res.status(200).json({
       response: answer.response,

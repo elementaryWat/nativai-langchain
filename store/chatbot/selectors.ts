@@ -3,9 +3,19 @@ import { RootState } from "..";
 
 const selectChatbotState = (state: RootState) => state.chatbot;
 
+export const selectChatId = createSelector(
+  selectChatbotState,
+  (chat) => chat.id
+);
+
 export const selectLevel = createSelector(
   selectChatbotState,
   (chat) => chat.level
+);
+
+export const selectTopic = createSelector(
+  selectChatbotState,
+  (chat) => chat.topic
 );
 
 export const selectMessages = createSelector(

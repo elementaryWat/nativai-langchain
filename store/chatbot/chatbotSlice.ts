@@ -2,24 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FeedBack, Message as MessageType } from "../../types/Message";
 
 interface ChatbotState {
+  id: string;
   level: string;
+  topic: string;
   lastUserMessageIndex: number;
   messages: MessageType[];
   loading: boolean;
 }
 
 const initialState: ChatbotState = {
+  id: `chat-${new Date().toISOString()}`,
   level: "",
+  topic: "",
   lastUserMessageIndex: 1,
-  messages: [
-    {
-      role: "assistant",
-      content:
-        "Hello, I'm Nati and I am going to talk with you about any topic and practice english in the process. It's great to meet you today. What would you like to talk about?",
-      feedback: null,
-      loadingFeedback: false,
-    },
-  ],
+  messages: [],
   loading: false,
 };
 
@@ -29,6 +25,9 @@ export const chatbotConfigSlice = createSlice({
   reducers: {
     setLevel: (state, action: PayloadAction<string>) => {
       state.level = action.payload;
+    },
+    setTopic: (state, action: PayloadAction<string>) => {
+      state.topic = action.payload;
     },
     addMessageAction: (state, action: PayloadAction<MessageType>) => {
       state.messages.push(action.payload);
@@ -53,6 +52,7 @@ export const chatbotConfigSlice = createSlice({
 
 export const {
   setLevel,
+  setTopic,
   addMessageAction,
   setLastUserMessageIndex,
   addFeedBackToLastMessage,
