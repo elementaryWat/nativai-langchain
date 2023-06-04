@@ -14,6 +14,7 @@ interface StepperxProps {
   activeStep: number;
   setActiveStep: (currentStep: number) => void;
   nextHandlers?: (((stepIndex: number) => Promise<void>) | null)[];
+  isNextDisabled: () => boolean;
 }
 
 const Stepperx: React.FC<StepperxProps> = ({
@@ -22,6 +23,7 @@ const Stepperx: React.FC<StepperxProps> = ({
   activeStep,
   setActiveStep,
   nextHandlers,
+  isNextDisabled,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const theme = useTheme();
@@ -66,7 +68,10 @@ const Stepperx: React.FC<StepperxProps> = ({
           <Button
             size="small"
             onClick={handleNext}
-            disabled={activeStep === steps.length - 1 && !handleNext}
+            disabled={
+              (activeStep === steps.length - 1 && !handleNext) ||
+              isNextDisabled()
+            }
           >
             {loading ? <CircularProgress size={24} /> : "Next"}
             {theme.direction === "rtl" ? (

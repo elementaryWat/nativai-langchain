@@ -13,7 +13,7 @@ const OnboardingPage: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Level Select", "Topic Select"];
-  const { getInitialMessage, topicConversation } = useChat();
+  const { getInitialMessage, levelConversation, topicConversation } = useChat();
 
   const goToChat = async () => {
     await getInitialMessage();
@@ -22,6 +22,10 @@ const OnboardingPage: React.FC = () => {
   const nextHandlers = [null, null, goToChat];
 
   const stepComponents = [<GettingStarted />, <LevelSelect />, <TopicSelect />];
+
+  const isNextDisabled = () =>
+    (activeStep === 1 && levelConversation === "") ||
+    (activeStep === 2 && topicConversation === "");
 
   return (
     <PageContainer background="linear-gradient(180deg, #6e45ff, black)">
@@ -34,6 +38,7 @@ const OnboardingPage: React.FC = () => {
         setActiveStep={setActiveStep}
         stepComponents={stepComponents}
         nextHandlers={nextHandlers}
+        isNextDisabled={isNextDisabled}
       />
     </PageContainer>
   );
