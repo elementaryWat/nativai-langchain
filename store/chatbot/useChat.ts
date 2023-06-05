@@ -53,7 +53,7 @@ export const useChat = () => {
         loadingFeedback: false,
       })
     );
-  }, [dispatch, topicConversation]);
+  }, [dispatch, username, topicConversation]);
 
   // useEffect(() => {
   //   if (
