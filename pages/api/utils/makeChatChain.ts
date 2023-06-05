@@ -8,18 +8,14 @@ import {
   ChatPromptTemplate,
   HumanMessagePromptTemplate,
   MessagesPlaceholder,
-  PromptTemplate,
   SystemMessagePromptTemplate,
 } from "langchain/prompts";
-import {
-  AI_INTRODUCTION_PROMPT,
-  INTRODUCTIONS,
-  SYSTEM_PROMPT,
-  TOPICS,
-} from "../../../utils/const";
+import { INTRODUCTIONS, TOPICS } from "../../../utils/const";
+import { promptIntroduction, promptSystem } from "./promptTemplates";
 
 export const makeChatChain = async (
   chatId: string,
+  username: string,
   levelConversation: string,
   topicConversation: string
 ) => {
@@ -29,26 +25,16 @@ export const makeChatChain = async (
     timeout: 15000,
   });
 
-  const promptSystem = new PromptTemplate({
-    template: SYSTEM_PROMPT,
-    inputVariables: ["topic", "level"],
-  });
-
   const SYSTEM_CONFIG = await promptSystem.format({
     level: levelConversation,
     topic: TOPICS[topicConversation],
   });
 
-  const promptIntroduction = new PromptTemplate({
-    template: AI_INTRODUCTION_PROMPT,
-    inputVariables: ["topic", "intro"],
-  });
-
   const AI_INTRODUCTION = await promptIntroduction.format({
+    username,
     topic: TOPICS[topicConversation],
     intro: INTRODUCTIONS[topicConversation],
   });
-  console.log();
 
   const chatPrompt = ChatPromptTemplate.fromPromptMessages([
     SystemMessagePromptTemplate.fromTemplate(SYSTEM_CONFIG),

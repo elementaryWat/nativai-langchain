@@ -1,5 +1,27 @@
 import styled from "styled-components";
-import { Button, FormControl, Grid, InputLabel, Select } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  Select,
+  TextField,
+} from "@mui/material";
+
+export const StyledTextField = styled(TextField)`
+  && {
+    margin: 10px;
+    width: 100%;
+    color: #bcbcbd;
+    padding-bottom: 3rem;
+    .MuiInputBase-root {
+      color: #bcbcbd;
+    }
+    .MuiFormLabel-root {
+      color: #bcbcbd;
+    }
+  }
+`;
 
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
@@ -33,7 +55,7 @@ export const Title = styled.h1`
 
 export const StyledFormControl = styled(FormControl)`
   width: 100%;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   & {
     color: white;
   }

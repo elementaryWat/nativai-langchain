@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
 import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
+import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
 
 const Chat: React.FC = () => {
   const {
     chatId,
+    username,
     messages,
     levelConversation,
     topicConversation,
@@ -16,6 +18,18 @@ const Chat: React.FC = () => {
     addFeedBack,
     setLoadingStatus,
   } = useChat();
+  const [openDialog, setOpenDialog] = useState(false);
+
+  useEffect(() => {
+    if (messages.length === 1) {
+      synthesizeSpeech(messages[0].content);
+    }
+    const timer = setTimeout(() => {
+      setOpenDialog(true);
+    }, 60000);
+
+    return () => clearTimeout(timer); // this will clear Timeout when component unmonts.
+  }, []);
 
   const handleSubmit = async (message: string) => {
     addMessage({
@@ -28,6 +42,7 @@ const Chat: React.FC = () => {
     try {
       const { response } = await postChat(
         chatId,
+        username,
         message,
         levelConversation,
         topicConversation
@@ -62,6 +77,7 @@ const Chat: React.FC = () => {
       <FixedInputContainer>
         <Input onSubmit={handleSubmit} />
       </FixedInputContainer>
+      <FeedbackDialog open={openDialog} setOpen={setOpenDialog} />
     </ChatContainer>
   );
 };

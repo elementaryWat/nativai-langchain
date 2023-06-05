@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { FeedBack, Message as MessageType } from "../../types/Message";
 import {
   selectTopic,
@@ -8,6 +8,7 @@ import {
   selectMessages,
   selectLevel,
   selectChatId,
+  selectUsername,
 } from "./selectors";
 import {
   addMessageAction,
@@ -16,6 +17,8 @@ import {
   addFeedBackToLastMessage,
   setLastUserMessageIndex,
   setTopic,
+  setUsernameAction,
+  setMessagesAction,
 } from "./chatbotSlice";
 import { PromptTemplate } from "langchain";
 import {
@@ -23,22 +26,22 @@ import {
   INTRODUCTIONS,
   TOPICS,
 } from "../../utils/const";
+import { promptIntroduction } from "../../pages/api/utils/promptTemplates";
 
 export const useChat = () => {
   const dispatch = useDispatch();
   const chatId = useSelector(selectChatId);
+  const username = useSelector(selectUsername);
   const levelConversation = useSelector(selectLevel);
   const topicConversation = useSelector(selectTopic);
   const messages = useSelector(selectMessages);
   const loading = useSelector(selectLoading);
 
   const getInitialMessage = useCallback(async () => {
-    const promptIntroduction = new PromptTemplate({
-      template: AI_INTRODUCTION_PROMPT,
-      inputVariables: ["topic", "intro"],
-    });
+    setMessages([]);
 
     const AI_INTRODUCTION = await promptIntroduction.format({
+      username,
       topic: TOPICS[topicConversation],
       intro: INTRODUCTIONS[topicConversation],
     });
@@ -52,6 +55,25 @@ export const useChat = () => {
     );
   }, [dispatch, topicConversation]);
 
+  // useEffect(() => {
+  //   if (
+  //     messages.length > 0 &&
+  //     username !== "" &&
+  //     levelConversation !== "" &&
+  //     topicConversation !== ""
+  //   ) {
+  //     setMessages([]);
+  //     getInitialMessage();
+  //   }
+  // }, [messages, username, levelConversation, topicConversation]);
+
+  const setUsername = useCallback(
+    (username: string) => {
+      dispatch(setUsernameAction(username));
+    },
+    [dispatch]
+  );
+
   const setLevelConversation = useCallback(
     (level: string) => {
       dispatch(setLevel(level));
@@ -62,6 +84,13 @@ export const useChat = () => {
   const setTopicConversation = useCallback(
     (topic: string) => {
       dispatch(setTopic(topic));
+    },
+    [dispatch]
+  );
+
+  const setMessages = useCallback(
+    (messages: MessageType[]) => {
+      dispatch(setMessagesAction(messages));
     },
     [dispatch]
   );
@@ -90,23 +119,15 @@ export const useChat = () => {
     [dispatch]
   );
 
-  // const saveChatConfig = async () => {
-  //   const chatConfig = {
-  //     level: levelConversation,
-  //     topic: topicConversation,
-  //   };
-
-  //   const data = await saveChatbotConfig(chatConfig); // you can replace doc() with any unique identifier like user's id
-  //   return data;
-  // };
-
   return {
     chatId,
+    username,
     messages,
     loading,
     levelConversation,
     topicConversation,
     getInitialMessage,
+    setUsername,
     addMessage,
     addFeedBack,
     setLoadingStatus,

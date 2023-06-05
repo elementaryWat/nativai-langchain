@@ -18,7 +18,7 @@
     "aws-sdk": "^2.1387.0",
     "dotenv": "^16.0.3",
     "fetch-blob": "^4.0.0",
-    "firebase-admin": "^11.9.0",
+    "firebase": "^9.22.1",
     "formidable": "^2.1.1",
     "fs": "^0.0.1-security",
     "langchain": "^0.0.84",

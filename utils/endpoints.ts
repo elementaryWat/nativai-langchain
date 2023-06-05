@@ -1,5 +1,6 @@
 export const postChat = async (
   chatId: string,
+  username: string,
   message: string,
   levelConversation: string,
   topicConversation: string
@@ -12,6 +13,7 @@ export const postChat = async (
       },
       body: JSON.stringify({
         chatId,
+        username,
         message,
         level: levelConversation,
         topic: topicConversation,

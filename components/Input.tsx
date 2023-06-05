@@ -60,7 +60,7 @@ const Input: React.FC<InputProps> = ({ onSubmit }) => {
         <AudioRecorder onStopRecording={handleStopRecording} />
       </Grid>
       <Grid item>
-        <IconButton onClick={handleSubmit}>
+        <IconButton onClick={handleSubmit} disabled={message === ""}>
           <Send />
         </IconButton>
       </Grid>

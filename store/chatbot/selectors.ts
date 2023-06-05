@@ -8,6 +8,11 @@ export const selectChatId = createSelector(
   (chat) => chat.id
 );
 
+export const selectUsername = createSelector(
+  selectChatbotState,
+  (chat) => chat.username
+);
+
 export const selectLevel = createSelector(
   selectChatbotState,
   (chat) => chat.level
