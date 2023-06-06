@@ -20,6 +20,7 @@
     "fetch-blob": "^4.0.0",
     "firebase": "^9.22.1",
     "formidable": "^2.1.1",
+    "franc-min": "^6.1.0",
     "fs": "^0.0.1-security",
     "langchain": "^0.0.84",
     "mic-recorder-to-mp3": "^2.2.2",

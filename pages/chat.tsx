@@ -31,14 +31,13 @@ const Chat: React.FC = () => {
     return () => clearTimeout(timer); // this will clear Timeout when component unmonts.
   }, []);
 
-  const handleSubmit = async (message: string) => {
+  const handleSubmit = async (message: string, language: string) => {
     addMessage({
       role: "user",
       content: message,
       loadingFeedback: false,
     });
     setLoadingStatus(true);
-
     try {
       const { response } = await postChat(
         chatId,
@@ -66,6 +65,16 @@ const Chat: React.FC = () => {
         error
       );
     }
+    // if (language !== ENGLISH_CODE) {
+    //   addMessage({
+    //     role: "assistant",
+    //     content: RESPONSE_BACK_TO_ENGLISH,
+    //     loadingFeedback: false,
+    //   });
+    //   await synthesizeSpeech(RESPONSE_BACK_TO_ENGLISH);
+    // } else {
+
+    // }
   };
 
   return (

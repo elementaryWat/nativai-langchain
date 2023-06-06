@@ -4,7 +4,7 @@ import AudioRecorder from "./AudioRecorder";
 import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 interface InputProps {
-  onSubmit: (message: string) => void;
+  onSubmit: (message: string, language: string) => void;
 }
 
 const configuration = new Configuration({
@@ -15,8 +15,9 @@ const openai = new OpenAIApi(configuration);
 
 const Input: React.FC<InputProps> = ({ onSubmit }) => {
   const [message, setMessage] = useState("");
+  const [language, setLanguage] = useState("");
   const handleSubmit = () => {
-    onSubmit(message);
+    onSubmit(message, language);
     setMessage("");
   };
 
@@ -36,6 +37,7 @@ const Input: React.FC<InputProps> = ({ onSubmit }) => {
       const data = await response.json();
 
       setMessage(data.transcription);
+      setLanguage(data.language);
     } catch (error) {
       console.error("Error transcribing audio: ", error);
     }

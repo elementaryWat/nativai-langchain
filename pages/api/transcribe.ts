@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 import multer from "multer";
 import fs from "fs";
 import tmp from "tmp";
+import { franc } from "franc-min";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const configuration = new Configuration({
@@ -42,11 +43,14 @@ export default function handler(req, res) {
 
         const resp = await openai.createTranscription(
           fs.createReadStream(tmpFile.name) as any,
-          "whisper-1"
+          "whisper-1",
+          "audio in english",
+          "json",
+          0.2,
+          "en"
         );
-        console.log(resp.data);
-
-        res.status(200).json({ transcription: resp.data.text });
+        const language = franc(resp.data.text);
+        res.status(200).json({ transcription: resp.data.text, language });
 
         // Clean up the temporary file
         tmpFile.removeCallback();
