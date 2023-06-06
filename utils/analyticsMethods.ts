@@ -16,11 +16,19 @@ interface EventParams {
 }
 
 export const setPageView = (pageName: string) => {
-  logEvent(analytics, ANALYTICS_EVENTS.PAGE_VIEW, { page: pageName });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.PAGE_VIEW, { page: pageName });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackEvent = (eventName: string, eventParams?: EventParams) => {
-  logEvent(analytics, eventName, eventParams);
+  try {
+    logEvent(analytics, eventName, eventParams);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackStartChat = (
@@ -29,12 +37,16 @@ export const trackStartChat = (
   levelConversation: string,
   topicConversation: string
 ) => {
-  logEvent(analytics, ANALYTICS_EVENTS.START_CONVERSATION, {
-    chatId,
-    username,
-    levelConversation,
-    topicConversation,
-  });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.START_CONVERSATION, {
+      chatId,
+      username,
+      levelConversation,
+      topicConversation,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackChatMessage = (
@@ -42,11 +54,15 @@ export const trackChatMessage = (
   message: string,
   messageType: "sent" | "received"
 ) => {
-  logEvent(analytics, ANALYTICS_EVENTS.CHAT_MESSAGE, {
-    userId,
-    message,
-    messageType,
-  });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.CHAT_MESSAGE, {
+      userId,
+      message,
+      messageType,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackFeedback = (
@@ -56,21 +72,33 @@ export const trackFeedback = (
   rating: number,
   comment: string
 ) => {
-  logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK, {
-    chatId,
-    username,
-    lengthConversation,
-    rating,
-    comment,
-  });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK, {
+      chatId,
+      username,
+      lengthConversation,
+      rating,
+      comment,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackError = (error: string) => {
-  logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK, {
-    error,
-  });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK, {
+      error,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const trackEndChat = (userId: string) => {
-  logEvent(analytics, ANALYTICS_EVENTS.END_CONVERSATION, { userId });
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.END_CONVERSATION, { userId });
+  } catch (e) {
+    console.error(e);
+  }
 };
