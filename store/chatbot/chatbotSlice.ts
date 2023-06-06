@@ -44,6 +44,9 @@ export const chatbotConfigSlice = createSlice({
       state.lastUserMessageIndex = action.payload;
       state.messages[action.payload].loadingFeedback = true;
     },
+    setErrorFeedBackToLastMessage: (state) => {
+      state.messages[state.lastUserMessageIndex].loadingFeedback = false;
+    },
     addFeedBackToLastMessage: (
       state,
       action: PayloadAction<{ feedback: FeedBack }>
@@ -66,6 +69,7 @@ export const {
   addMessageAction,
   setLastUserMessageIndex,
   addFeedBackToLastMessage,
+  setErrorFeedBackToLastMessage,
   setLoading,
 } = chatbotConfigSlice.actions;
 

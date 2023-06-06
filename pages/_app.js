@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store";
-// import { setPageView } from "../utils/analyticsMethods";
+import { setPageView } from "../utils/analyticsMethods";
 import "../globals.css";
 import { useRouter } from "next/router";
 
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {
     // analytics calls
-    // setPageView(router.pathname);
+    setPageView(router.pathname);
 
     const setHeight = () => {
       let vh = window.innerHeight * 0.01;

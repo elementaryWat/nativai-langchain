@@ -8,21 +8,6 @@ import {
   TextField,
 } from "@mui/material";
 
-export const StyledTextField = styled(TextField)`
-  && {
-    margin: 10px;
-    width: 100%;
-    color: #bcbcbd;
-    padding-bottom: 3rem;
-    .MuiInputBase-root {
-      color: #bcbcbd;
-    }
-    .MuiFormLabel-root {
-      color: #bcbcbd;
-    }
-  }
-`;
-
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
   flex-direction: column;
@@ -33,17 +18,22 @@ export const PageContainer = styled(Grid)<{ background?: string }>`
   background: ${({ background }) => background || "transparent"};
 `;
 
-export const StyledInputLabel = styled(InputLabel)`
+export const StyledTextField = styled(TextField)`
   && {
+    margin: 10px;
+    width: 100%;
     color: #bcbcbd;
-    top: -1rem;
-    font-size: 1.8rem;
-  }
-`;
-
-export const StyledSelect = styled(Select)`
-  &.MuiInputBase-root {
-    color: #bcbcbd;
+    padding-bottom: 3rem;
+    .MuiInputBase-root {
+      color: #bcbcbd;
+      border-radius: 1rem;
+    }
+    .MuiFormLabel-root {
+      color: #bcbcbd;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border-color: #8a2be2;
+    }
   }
 `;
 
@@ -54,10 +44,44 @@ export const Title = styled.h1`
 `;
 
 export const StyledFormControl = styled(FormControl)`
-  width: 100%;
-  padding-bottom: 3rem;
-  & {
-    color: white;
+  && {
+    margin: 10px;
+    width: 100%;
+    color: #bcbcbd;
+    padding-bottom: 3rem;
+  }
+`;
+
+export const StyledInputLabel = styled(InputLabel)`
+  && {
+    color: #bcbcbd;
+    top: -0.5rem;
+    font-size: 1.2rem;
+  }
+`;
+
+export const StyledSelect = styled(Select)`
+  && {
+    color: #bcbcbd;
+    .MuiInputBase-root {
+      color: #bcbcbd;
+      border-radius: 16px; // Add border-radius
+    }
+    .MuiFormLabel-root {
+      color: #bcbcbd;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border-color: #8a2be2; // Add border color
+    }
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+      border-color: #8a2be2; // Add border color on hover
+    }
+    .Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: #8a2be2; // Add border color when the input is focused
+    }
+    .Mui-focused .MuiFormLabel-root {
+      color: #8a2be2; // Add label color when the input is focused
+    }
   }
 `;
 

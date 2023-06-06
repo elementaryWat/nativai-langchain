@@ -19,6 +19,7 @@ import {
   setTopic,
   setUsernameAction,
   setMessagesAction,
+  setErrorFeedBackToLastMessage,
 } from "./chatbotSlice";
 import { PromptTemplate } from "langchain";
 import {
@@ -112,6 +113,10 @@ export const useChat = () => {
     [dispatch, messages]
   );
 
+  const setErrorFeedback = useCallback(() => {
+    dispatch(setErrorFeedBackToLastMessage());
+  }, [dispatch]);
+
   const setLoadingStatus = useCallback(
     (status: boolean) => {
       dispatch(setLoading(status));
@@ -130,6 +135,7 @@ export const useChat = () => {
     setUsername,
     addMessage,
     addFeedBack,
+    setErrorFeedback,
     setLoadingStatus,
     setLevelConversation,
     setTopicConversation,

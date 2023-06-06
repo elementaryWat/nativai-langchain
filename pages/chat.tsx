@@ -18,6 +18,7 @@ const Chat: React.FC = () => {
     addMessage,
     addFeedBack,
     setLoadingStatus,
+    setErrorFeedback,
   } = useChat();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -67,6 +68,7 @@ const Chat: React.FC = () => {
         "Error sending transcript to the Chat Completion API:",
         error
       );
+      setErrorFeedback();
       trackError(error);
     }
     // if (language !== ENGLISH_CODE) {
