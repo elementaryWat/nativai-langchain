@@ -1,6 +1,9 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
-import { getAnalytics, isSupported } from "firebase/analytics";
+import {
+  getAnalytics,
+  setAnalyticsCollectionEnabled,
+} from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,7 +25,12 @@ let analytics;
 
 if (!getApps().length) {
   app = initializeApp(firebaseConfig);
-  analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null));
+  if (typeof window !== "undefined") {
+    analytics = getAnalytics(app);
+    if (process.env.NODE_ENV !== "production") {
+      setAnalyticsCollectionEnabled(analytics, false);
+    }
+  }
 } else {
   app = getApp();
 }

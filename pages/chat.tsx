@@ -22,6 +22,7 @@ const Chat: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV);
     if (messages.length === 1) {
       synthesizeSpeech(messages[0].content);
     }

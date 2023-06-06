@@ -1,7 +1,6 @@
 import aws from "aws-sdk";
 
 export const synthesizeSpeech = async (text) => {
-  console.log(process.env);
   const polly = new aws.Polly({
     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
