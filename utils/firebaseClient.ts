@@ -1,5 +1,6 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
+import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,4 +24,5 @@ if (!getApps().length) {
   app = getApp();
 }
 const db = getFirestore(app);
-export { db };
+const analytics = getAnalytics(app);
+export { db, analytics };

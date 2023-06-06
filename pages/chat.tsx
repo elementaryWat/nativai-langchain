@@ -6,6 +6,7 @@ import { synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
+import { trackError, trackStartChat } from "../utils/analyticsMethods";
 
 const Chat: React.FC = () => {
   const {
@@ -24,6 +25,7 @@ const Chat: React.FC = () => {
     if (messages.length === 1) {
       synthesizeSpeech(messages[0].content);
     }
+    trackStartChat(chatId, username, levelConversation, topicConversation);
     const timer = setTimeout(() => {
       setOpenDialog(true);
     }, 180000);
@@ -64,6 +66,7 @@ const Chat: React.FC = () => {
         "Error sending transcript to the Chat Completion API:",
         error
       );
+      trackError(error);
     }
     // if (language !== ENGLISH_CODE) {
     //   addMessage({

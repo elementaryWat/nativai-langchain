@@ -13,6 +13,7 @@ import { styled } from "@mui/material/styles";
 import { addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../utils/firebaseClient";
 import { useChat } from "../../store/chatbot/useChat";
+import { trackFeedback } from "../../utils/analyticsMethods";
 
 const StyledDialog = styled(Dialog)`
   .MuiDialog-paper {
@@ -55,6 +56,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
       rating,
       comment,
     });
+    trackFeedback(chatId, username, messages.length, rating, comment);
 
     console.log("Document written with ID: ", docRef.id);
 
