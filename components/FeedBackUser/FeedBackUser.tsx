@@ -46,24 +46,26 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
   };
 
   const handleSubmit = async () => {
-    const docRef = await addDoc(collection(db, "feedbacks"), {
-      chatId,
-      email,
-      username,
-      levelConversation,
-      topicConversation,
-      messages,
-      rating,
-      comment,
-    });
-    trackFeedback(chatId, username, messages.length, rating, comment);
+    if (rating !== 0 && comment !== "" && email !== "") {
+      const docRef = await addDoc(collection(db, "feedbacks"), {
+        chatId,
+        email,
+        username,
+        levelConversation,
+        topicConversation,
+        messages,
+        rating,
+        comment,
+      });
+      trackFeedback(chatId, username, messages.length, rating, comment);
 
-    console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id);
 
-    // Clear the state
-    setRating(0);
-    setComment("");
-    setOpen(false);
+      // Clear the state
+      setRating(0);
+      setComment("");
+      setOpen(false);
+    }
   };
 
   return (
@@ -81,6 +83,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
           }}
         />
         <StyledTextField
+          required
           autoFocus
           multiline
           margin="dense"
@@ -92,6 +95,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
           onChange={(e) => setComment(e.target.value)}
         />
         <StyledTextField
+          required
           margin="dense"
           id="name"
           label="Email"

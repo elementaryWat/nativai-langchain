@@ -7,12 +7,14 @@ import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartChat } from "../utils/analyticsMethods";
+import { useRouter } from "next/router";
 
 const Chat: React.FC = () => {
   const {
     chatId,
     username,
     messages,
+    loading,
     levelConversation,
     topicConversation,
     addMessage,
@@ -21,16 +23,19 @@ const Chat: React.FC = () => {
     setErrorFeedback,
   } = useChat();
   const [openDialog, setOpenDialog] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(process.env.NODE_ENV);
+    if (messages.length === 0) {
+      router.replace("/");
+    }
     if (messages.length === 1) {
       synthesizeSpeech(messages[0].content);
     }
     trackStartChat(chatId, username, levelConversation, topicConversation);
     const timer = setTimeout(() => {
       setOpenDialog(true);
-    }, 180000);
+    }, 1000);
 
     return () => clearTimeout(timer); // this will clear Timeout when component unmonts.
   }, []);
@@ -90,7 +95,7 @@ const Chat: React.FC = () => {
       </Typography> */}
       <MessagesContainer />
       <FixedInputContainer>
-        <Input onSubmit={handleSubmit} />
+        <Input onSubmit={handleSubmit} loadingMessage={loading} />
       </FixedInputContainer>
       <FeedbackDialog open={openDialog} setOpen={setOpenDialog} />
     </ChatContainer>

@@ -21,12 +21,7 @@ import {
   setMessagesAction,
   setErrorFeedBackToLastMessage,
 } from "./chatbotSlice";
-import { PromptTemplate } from "langchain";
-import {
-  AI_INTRODUCTION_PROMPT,
-  INTRODUCTIONS,
-  TOPICS,
-} from "../../utils/const";
+import { INTRODUCTIONS, TOPICS } from "../../utils/const";
 import { promptIntroduction } from "../../pages/api/utils/promptTemplates";
 
 export const useChat = () => {

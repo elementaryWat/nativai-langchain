@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 interface InputProps {
   onSubmit: (message: string, language: string) => void;
+  loadingMessage: boolean;
 }
 
 const configuration = new Configuration({
@@ -13,7 +14,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const Input: React.FC<InputProps> = ({ onSubmit }) => {
+const Input: React.FC<InputProps> = ({ onSubmit, loadingMessage }) => {
   const [message, setMessage] = useState("");
   const [language, setLanguage] = useState("");
   const handleSubmit = () => {
@@ -51,18 +52,16 @@ const Input: React.FC<InputProps> = ({ onSubmit }) => {
           label="Type your message"
           multiline
           onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleSubmit();
-            }
-          }}
         />
       </Grid>
       <Grid item>
         <AudioRecorder onStopRecording={handleStopRecording} />
       </Grid>
       <Grid item>
-        <IconButton onClick={handleSubmit} disabled={message === ""}>
+        <IconButton
+          onClick={handleSubmit}
+          disabled={message === "" || loadingMessage}
+        >
           <Send />
         </IconButton>
       </Grid>
