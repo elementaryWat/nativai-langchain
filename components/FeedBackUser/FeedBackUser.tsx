@@ -72,9 +72,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
     <StyledDialog open={open} onClose={handleClose}>
       <DialogTitle>Leave your feedback</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Please rate our service and leave a comment.
-        </DialogContentText>
+        <DialogContentText>Tell us how to improve</DialogContentText>
         <StyledRating
           name="simple-controlled"
           value={rating}
@@ -106,7 +104,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        {/* <Button onClick={handleClose}>Cancel</Button> */}
         <Button onClick={handleSubmit}>Submit</Button>
       </DialogActions>
     </StyledDialog>

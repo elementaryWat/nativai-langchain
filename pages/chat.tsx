@@ -35,7 +35,7 @@ const Chat: React.FC = () => {
     trackStartChat(chatId, username, levelConversation, topicConversation);
     const timer = setTimeout(() => {
       setOpenDialog(true);
-    }, 1000);
+    }, 180000);
 
     return () => clearTimeout(timer); // this will clear Timeout when component unmonts.
   }, []);
