@@ -9,6 +9,7 @@ import {
   selectLevel,
   selectChatId,
   selectUsername,
+  selectIsAudioPlaying,
 } from "./selectors";
 import {
   addMessageAction,
@@ -20,6 +21,9 @@ import {
   setUsernameAction,
   setMessagesAction,
   setErrorFeedBackToLastMessage,
+  setAudioPlayingAction,
+  removeLastAIResponseAction,
+  editLastUserMessageAction,
 } from "./chatbotSlice";
 import { INTRODUCTIONS, TOPICS } from "../../utils/const";
 import { promptIntroduction } from "../../pages/api/utils/promptTemplates";
@@ -31,6 +35,7 @@ export const useChat = () => {
   const levelConversation = useSelector(selectLevel);
   const topicConversation = useSelector(selectTopic);
   const messages = useSelector(selectMessages);
+  const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const loading = useSelector(selectLoading);
 
   const getInitialMessage = useCallback(async () => {
@@ -101,6 +106,24 @@ export const useChat = () => {
     [dispatch, messages]
   );
 
+  const editLastUserMessage = useCallback(
+    (message: string) => {
+      dispatch(editLastUserMessageAction(message));
+    },
+    [dispatch]
+  );
+
+  const removeLastAIResponse = useCallback(() => {
+    dispatch(removeLastAIResponseAction());
+  }, [dispatch]);
+
+  const setAudioPlaying = useCallback(
+    (playing: boolean) => {
+      dispatch(setAudioPlayingAction(playing));
+    },
+    [dispatch]
+  );
+
   const addFeedBack = useCallback(
     (feedback: FeedBack) => {
       dispatch(addFeedBackToLastMessage({ feedback }));
@@ -123,12 +146,16 @@ export const useChat = () => {
     chatId,
     username,
     messages,
+    isAudioPlaying,
     loading,
     levelConversation,
     topicConversation,
     getInitialMessage,
     setUsername,
     addMessage,
+    editLastUserMessage,
+    removeLastAIResponse,
+    setAudioPlaying,
     addFeedBack,
     setErrorFeedback,
     setLoadingStatus,

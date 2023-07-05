@@ -28,6 +28,11 @@ export const selectMessages = createSelector(
   (chat) => chat.messages
 );
 
+export const selectIsAudioPlaying = createSelector(
+  selectChatbotState,
+  (chat) => chat.audioPlaying
+);
+
 export const selectLoading = createSelector(
   selectChatbotState,
   (chat) => chat.loading

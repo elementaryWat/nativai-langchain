@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
-import { synthesizeSpeech } from "../utils/synthesizeSpeech";
+import { playAudio, synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
@@ -14,6 +14,7 @@ const Chat: React.FC = () => {
     chatId,
     username,
     messages,
+    isAudioPlaying,
     loading,
     levelConversation,
     topicConversation,
@@ -21,6 +22,7 @@ const Chat: React.FC = () => {
     addFeedBack,
     setLoadingStatus,
     setErrorFeedback,
+    setAudioPlaying,
   } = useChat();
   const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
@@ -29,23 +31,26 @@ const Chat: React.FC = () => {
     if (messages.length === 0) {
       router.replace("/");
     }
-    if (messages.length === 1) {
-      synthesizeSpeech(messages[0].content);
-    }
     trackStartChat(chatId, username, levelConversation, topicConversation);
-    const timer = setTimeout(() => {
-      setOpenDialog(true);
-    }, 180000);
-
-    return () => clearTimeout(timer); // this will clear Timeout when component unmonts.
+    // if (messages.length === 1) {
+    //   synthesizeSpeech(messages[0].content);
+    // }
   }, []);
 
-  const handleSubmit = async (message: string, language: string) => {
-    addMessage({
-      role: "user",
-      content: message,
-      loadingFeedback: false,
-    });
+  useEffect(() => {
+    if (messages.length === 7) {
+      setOpenDialog(true);
+    }
+  }, [messages]);
+
+  const handleSubmit = async (message: string, edit?: boolean) => {
+    if (!edit) {
+      addMessage({
+        role: "user",
+        content: message,
+        loadingFeedback: false,
+      });
+    }
     setLoadingStatus(true);
     try {
       const { response } = await postChat(
@@ -55,16 +60,22 @@ const Chat: React.FC = () => {
         levelConversation,
         topicConversation
       );
-      await synthesizeSpeech(response);
+
+      const audioUrl = await synthesizeSpeech(response);
+      playAudio(audioUrl, isAudioPlaying, setAudioPlaying);
+
       addMessage({
         role: "assistant",
         content: response,
         loadingFeedback: false,
+        audioUrl,
       });
       setLoadingStatus(false);
 
       const { feedback } = await postFeedback(
-        messages[messages.length - 1].content,
+        edit
+          ? messages[messages.length - 3].content
+          : messages[messages.length - 1].content,
         message
       );
       addFeedBack(feedback);
@@ -93,7 +104,7 @@ const Chat: React.FC = () => {
       {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
       </Typography> */}
-      <MessagesContainer />
+      <MessagesContainer onSubmit={handleSubmit} />
       <FixedInputContainer>
         <Input onSubmit={handleSubmit} loadingMessage={loading} />
       </FixedInputContainer>

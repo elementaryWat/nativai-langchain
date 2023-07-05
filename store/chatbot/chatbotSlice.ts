@@ -8,6 +8,7 @@ interface ChatbotState {
   topic: string;
   lastUserMessageIndex: number;
   messages: MessageType[];
+  audioPlaying: boolean;
   loading: boolean;
 }
 
@@ -18,6 +19,7 @@ const initialState: ChatbotState = {
   topic: "",
   lastUserMessageIndex: 1,
   messages: [],
+  audioPlaying: false,
   loading: false,
 };
 
@@ -40,9 +42,21 @@ export const chatbotConfigSlice = createSlice({
     addMessageAction: (state, action: PayloadAction<MessageType>) => {
       state.messages.push(action.payload);
     },
+    removeLastAIResponseAction: (state) => {
+      state.messages = state.messages.filter(
+        (message, index) => index <= state.messages.length - 2
+      );
+    },
+    setAudioPlayingAction: (state, action: PayloadAction<boolean>) => {
+      state.audioPlaying = action.payload;
+    },
     setLastUserMessageIndex: (state, action: PayloadAction<number>) => {
       state.lastUserMessageIndex = action.payload;
       state.messages[action.payload].loadingFeedback = true;
+    },
+    editLastUserMessageAction: (state, action: PayloadAction<string>) => {
+      state.messages[state.lastUserMessageIndex].content = action.payload;
+      state.messages[state.lastUserMessageIndex].feedback = null;
     },
     setErrorFeedBackToLastMessage: (state) => {
       state.messages[state.lastUserMessageIndex].loadingFeedback = false;
@@ -67,7 +81,10 @@ export const {
   setTopic,
   setMessagesAction,
   addMessageAction,
+  removeLastAIResponseAction,
+  setAudioPlayingAction,
   setLastUserMessageIndex,
+  editLastUserMessageAction,
   addFeedBackToLastMessage,
   setErrorFeedBackToLastMessage,
   setLoading,

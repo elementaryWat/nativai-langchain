@@ -28,7 +28,7 @@ const GettingStarted: React.FC = () => {
           NativAI
         </Typography>
         <Typography variant="h5" gutterBottom>
-          Bienvend@ a una plataforma única diseñada para ayudarte a mejorar tus
+          Bienvenid@ a una plataforma única diseñada para ayudarte a mejorar tus
           habilidades en inglés.
         </Typography>
         <Typography variant="h5" gutterBottom>

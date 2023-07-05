@@ -47,6 +47,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
 
   const handleSubmit = async () => {
     if (rating !== 0 && comment !== "" && email !== "") {
+      setOpen(false);
       const docRef = await addDoc(collection(db, "feedbacks"), {
         chatId,
         email,
@@ -64,7 +65,6 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
       // Clear the state
       setRating(0);
       setComment("");
-      setOpen(false);
     }
   };
 

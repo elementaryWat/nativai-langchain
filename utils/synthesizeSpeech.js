@@ -10,7 +10,7 @@ export const synthesizeSpeech = async (text) => {
   const params = {
     OutputFormat: "mp3",
     Text: text,
-    VoiceId: "Joanna", // Choose the voice you want to use
+    VoiceId: "Joanna",
     TextType: "text",
   };
 
@@ -19,9 +19,17 @@ export const synthesizeSpeech = async (text) => {
     const audioUrl = URL.createObjectURL(
       new Blob([data.AudioStream], { type: data.ContentType })
     );
-    const audio = new Audio(audioUrl);
-    audio.play();
+    return audioUrl;
   } catch (error) {
     console.error("Error synthesizing speech:", error);
+  }
+};
+
+export const playAudio = async (audioUrl, isPlaying, setIsPlaying) => {
+  if (!isPlaying) {
+    setIsPlaying(true);
+    const audio = new Audio(audioUrl);
+    await audio.play();
+    setIsPlaying(false);
   }
 };

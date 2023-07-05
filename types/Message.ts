@@ -8,4 +8,6 @@ export interface Message {
   content: string;
   loadingFeedback?: boolean;
   feedback?: FeedBack;
+  audioUrl?: string;
+  audioPlaying?: boolean;
 }

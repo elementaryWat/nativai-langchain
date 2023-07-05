@@ -1,10 +1,9 @@
-import { TextField, IconButton, Grid } from "@mui/material";
-import { Send } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 import AudioRecorder from "./AudioRecorder";
-import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
+import { useState } from "react";
 interface InputProps {
-  onSubmit: (message: string, language: string) => void;
+  onSubmit: (message: string) => void;
   loadingMessage: boolean;
 }
 
@@ -15,17 +14,12 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const Input: React.FC<InputProps> = ({ onSubmit, loadingMessage }) => {
-  const [message, setMessage] = useState("");
-  const [language, setLanguage] = useState("");
-  const handleSubmit = () => {
-    onSubmit(message, language);
-    setMessage("");
-  };
-
+  const [transcribing, setTranscribing] = useState(false);
   const handleStopRecording = async (audioFile: File) => {
     const formData = new FormData();
     formData.append("audio", audioFile, "audio.mp3");
     try {
+      setTranscribing(true);
       const response = await fetch("/api/transcribe", {
         method: "POST",
         body: formData,
@@ -36,35 +30,20 @@ const Input: React.FC<InputProps> = ({ onSubmit, loadingMessage }) => {
       }
 
       const data = await response.json();
-
-      setMessage(data.transcription);
-      setLanguage(data.language);
+      setTranscribing(false);
+      if (data.transcription !== "") {
+        onSubmit(data.transcription);
+      }
     } catch (error) {
       console.error("Error transcribing audio: ", error);
     }
   };
   return (
-    <Grid container alignItems="center" spacing={1}>
-      <Grid item xs>
-        <TextField
-          fullWidth
-          value={message}
-          label="Type your message"
-          multiline
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </Grid>
-      <Grid item>
-        <AudioRecorder onStopRecording={handleStopRecording} />
-      </Grid>
-      <Grid item>
-        <IconButton
-          onClick={handleSubmit}
-          disabled={message === "" || loadingMessage}
-        >
-          <Send />
-        </IconButton>
-      </Grid>
+    <Grid container justifyContent="center" spacing={1}>
+      <AudioRecorder
+        onStopRecording={handleStopRecording}
+        loadingMessage={transcribing || loadingMessage}
+      />
     </Grid>
   );
 };
