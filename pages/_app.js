@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store";
 import { setPageView } from "../utils/analyticsMethods";
+import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 import { useRouter } from "next/router";
 
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Component {...pageProps} />
+      <Analytics />
     </Provider>
   );
 }

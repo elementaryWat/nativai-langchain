@@ -15,6 +15,7 @@
     "@pinecone-database/pinecone": "^0.0.14",
     "@reduxjs/toolkit": "^1.9.5",
     "@upstash/redis": "^1.20.6",
+    "@vercel/analytics": "^1.0.1",
     "aws-sdk": "^2.1387.0",
     "dotenv": "^16.0.3",
     "fetch-blob": "^4.0.0",
