@@ -32,9 +32,9 @@ const Chat: React.FC = () => {
       router.replace("/");
     }
     trackStartChat(chatId, username, levelConversation, topicConversation);
-    // if (messages.length === 1) {
-    //   synthesizeSpeech(messages[0].content);
-    // }
+    if (messages.length === 1) {
+      synthesizeSpeech(messages[0].content);
+    }
   }, []);
 
   useEffect(() => {
@@ -60,15 +60,15 @@ const Chat: React.FC = () => {
         levelConversation,
         topicConversation
       );
-
-      const audioUrl = await synthesizeSpeech(response);
-      playAudio(audioUrl, isAudioPlaying, setAudioPlaying);
+      await synthesizeSpeech(response);
+      // const audioUrl = await synthesizeSpeech(response);
+      // playAudio(audioUrl, isAudioPlaying, setAudioPlaying);
 
       addMessage({
         role: "assistant",
         content: response,
         loadingFeedback: false,
-        audioUrl,
+        // audioUrl,
       });
       setLoadingStatus(false);
 

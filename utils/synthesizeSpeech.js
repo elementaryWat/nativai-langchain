@@ -19,7 +19,9 @@ export const synthesizeSpeech = async (text) => {
     const audioUrl = URL.createObjectURL(
       new Blob([data.AudioStream], { type: data.ContentType })
     );
-    return audioUrl;
+    // return audioUrl;
+    const audio = new Audio(audioUrl);
+    audio.play();
   } catch (error) {
     console.error("Error synthesizing speech:", error);
   }
