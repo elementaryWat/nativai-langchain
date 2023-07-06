@@ -7,6 +7,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
+import { Backdrop, Typography } from "@mui/material";
 
 interface StepperxProps {
   steps: string[];
@@ -16,6 +17,28 @@ interface StepperxProps {
   nextHandlers?: (((stepIndex: number) => Promise<void>) | null)[];
   isNextDisabled: () => boolean;
 }
+
+const Loading: React.FC = () => {
+  return (
+    <Backdrop
+      open={true}
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
+      <Box
+        sx={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+        }}
+      >
+        <CircularProgress color="inherit" />
+        <Typography variant="h6">Setting up...</Typography>
+      </Box>
+    </Backdrop>
+  );
+};
 
 const Stepperx: React.FC<StepperxProps> = ({
   steps,
@@ -44,7 +67,7 @@ const Stepperx: React.FC<StepperxProps> = ({
   };
 
   const getStepContent = (step: number) => {
-    return stepComponents[step] || "Unknown step";
+    return stepComponents[step] || <Loading />;
   };
 
   return (
