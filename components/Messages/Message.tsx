@@ -7,6 +7,7 @@ import { MessageBubble, MessageContainer } from "./styled";
 // import PlayIcon from "@mui/icons-material/VolumeUp";
 import EditIcon from "@mui/icons-material/EditNote";
 import FeedbackPopover from "./FeedbackPopover";
+import { trackOpenFeedbackMessage } from "../../utils/analyticsMethods";
 // import { useSelector } from "react-redux";
 // import { selectIsAudioPlaying } from "../../store/chatbot/selectors";
 
@@ -28,6 +29,7 @@ const Message = ({
   // const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    trackOpenFeedbackMessage(editedMessage, feedback.feedback);
   };
 
   const handleClose = () => {

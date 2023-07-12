@@ -13,7 +13,10 @@ import { styled } from "@mui/material/styles";
 import { addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../utils/firebaseClient";
 import { useChat } from "../../store/chatbot/useChat";
-import { trackFeedback } from "../../utils/analyticsMethods";
+import {
+  trackCloseFeedback,
+  trackFeedback,
+} from "../../utils/analyticsMethods";
 
 const StyledDialog = styled(Dialog)`
   .MuiDialog-paper {
@@ -43,6 +46,7 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
 
   const handleClose = () => {
     setOpen(false);
+    trackCloseFeedback(chatId, username);
   };
 
   const handleSubmit = async () => {

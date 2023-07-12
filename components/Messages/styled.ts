@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
 
-export const StyledMessagesContainer = styled("div")`
+export const StyledMessagesContainer = styled(Container)`
   flex: 1;
   overflow-y: auto;
   padding: 16px;

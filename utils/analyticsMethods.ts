@@ -8,6 +8,7 @@ const ANALYTICS_EVENTS = {
   ERROR_OCURRED: "error_ocurred",
   FEEDBACK_RESPONSE: "feedback_response",
   FEEDBACK: "feedback",
+  CLOSE_FEEDBACK: "close_feedback",
   END_CONVERSATION: "end_conversation",
 };
 
@@ -31,19 +32,26 @@ export const trackEvent = (eventName: string, eventParams?: EventParams) => {
   }
 };
 
-export const trackStartChat = (
+export const trackStartEndChat = (
   chatId: string,
   username: string,
   levelConversation: string,
-  topicConversation: string
+  topicConversation: string,
+  start: boolean = true
 ) => {
   try {
-    logEvent(analytics, ANALYTICS_EVENTS.START_CONVERSATION, {
-      chatId,
-      username,
-      levelConversation,
-      topicConversation,
-    });
+    logEvent(
+      analytics,
+      start
+        ? ANALYTICS_EVENTS.START_CONVERSATION
+        : ANALYTICS_EVENTS.END_CONVERSATION,
+      {
+        chatId,
+        username,
+        levelConversation,
+        topicConversation,
+      }
+    );
   } catch (e) {
     console.error(e);
   }
@@ -79,6 +87,28 @@ export const trackFeedback = (
       lengthConversation,
       rating,
       comment,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const trackCloseFeedback = (chatId: string, username: string) => {
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.CLOSE_FEEDBACK, {
+      chatId,
+      username,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const trackOpenFeedbackMessage = (message: string, feedback: string) => {
+  try {
+    logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK_RESPONSE, {
+      message,
+      feedback,
     });
   } catch (e) {
     console.error(e);

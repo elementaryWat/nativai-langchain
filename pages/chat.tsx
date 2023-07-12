@@ -6,7 +6,7 @@ import { playAudio, synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
-import { trackError, trackStartChat } from "../utils/analyticsMethods";
+import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 
 const Chat: React.FC = () => {
@@ -31,7 +31,7 @@ const Chat: React.FC = () => {
     if (messages.length === 0) {
       router.replace("/");
     }
-    trackStartChat(chatId, username, levelConversation, topicConversation);
+    trackStartEndChat(chatId, username, levelConversation, topicConversation);
     if (messages.length === 1) {
       synthesizeSpeech(messages[0].content);
     }
@@ -40,6 +40,13 @@ const Chat: React.FC = () => {
   useEffect(() => {
     if (messages.length === 7) {
       setOpenDialog(true);
+      trackStartEndChat(
+        chatId,
+        username,
+        levelConversation,
+        topicConversation,
+        false
+      );
     }
   }, [messages]);
 

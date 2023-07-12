@@ -16,7 +16,7 @@ const MessagesContainer: React.FC<MessageContainerProps> = ({ onSubmit }) => {
     onSubmit(newMessage, true);
   };
   return (
-    <StyledMessagesContainer>
+    <StyledMessagesContainer maxWidth="lg">
       {messages.map((message, index) => (
         <Message
           key={index}
