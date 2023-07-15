@@ -49,9 +49,8 @@ export const makeChatChain = async (
       sessionId: chatId, // Or some other unique identifier for the conversation
       sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
       config: {
-        url: "https://helping-clam-36296.upstash.io",
-        token:
-          "AY3IACQgZTIyMTc4MjEtNWMzYy00YmI3LWJmYzAtM2MxNzgzNGQ0YzlmNjcwNmYyODYyYjg5NDhlZGI3N2IyNWE1ZWE5NTBiNTQ=",
+        url: process.env.NEXT_PUBLIC_UPSTASH_URL,
+        token: process.env.NEXT_PUBLIC_UPSTASH_TOKEN,
       },
     }),
   });
