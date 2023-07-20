@@ -9,10 +9,16 @@ import { useChat } from "../store/chatbot/useChat";
 import NameInput from "../components/Onboarding/NameInput/NameInput";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
+import SigninButton from "../components/AuthComponent/SigninButton";
+import { useEffect } from 'react';
+import { SignOut } from "../components/AuthComponent/SignOut";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
+  const [isSession, setIsSession] = useState(false)
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
   const { data: session } = useSession();
@@ -33,6 +39,44 @@ const OnboardingPage: React.FC = () => {
     <TopicSelect />,
   ];
 
+ 
+  const addUserIfNotExists = async (userData) => {
+    const db = getFirestore();
+  
+    // Verificar si el usuario ya existe en la colección "users"
+    const userRef = doc(db, "users", userData.email);
+    const userSnapshot = await getDoc(userRef);
+  
+    if (userSnapshot.exists()) {
+      // El usuario ya existe, no es necesario agregarlo nuevamente
+      console.log("El usuario ya existe en la base de datos.");
+    } else {
+      // El usuario no existe, agregarlo a la colección "users"
+      try {
+        await setDoc(userRef, userData);
+        console.log("Usuario agregado correctamente a la base de datos.");
+      } catch (error) {
+        console.error("Error al agregar el usuario:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (session && session.user) {
+      // Crear el objeto userData con los datos del usuario
+      const userData = {
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+        chat: [], // Puedes inicializar el chat como un array vacío
+      };
+
+      // Llamar a la función para agregar el usuario a la colección "users"
+      addUserIfNotExists(userData);
+    }
+  }, [session]);
+
+
   const isNextDisabled = () =>
     (activeStep === 1 && username === "") ||
     (activeStep === 2 && levelConversation === "") ||
@@ -43,7 +87,7 @@ const OnboardingPage: React.FC = () => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {/* Signed in as {session.user.name} <br /> */}
+      <SignOut />
       <Stepperx
         steps={steps}
         activeStep={activeStep}
