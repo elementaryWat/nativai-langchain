@@ -24,6 +24,7 @@ const Chat: React.FC = () => {
     setErrorFeedback,
     setAudioPlaying,
   } = useChat();
+
   const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
 

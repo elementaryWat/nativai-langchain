@@ -5,8 +5,9 @@ import { setPageView } from "../utils/analyticsMethods";
 import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 import { useRouter } from "next/router";
+import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   useEffect(() => {
     // analytics calls
@@ -25,10 +26,12 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-      <Analytics />
-    </Provider>
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <Component {...pageProps} />
+        <Analytics />
+      </Provider>
+    </SessionProvider>
   );
 }
 

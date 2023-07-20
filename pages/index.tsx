@@ -8,12 +8,15 @@ import { useRouter } from "next/router";
 import { useChat } from "../store/chatbot/useChat";
 import NameInput from "../components/Onboarding/NameInput/NameInput";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
+import { useSession } from "next-auth/react";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
+  const { data: session } = useSession();
+  console.log(session);
   const { getInitialMessage, username, levelConversation, topicConversation } =
     useChat();
 
@@ -40,6 +43,7 @@ const OnboardingPage: React.FC = () => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      {/* Signed in as {session.user.name} <br /> */}
       <Stepperx
         steps={steps}
         activeStep={activeStep}
