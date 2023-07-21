@@ -18,11 +18,22 @@ import { getFirestore } from "firebase/firestore";
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
-  const [isSession, setIsSession] = useState(false)
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
   const { data: session } = useSession();
   console.log(session);
+
+  useEffect(()=>{
+    if (!session) {
+        router.push('/login');
+      }else{
+        router.push('/')
+      }
+    
+  },[session])
+
+
+
   const { getInitialMessage, username, levelConversation, topicConversation } =
     useChat();
 
@@ -38,6 +49,7 @@ const OnboardingPage: React.FC = () => {
     <LevelSelect />,
     <TopicSelect />,
   ];
+
 
  
   const addUserIfNotExists = async (userData) => {
