@@ -21,7 +21,6 @@ const OnboardingPage: React.FC = () => {
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
   const { data: session } = useSession();
-  console.log(session);
 
   useEffect(()=>{
     if (!session) {
@@ -29,8 +28,7 @@ const OnboardingPage: React.FC = () => {
       }else{
         router.push('/')
       }
-    
-  },[session])
+  },[session,router])
 
 
 
@@ -50,7 +48,6 @@ const OnboardingPage: React.FC = () => {
     <TopicSelect />,
   ];
 
-
  
   const addUserIfNotExists = async (userData) => {
     const db = getFirestore();
@@ -60,7 +57,7 @@ const OnboardingPage: React.FC = () => {
     const userSnapshot = await getDoc(userRef);
   
     if (userSnapshot.exists()) {
-      // El usuario ya existe, no es necesario agregarlo nuevamente
+      // El usuario ya existe
       console.log("El usuario ya existe en la base de datos.");
     } else {
       // El usuario no existe, agregarlo a la colección "users"

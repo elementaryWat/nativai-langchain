@@ -15,7 +15,10 @@ export const PageContainer = styled(Grid)<{ background?: string }>`
   align-items: center;
   height: 100%;
   color: white;
-  background: ${({ background }) => background || "transparent"};
+  background-color:#ffffff;
+  padding:0 1rem;
+  // border-radius: 20px;
+  // background: ${({ background }) => background || "transparent"};
 `;
 
 export const StyledTextField = styled(TextField)`

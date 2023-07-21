@@ -1,8 +1,12 @@
-'use client'
 import React, { useEffect } from 'react'
 import SigninButton from '../components/AuthComponent/SigninButton'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+
+///////////////////////////////////////////////////////////
+//Hacer componente y que se muestro si no se a logueado////
+///////////////////////////////////////////////////////////
+
 
 const Login: React.FC = () => {
   
@@ -16,7 +20,7 @@ const Login: React.FC = () => {
             router.push('/login')
           }
         
-    },[session])
+    },[session,router])
 
     
   return (

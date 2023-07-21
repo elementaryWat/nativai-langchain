@@ -1,4 +1,11 @@
 #__next>div{
     display: flex;
     flex-direction: column;
+    background-color: #9d37a7;
 }
+
+body{
+    background-color: #9d37a7;
+}
+
+  

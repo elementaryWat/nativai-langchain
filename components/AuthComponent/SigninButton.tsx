@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router';
 import style from './SigninButton.module.css'
@@ -12,8 +12,9 @@ const SigninButton = () => {
 
   const router = useRouter();
 
-  const handleClick = () => {
-    signIn('google');
+  const handleClick = async () => {
+    const res = await signIn('google');
+    console.log(res)
     router.push('/');
   };
 
