@@ -103,6 +103,15 @@ const Stepperx: React.FC<StepperxProps> = ({
               (activeStep === steps.length - 1 && !handleNext) ||
               isNextDisabled()
             }
+            sx={{
+              // Agrega tus estilos personalizados para el botón "Next" aquí
+              backgroundColor: "#643453",
+              color: "white",
+              border:"none",
+              "&:hover": {
+                backgroundColor: "#643450",
+              },
+            }}
           >
             {loading ? <CircularProgress size={24} /> : "Next"}
             {theme.direction === "rtl" ? (
@@ -113,7 +122,15 @@ const Stepperx: React.FC<StepperxProps> = ({
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0} sx={{
+            // Agrega tus estilos personalizados para el botón "Next" aquí
+            backgroundColor: "#643453",
+            color: "white",
+            border:"none",
+            "&:hover": {
+              backgroundColor: "#643450",
+            },
+          }}>
             {theme.direction === "rtl" ? (
               <KeyboardArrowRight />
             ) : (
