@@ -62,10 +62,18 @@ const GettingStarted: React.FC = () => {
           textAlign:"center",
           backgroundColor:"#643453",
           padding:"1rem 2rem",
-          borderRadius:"20px"
-          
+          borderRadius:"20px",
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center"
         }} variant="h2" mb={8}>
-          Nativ<StyledTypographSpan variant="span" mb={8}>AI</StyledTypographSpan>
+          Nativ<StyledTypographSpan variant="h2" sx={{
+            color:"rgb(99, 137, 241)",
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center",
+            margin:"0 0 0 1rem",
+          }} mb={8}>AI</StyledTypographSpan>
         </Typography>
         {/* <StyledTypography variant="h5" gutterBottom>
           Bienvenid@ a una plataforma única diseñada para ayudarte a mejorar tus
