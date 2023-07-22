@@ -79,10 +79,16 @@ const Stepperx: React.FC<StepperxProps> = ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor:"#9d37a7",
       }}
     >
-      <Box sx={{ flex: "1 0 auto" }}>{getStepContent(activeStep)}</Box>
+      <Box sx={{ 
+          height:"100%",
+          display:"flex",
+          alignItems:'stretch',
+          justifyContent:"center",
+          borderRadius:"20px",
+          padding:"1rem"
+        }}>{getStepContent(activeStep)}</Box>
       <MobileStepper
         variant="dots"
         steps={steps.length}

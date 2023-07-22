@@ -92,9 +92,9 @@ const OnboardingPage: React.FC = () => {
 
 
   const isNextDisabled = () =>
-    (activeStep === 1 && username === "") ||
-    (activeStep === 2 && levelConversation === "") ||
-    (activeStep === 3 && topicConversation === "");
+    // (activeStep === 1 && username === "") ||
+    (activeStep === 1 && levelConversation === "") ||
+    (activeStep === 2 && topicConversation === "");
 
   return (
     <PageContainer background="linear-gradient(180deg, #6e45ff, black)">

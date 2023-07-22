@@ -9,7 +9,7 @@ export const SignOut = () => {
   const router = useRouter();
 
   const handleSignOut = () => {
-    // router.push('/login');
+    router.push('/');
     signOut();
   };
 

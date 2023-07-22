@@ -8,6 +8,7 @@ import { postChat, postFeedback } from "../utils/endpoints";
 import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
+import { SignOut } from "../components/AuthComponent/SignOut";
 
 const Chat: React.FC = () => {
   const {
@@ -108,6 +109,8 @@ const Chat: React.FC = () => {
   };
 
   return (
+    <>
+    <SignOut/>
     <ChatContainer>
       {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
@@ -118,6 +121,7 @@ const Chat: React.FC = () => {
       </FixedInputContainer>
       <FeedbackDialog open={openDialog} setOpen={setOpenDialog} />
     </ChatContainer>
+    </>
   );
 };
 

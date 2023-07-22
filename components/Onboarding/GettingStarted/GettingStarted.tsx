@@ -51,14 +51,22 @@ const GettingStarted: React.FC = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="space-evenly" // Adjust alignment
-        paddingY={5}
+        padding="2rem"
         height="100%"
         borderRadius='20px'
         bgcolor='#ffffff'
       >
-        <StyledTypographH2 variant="h2" gutterBottom  mb={8}>
+        <Typography sx={{
+          color:"#fff",
+          margin:"0 0 0 1rem",
+          textAlign:"center",
+          backgroundColor:"#643453",
+          padding:"1rem 2rem",
+          borderRadius:"20px"
+          
+        }} variant="h2" mb={8}>
           Nativ<StyledTypographSpan variant="span" mb={8}>AI</StyledTypographSpan>
-        </StyledTypographH2>
+        </Typography>
         {/* <StyledTypography variant="h5" gutterBottom>
           Bienvenid@ a una plataforma única diseñada para ayudarte a mejorar tus
           habilidades en inglés.
@@ -66,9 +74,16 @@ const GettingStarted: React.FC = () => {
         {/* <StyledTypography variant="h5" gutterBottom>
           ¡Empieza ahora y da un paso hacia el dominio del inglés!
         </StyledTypography> */}
-        <StyledTypography variant="h5" gutterBottom>
+        <Typography sx={{
+          color:"#643453",
+          margin:"0 0 0 1rem",
+          textAlign:"center",
+          // backgroundColor:"#643453",
+          padding:"1rem 2rem",
+          borderRadius:"20px"
+        }}  variant="h5" >
           ¡Empieza ahora!
-        </StyledTypography>
+        </Typography>
       </Grid>
     </PageContainer>
     //No funciona con este 
