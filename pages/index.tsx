@@ -28,7 +28,7 @@ const OnboardingPage: React.FC = () => {
       }else{
         router.push('/')
       }
-  },[session,router])
+  },[session])
 
 
 

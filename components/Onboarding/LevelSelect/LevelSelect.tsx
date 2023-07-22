@@ -12,15 +12,15 @@ const levelDescriptions = {
   "C2 - Proficient": "Manejo el idioma casi a la perfección",
 };
 
-const LevelSelect: React.FC = () => {
+  const LevelSelect: React.FC = () => {
   const { levelConversation, setLevelConversation } = useChat();
 
   return (
-    <PageContainer>
-      <Typography variant="h4" mb={2}>
+    <PageContainer flexDirection="column" >
+      <Typography color="#111" variant="h5" mb={2}>
         Elige tu nivel
       </Typography>
-      <Grid container flexDirection="column">
+      <Grid container alignItems="center" justifyContent="center" flexDirection="column">
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton
             key={level}

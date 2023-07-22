@@ -8,7 +8,7 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect: '/',
+      redirectUrl: '/',
     }),
     // FacebookProvider({
     //   clientId: "2634906513315037",

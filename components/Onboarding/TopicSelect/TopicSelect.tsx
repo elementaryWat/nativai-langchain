@@ -11,6 +11,18 @@ import HobbiesIcon from "@mui/icons-material/SportsEsports";
 import HealthIcon from "@mui/icons-material/LocalHospital";
 import TechIcon from "@mui/icons-material/Devices";
 import EnvironmentIcon from "@mui/icons-material/Nature";
+import styled from "styled-components";
+
+
+
+
+const StyledGrid = styled(Grid)`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 
 const TopicSelect: React.FC = () => {
   const { topicConversation, setTopicConversation } = useChat();
@@ -24,17 +36,19 @@ const TopicSelect: React.FC = () => {
     "technology-and-science": <TechIcon />,
     "environment-and-sustainability": <EnvironmentIcon />,
   };
+
   return (
-    <PageContainer>
-      <Typography variant="h4" mt={4} mb={2}>
+    <PageContainer flexDirection="column" >
+      <Typography color="#111" variant="h4" mt={4} mb={2}>
         Elige un tema
       </Typography>
-      <Grid container flexDirection="column">
+      <StyledGrid container>
         {Object.keys(TOPICS).map((topicKey) => (
           <StyledRadioButton
             key={topicKey}
             selected={topicConversation === topicKey}
             onClick={() => setTopicConversation(topicKey)}
+            
           >
             <Box>
               {TOPIC_ICONS[topicKey]}
@@ -44,7 +58,7 @@ const TopicSelect: React.FC = () => {
             </Box>
           </StyledRadioButton>
         ))}
-      </Grid>
+      </StyledGrid>
     </PageContainer>
   );
 };

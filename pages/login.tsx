@@ -20,7 +20,7 @@ const Login: React.FC = () => {
             router.push('/login')
           }
         
-    },[session,router])
+    },[session])
 
     
   return (

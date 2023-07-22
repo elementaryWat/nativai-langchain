@@ -50,6 +50,7 @@ export const StyledRadioButton = styled(Button)<{ selected: boolean }>`
   background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
   color: white;
   margin: 5px;
+  width:40%;
   &:hover {
     background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
   }
