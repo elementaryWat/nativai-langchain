@@ -29,7 +29,6 @@ const SigninButton = () => {
                 <BsGoogle/> <span>Inicia Sesion</span>
             </button>
         </div>
-
     </div>
 
   )

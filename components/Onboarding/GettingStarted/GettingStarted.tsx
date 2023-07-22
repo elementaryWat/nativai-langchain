@@ -54,7 +54,7 @@ const GettingStarted: React.FC = () => {
         paddingY={5}
         height="100%"
         borderRadius='20px'
-        // bgcolor='#643453'
+        bgcolor='#ffffff'
       >
         <StyledTypographH2 variant="h2" gutterBottom  mb={8}>
           Nativ<StyledTypographSpan variant="span" mb={8}>AI</StyledTypographSpan>

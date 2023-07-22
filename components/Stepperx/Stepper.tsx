@@ -79,7 +79,7 @@ const Stepperx: React.FC<StepperxProps> = ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor:"#9d37a7"
+        backgroundColor:"#9d37a7",
       }}
     >
       <Box sx={{ flex: "1 0 auto" }}>{getStepContent(activeStep)}</Box>

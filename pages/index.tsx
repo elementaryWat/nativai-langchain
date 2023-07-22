@@ -32,18 +32,23 @@ const OnboardingPage: React.FC = () => {
 
 
 
-  const { getInitialMessage, username, levelConversation, topicConversation } =
-    useChat();
+  const { getInitialMessage, username, setUsername, levelConversation, topicConversation } = useChat();
+
+  useEffect(()=>{
+    if (session) {
+      setUsername(session.user.name)
+      }
+  },[session])
 
   const goToChat = async () => {
     await getInitialMessage();
     router.push("/chat");
   };
-  const nextHandlers = [null, null, null, goToChat];
+  const nextHandlers = [null, null, goToChat];
 
   const stepComponents = [
     <GettingStarted />,
-    <NameInput />,
+    // <NameInput />,
     <LevelSelect />,
     <TopicSelect />,
   ];

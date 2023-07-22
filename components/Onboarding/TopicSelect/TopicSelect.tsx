@@ -15,7 +15,7 @@ import styled from "styled-components";
 
 const StyledTypographH4 = styled(Typography)`
   color: #fff; 
-  margin-bottom: 1rem;
+  margin:1rem 0;
   text-align: center;
   background-color:#643453;
   padding:1rem 2rem;
@@ -27,12 +27,15 @@ const StyledTypographH4 = styled(Typography)`
 
 const StyledGrid = styled(Grid)`
   width: 100%;
+  height: 100%;
+  padding:1rem 0rem;
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   // justify-content: stretch;
   justify-content: center;
   // align-items: center;
+  // background-color: #9d37a7;
 `;
 
 const TopicSelect: React.FC = () => {
