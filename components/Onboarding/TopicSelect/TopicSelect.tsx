@@ -29,8 +29,10 @@ const StyledGrid = styled(Grid)`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
+  // justify-content: stretch;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 `;
 
 const TopicSelect: React.FC = () => {
