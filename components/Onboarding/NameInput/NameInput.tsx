@@ -6,7 +6,7 @@ const NameInput: React.FC = () => {
   const { username, setUsername } = useChat();
 
   return (
-    <PageContainer flexDirection="column" >
+    <PageContainer flexDirection="column"  borderRadius='50px' >
       <StyledTextField
         id="name"
         label="Your name"

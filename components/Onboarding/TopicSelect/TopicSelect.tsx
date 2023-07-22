@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography, Box } from "@mui/material";
-import { PageContainer, StyledRadioButton } from "../styled";
+import { PageContainer, StyledRadioButtonTopic } from "../styled";
 import { useChat } from "../../../store/chatbot/useChat";
 import { TOPICS } from "../../../utils/const";
 import FamilyIcon from "@mui/icons-material/FamilyRestroom";
@@ -13,6 +13,15 @@ import TechIcon from "@mui/icons-material/Devices";
 import EnvironmentIcon from "@mui/icons-material/Nature";
 import styled from "styled-components";
 
+const StyledTypographH4 = styled(Typography)`
+  color: #fff; 
+  margin-bottom: 1rem;
+  text-align: center;
+  background-color:#643453;
+  padding:1rem 2rem;
+  border-radius: 20px;
+  font-weight: bold;
+`;
 
 
 
@@ -38,17 +47,16 @@ const TopicSelect: React.FC = () => {
   };
 
   return (
-    <PageContainer flexDirection="column" >
-      <Typography color="#111" variant="h4" mt={4} mb={2}>
+    <PageContainer flexDirection="column"  borderRadius='50px' >
+      <StyledTypographH4 >
         Elige un tema
-      </Typography>
+      </StyledTypographH4>
       <StyledGrid container>
         {Object.keys(TOPICS).map((topicKey) => (
-          <StyledRadioButton
+          <StyledRadioButtonTopic
             key={topicKey}
             selected={topicConversation === topicKey}
             onClick={() => setTopicConversation(topicKey)}
-            
           >
             <Box>
               {TOPIC_ICONS[topicKey]}
@@ -56,7 +64,7 @@ const TopicSelect: React.FC = () => {
                 {TOPICS[topicKey]}
               </Typography>
             </Box>
-          </StyledRadioButton>
+          </StyledRadioButtonTopic>
         ))}
       </StyledGrid>
     </PageContainer>

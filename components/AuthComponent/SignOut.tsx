@@ -2,13 +2,14 @@ import { signOut, useSession } from 'next-auth/react';
 import React from 'react';
 import { useRouter } from 'next/router';
 import style from './SignOut.module.css'
+import SigninButton from './SigninButton';
 
 export const SignOut = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   const handleSignOut = () => {
-    router.push('/login');
+    // router.push('/login');
     signOut();
   };
 
@@ -22,7 +23,7 @@ export const SignOut = () => {
           </button>
         </div>
       ) : (
-        <p>No hay sesión activa</p>
+        <SigninButton/>
       )}
     </div>
   );

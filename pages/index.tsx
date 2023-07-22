@@ -22,13 +22,13 @@ const OnboardingPage: React.FC = () => {
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
   const { data: session } = useSession();
 
-  useEffect(()=>{
-    if (!session) {
-        router.push('/login');
-      }else{
-        router.push('/')
-      }
-  },[session])
+  // useEffect(()=>{
+  //   if (!session) {
+  //       router.push('/login');
+  //     }else{
+  //       router.push('/')
+  //     }
+  // },[session])
 
 
 

@@ -7,6 +7,10 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    position:absolute;
+    top:0;
+    left: 0;
+    z-index: 1000;
 }
 
 .hero_login{

@@ -47,14 +47,33 @@ export const Title = styled.h1`
 `;
 
 export const StyledRadioButton = styled(Button)<{ selected: boolean }>`
-  background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
+  background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+  color: white;
+  margin: 5px;
+  width:50%;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+  }
+`;
+
+
+export const StyledRadioButtonTopic = styled(Button)<{ selected: boolean }>`
+  background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
   color: white;
   margin: 5px;
   width:40%;
+
   &:hover {
-    background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
+    background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
   }
 `;
+
 
 export const StyledButton = styled(Button)`
   margin-top: 20px;
@@ -64,6 +83,7 @@ export const StyledButton = styled(Button)`
   color: white;
   width: 100%;
   transition: background-color 0.3s ease;
+  
 
   &:hover {
     background-color: #303f9f;
