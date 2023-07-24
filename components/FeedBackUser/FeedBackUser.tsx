@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  TextField,
-  Rating,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Typography, Box, IconButton, Icon, Grid } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../utils/firebaseClient";
 import { useChat } from "../../store/chatbot/useChat";
@@ -17,44 +7,46 @@ import {
   trackCloseFeedback,
   trackFeedback,
 } from "../../utils/analyticsMethods";
+import {
+  EmojiButton,
+  EmojiDescription,
+  FeedbackButton,
+  FeedbackContainer,
+  FeedbackSection,
+} from "./styled";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ScoreIcon from "@mui/icons-material/Score";
+import ChatIcon from "@mui/icons-material/Chat";
 
-const StyledDialog = styled(Dialog)`
-  .MuiDialog-paper {
-    padding: 20px;
-  }
-`;
+const labels = [
+  { emoji: "😞", description: "Lo dudo mucho" },
+  { emoji: "😐", description: "Neutral" },
+  { emoji: "😍", description: "Muy probablemente" },
+];
 
-const StyledRating = styled(Rating)`
-  margin-top: 20px;
-`;
-
-const StyledTextField = styled(TextField)`
-  margin-top: 20px;
-`;
-
-interface FeedbackModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-
-export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
+export default function FeedbackUser() {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [email, setEmail] = useState("");
   const { chatId, username, messages, levelConversation, topicConversation } =
     useChat();
 
   const handleClose = () => {
-    setOpen(false);
     trackCloseFeedback(chatId, username);
   };
 
+  const handleEmojiClick = (index: number) => {
+    setRating(index);
+  };
+
+  const redirectToTopicSelection = () => {
+    // history.push("/topics");
+    console.log("redirectToTopicSelection");
+  };
+
   const handleSubmit = async () => {
-    if (rating !== 0 && comment !== "" && email !== "") {
-      setOpen(false);
+    if (rating !== 0 && comment !== "") {
       const docRef = await addDoc(collection(db, "feedbacks"), {
         chatId,
-        email,
         username,
         levelConversation,
         topicConversation,
@@ -73,44 +65,51 @@ export default function FeedbackDialog({ open, setOpen }: FeedbackModalProps) {
   };
 
   return (
-    <StyledDialog open={open} onClose={handleClose}>
-      <DialogTitle>Leave your feedback</DialogTitle>
-      <DialogContent>
-        <DialogContentText>Tell us how to improve</DialogContentText>
-        <StyledRating
-          name="simple-controlled"
-          value={rating}
-          onChange={(event, newValue) => {
-            setRating(newValue);
-          }}
-        />
-        <StyledTextField
-          required
-          autoFocus
-          multiline
-          margin="dense"
-          id="name"
-          label="Comment"
-          type="text"
-          fullWidth
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <StyledTextField
-          required
-          margin="dense"
-          id="name"
-          label="Email"
-          type="email"
-          fullWidth
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        {/* <Button onClick={handleClose}>Cancel</Button> */}
-        <Button onClick={handleSubmit}>Submit</Button>
-      </DialogActions>
-    </StyledDialog>
+    <FeedbackContainer>
+      <FeedbackSection>
+        <ThumbUpIcon />
+        <Typography mb={4} variant="h4">
+          Bien hecho Augusto Romero!!
+        </Typography>
+        <Grid container justifyContent="center" spacing={8}>
+          <Grid item>
+            <ScoreIcon />
+            <EmojiDescription>Intermediate Level</EmojiDescription>
+          </Grid>
+          <Grid item>
+            <ChatIcon />
+            <EmojiDescription>1000 Words Used</EmojiDescription>
+          </Grid>
+        </Grid>
+      </FeedbackSection>
+      <FeedbackSection>
+        <Typography variant="h6">
+          ¿Qué tan probable es que recomiende nuestra aplicación a un amigo o
+          colega?
+        </Typography>
+        <Grid container flexDirection="row" justifyContent="space-around">
+          {labels.map((label, index) => (
+            <Grid
+              item
+              display={"flex"}
+              flexDirection="column"
+              key={index}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <EmojiButton onClick={() => handleEmojiClick(index)}>
+                {label.emoji}
+              </EmojiButton>
+              <EmojiDescription>{label.description}</EmojiDescription>
+            </Grid>
+          ))}
+        </Grid>
+      </FeedbackSection>
+      <FeedbackSection>
+        <FeedbackButton onClick={redirectToTopicSelection}>
+          Start another Conversation
+        </FeedbackButton>
+      </FeedbackSection>
+    </FeedbackContainer>
   );
 }
