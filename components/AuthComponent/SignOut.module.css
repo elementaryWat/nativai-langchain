@@ -2,15 +2,17 @@
     width: 100vw;
     height: 10vh;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     color:#ad78f3;
     font-weight: bold;
+    padding: 0 2rem;
 }
 
 
 .signOut_saludo{
-
+    color:#111;
+    padding: 1rem;
 }
 
 
@@ -18,14 +20,29 @@
     margin:0 2rem;
     padding: .5rem 1rem;
     border: none;
-    border-radius: 20px;
     font-weight: bold;
-    background-color: #ad78f3;
+    border-radius: 100px;
+    background: #6B45FA;   
     color: #fff;
 }
 
 .signOut_button:hover{
-    background-color: #b2b2b2;
+    background-color: #ad78f3;
     color: #111;
+    
+}
+
+
+@media (max-width: 967px) {
+    .signOut_container{
+        width: 100vw;
+        height: 10vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color:#ad78f3;
+        font-weight: bold;
+        padding: 0;
+    }
     
 }

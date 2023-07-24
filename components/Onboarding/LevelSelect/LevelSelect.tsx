@@ -15,13 +15,13 @@ const levelDescriptions = {
 };
 
 const StyledTypographH4 = styled(Typography)`
-  color: #fff; 
+  color: #000; 
   margin-bottom: 1rem;
   text-align: center;
-  background-color:#643453;
-  padding:1rem 2rem;
-  border-radius: 20px;
-  font-weight: bold;
+  font-weight: 600;
+  font-size:34px;
+  font-style:normal;
+  line-height:22px;
 `;
 
 
@@ -33,7 +33,7 @@ const StyledTypographH4 = styled(Typography)`
       <StyledTypographH4 color="#111" variant="h5" mb={2}>
         Elige tu nivel
       </StyledTypographH4>
-      <Grid container alignItems="center" justifyContent="center" flexDirection="column">
+      <Grid container alignItems="center" justifyContent="space-evenly" flexDirection="column">
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton  
             key={level}

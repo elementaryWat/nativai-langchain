@@ -11,9 +11,10 @@ import {
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
+  width: 100%;
   color: white;
   background-color:#ffffff;
   padding:0 1rem;
@@ -49,8 +50,10 @@ export const Title = styled.h1`
 export const StyledRadioButton = styled(Button)<{ selected: boolean }>`
   background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
   color: white;
-  margin: 5px;
+  margin: 1rem 0;
   width:50%;
+  border-radius: 30px;
+  height:100px;
 
   @media screen and (max-width: 768px) {
     width: 90%;
@@ -64,13 +67,17 @@ export const StyledRadioButton = styled(Button)<{ selected: boolean }>`
 
 
 export const StyledRadioButtonTopic = styled(Button)<{ selected: boolean }>`
-  background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+  background-color: ${(props) => (props.selected ? "#65236B" : "#9D37A7")};
   color: white;
   margin: 5px;
   width:40%;
+  border-radius: 30px;
+  height:120px;
+
+  
 
   &:hover {
-    background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+    background-color: ${(props) => (props.selected ? "#65236B" : "#9D37A7")};
   }
 `;
 

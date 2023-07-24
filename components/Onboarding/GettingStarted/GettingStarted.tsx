@@ -3,6 +3,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import { PageContainer } from "../styled";
 import styled from "styled-components";
 import style from './GettingStarted.module.css'
+import Image from "next/image";
+import logo from '../../../asset/img/home_hero.png'
 
 // Define a StyledHeader component for the header
 export const StyledHeader = styled(Box)`
@@ -51,32 +53,12 @@ const GettingStarted: React.FC = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="space-evenly" // Adjust alignment
-        padding="2rem"
         height="100%"
+        width="100%"
         borderRadius='20px'
-        bgcolor='#ffffff'
+        // bgcolor='#333'
       >
-        <Typography sx={{
-          color:"#fff",
-          margin:"0 0 0 1rem",
-          textAlign:"center",
-          backgroundColor:"#643453",
-          padding:"1rem 2rem",
-          borderRadius:"20px",
-          display:"flex",
-          justifyContent:"center",
-          alignItems:"center"
-        }} variant="h2" mb={8}>Nativ
-        <StyledTypographSpan 
-        variant="h2" 
-        sx={{
-            color:"rgb(99, 137, 241)",
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-            margin:"0 0 0 1rem",
-          }} mb={8}>AI</StyledTypographSpan>
-        </Typography>
+        <Image src={logo} alt="Logo"/>
         {/* <StyledTypography variant="h5" gutterBottom>
           Bienvenid@ a una plataforma única diseñada para ayudarte a mejorar tus
           habilidades en inglés.
@@ -85,12 +67,16 @@ const GettingStarted: React.FC = () => {
           ¡Empieza ahora y da un paso hacia el dominio del inglés!
         </StyledTypography> */}
         <Typography sx={{
-          color:"#643453",
-          margin:"0 0 0 1rem",
+          color:"#111",
+          width:"100%",
+          fontWeight:"bold",
+          borderRadius:"20px",
+          height:"30%",
+          fontSize:"3rem",
           textAlign:"center",
-          // backgroundColor:"#643453",
-          padding:"1rem 2rem",
-          borderRadius:"20px"
+          '@media (max-width: 768px)': {
+            textAlign:"start"
+          },
         }}  variant="h5" >
           ¡Empieza ahora!
         </Typography>

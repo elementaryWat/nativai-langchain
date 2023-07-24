@@ -13,8 +13,8 @@ const SigninButton = () => {
   const router = useRouter();
 
   const handleClick = async () => {
-    const res = await signIn('google');
-    console.log(res)
+   signIn('google');
+
     router.push('/');
   };
 

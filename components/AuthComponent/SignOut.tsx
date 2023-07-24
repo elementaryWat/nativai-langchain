@@ -9,8 +9,8 @@ export const SignOut = () => {
   const router = useRouter();
 
   const handleSignOut = () => {
-    router.push('/');
     signOut();
+    router.push('/');
   };
 
   return (

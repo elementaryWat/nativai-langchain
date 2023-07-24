@@ -14,13 +14,13 @@ import EnvironmentIcon from "@mui/icons-material/Nature";
 import styled from "styled-components";
 
 const StyledTypographH4 = styled(Typography)`
-  color: #fff; 
-  margin:1rem 0;
-  text-align: center;
-  background-color:#643453;
-  padding:1rem 2rem;
-  border-radius: 20px;
-  font-weight: bold;
+color: #000; 
+margin-bottom: 1rem;
+text-align: center;
+font-weight: 600;
+font-size:34px;
+font-style:normal;
+line-height:22px;
 `;
 
 

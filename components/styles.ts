@@ -11,6 +11,8 @@ export const FixedInputContainer = styled("div")`
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background-color: #f5f5f5;
+  background-color: #9D37A7;
   border-top: 1px solid #ccc;
+  height:15vh;
+  position: relative;
 `;

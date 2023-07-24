@@ -78,23 +78,35 @@ const Stepperx: React.FC<StepperxProps> = ({
         // height: "95vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
+        justifyContent: "start",
       }}
     >
       <Box sx={{ 
-          height:"100%",
+          height:"75%",
           display:"flex",
-          alignItems:'stretch',
+          alignItems:'center',
           justifyContent:"center",
           borderRadius:"20px",
-          padding:"1rem"
-        }}>{getStepContent(activeStep)}</Box>
+          alignContent:"space-evenly"
+        }}>
+          {getStepContent(activeStep)}
+        </Box>
+
       <MobileStepper
         variant="dots"
         steps={steps.length}
         position="static"
         activeStep={activeStep}
-        sx={{ backgroundColor: "transparent" }}
+        sx={{ 
+          backgroundColor: "transparent", 
+          color:"#9D37A7",
+          display:"flex",
+          justifyContent:"space-around",
+          margin:".5rem 0 0 0 ",
+          '@media (max-width: 768px)': {
+            justifyContent:"space-between",
+          },
+       }}
         nextButton={
           <Button
             size="small"
@@ -105,15 +117,18 @@ const Stepperx: React.FC<StepperxProps> = ({
             }
             sx={{
               // Agrega tus estilos personalizados para el botón "Next" aquí
-              backgroundColor: "#643453",
-              color: "white",
+              width:"50px",
+              height:"50px",
+              borderRadius:"50%",
+              backgroundColor: "#6B45FA",
+              color: "#ffffff",
               border:"none",
               "&:hover": {
                 backgroundColor: "#643450",
               },
             }}
           >
-            {loading ? <CircularProgress size={24} /> : "Next"}
+            {loading ? <CircularProgress size={24} /> : ""}
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (
@@ -121,25 +136,41 @@ const Stepperx: React.FC<StepperxProps> = ({
             )}
           </Button>
         }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0} sx={{
-            // Agrega tus estilos personalizados para el botón "Next" aquí
-            backgroundColor: "#643453",
-            color: "white",
-            border:"none",
-            "&:hover": {
-              backgroundColor: "#643450",
-            },
-          }}>
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
+        backButton={null
+          // <Button size="small" onClick={handleBack} disabled={activeStep === 0} sx={{
+          //   // Agrega tus estilos personalizados para el botón "Next" aquí
+          //   width:"50px",
+          //     height:"50px",
+          //     borderRadius:"50%",
+          //     backgroundColor: "#6B45FA",
+          //     color: "#ffffff",
+          //   border:"none",
+          //   "&:hover": {
+          //     backgroundColor: "#643450",
+          //   },
+          // }}>
+          //   {theme.direction === "rtl" ? (
+          //     <KeyboardArrowRight />
+          //   ) : (
+          //     <KeyboardArrowLeft />
+          //   )}
+          //   Back
+          // </Button>
         }
       />
+      <Box sx={{
+        width:"100%",
+        height:"10%",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"end",
+        }}>
+        <Box sx={{
+        width:"50%",
+        height:"3%",
+        backgroundColor:"#111111"
+        }}/>
+      </Box>
     </Container>
   );
 };
