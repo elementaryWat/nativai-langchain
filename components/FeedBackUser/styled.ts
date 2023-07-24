@@ -3,11 +3,12 @@ import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 
 export const FeedbackContainer = styled(Grid)`
-  flex: 1;
+  display:flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 20px;
+  min-height:100vh;
+  width:100vw:
 `;
 
 export const FeedbackSection = styled(Box)`
@@ -17,6 +18,8 @@ export const FeedbackSection = styled(Box)`
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
+  width:100%;
+  height:auto;
   & h6 {
     margin-bottom: 10px;
   }
@@ -27,11 +30,12 @@ export const FeedbackSection = styled(Box)`
 `;
 
 export const FeedbackButton = styled(Button)`
-  margin-top: 20px;
-  background-color: #3f51b5;
+  background-color: #9D37A7 ;
+  padding:.5rem 1rem;
   color: white;
+  border-radius:30px;
   &:hover {
-    background-color: #303f9f;
+    background-color:#511854;
   }
 `;
 
@@ -47,8 +51,29 @@ export const EmojiButton = styled.button`
   }
 `;
 
+export const TextfieldButton = styled.button`
+  font-size: 2rem;
+  display: flex;
+  text-align: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const EmojiDescription = styled.p`
-  font-size: 0.8rem;
-  color: grey;
+  font-size: .9rem;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+`;
+
+
+export const ScoreDescription = styled.p`
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: bold;
   text-align: center;
 `;
