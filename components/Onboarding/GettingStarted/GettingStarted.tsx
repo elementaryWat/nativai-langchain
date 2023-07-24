@@ -66,8 +66,10 @@ const GettingStarted: React.FC = () => {
           display:"flex",
           justifyContent:"center",
           alignItems:"center"
-        }} variant="h2" mb={8}>
-          Nativ<StyledTypographSpan variant="h2" sx={{
+        }} variant="h2" mb={8}>Nativ
+        <StyledTypographSpan 
+        variant="h2" 
+        sx={{
             color:"rgb(99, 137, 241)",
             display:"flex",
             justifyContent:"center",

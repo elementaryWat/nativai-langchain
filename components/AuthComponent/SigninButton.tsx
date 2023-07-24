@@ -29,6 +29,13 @@ const SigninButton = () => {
                 <BsGoogle/> <span>Inicia Sesion</span>
             </button>
         </div>
+        <div className={style.circulos_signin}>
+        <div className={style.circulo_signin1}></div>
+        <div className={style.circulo_signin2}></div>
+        <div className={style.circulo_signin3}></div>
+        <div className={style.circulo_signin4}></div>
+        <div className={style.circulo_signin5}></div>
+      </div>
     </div>
 
   )
