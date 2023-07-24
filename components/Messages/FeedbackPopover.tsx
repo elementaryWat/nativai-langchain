@@ -1,14 +1,12 @@
 import { Popover, Typography, Box } from "@mui/material";
+import { FeedBack } from "../../types/Message";
 
 interface FeedbackPopoverProps {
   id: string;
   open: boolean;
   anchorEl: HTMLButtonElement | null;
   onClose: () => void;
-  feedback: {
-    feedback: string;
-    score: number;
-  };
+  feedback: FeedBack;
 }
 
 const FeedbackPopover = ({
@@ -34,10 +32,16 @@ const FeedbackPopover = ({
   >
     <Box sx={{ p: 2 }}>
       <Typography variant="subtitle1" gutterBottom>
-        Feedback:
+        Grammar tips:
       </Typography>
       <Typography variant="body2" gutterBottom>
-        {feedback.feedback}
+        {feedback.grammar_feedback}
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        Vocabulary tips:
+      </Typography>
+      <Typography variant="body2" gutterBottom>
+        {feedback.vocabulary_feedback}
       </Typography>
       <Typography variant="subtitle1" gutterBottom color="secondary">
         Score: {feedback.score}

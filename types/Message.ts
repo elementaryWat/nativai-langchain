@@ -1,6 +1,12 @@
+export const SCORE_FEEDBACK_VALUE = {
+  Basic: 1,
+  Intermediate: 2,
+  Advanced: 3,
+};
 export interface FeedBack {
-  feedback: string;
-  score: number;
+  grammar_feedback: string;
+  vocabulary_feedback: string;
+  score: "Basic" | "Intermediate" | "Advanced";
 }
 
 export interface Message {

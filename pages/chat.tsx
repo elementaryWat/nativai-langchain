@@ -37,15 +37,8 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messages.length === 7) {
-      // setOpenDialog(true);
-      trackStartEndChat(
-        chatId,
-        username,
-        levelConversation,
-        topicConversation,
-        false
-      );
+    if (messages.length === 3) {
+      router.replace("/feedback");
     }
   }, [messages]);
 

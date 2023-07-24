@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Fab, IconButton } from "@mui/material";
 import { Mic, Stop } from "@mui/icons-material";
 import MicRecorder from "mic-recorder-to-mp3";
+import { RecordingFab } from "./styles";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -36,13 +36,15 @@ const AudioRecorder = ({ onStopRecording, loadingMessage }) => {
   };
 
   return (
-    <Fab
-      disabled={loadingMessage}
+    <RecordingFab
       onClick={isRecording ? stopRecording : startRecording}
       color="primary"
+      disabled={loadingMessage}
+      aria-label="record"
+      isRecording={isRecording}
     >
       {isRecording ? <Stop /> : <Mic />}
-    </Fab>
+    </RecordingFab>
   );
 };
 
