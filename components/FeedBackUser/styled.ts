@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
 export const FeedbackContainer = styled(Grid)`
@@ -18,8 +18,8 @@ export const FeedbackSection = styled(Box)`
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
-  width:100%;
-  height:auto;
+  width: 100%;
+  height: auto;
   & h6 {
     margin-bottom: 10px;
   }
@@ -30,13 +30,8 @@ export const FeedbackSection = styled(Box)`
 `;
 
 export const FeedbackButton = styled(Button)`
-  background-color: #9D37A7 ;
-  padding:.5rem 1rem;
-  color: white;
-  border-radius:30px;
-  &:hover {
-    background-color:#511854;
-  }
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
 `;
 
 export const EmojiButton = styled.button`
@@ -64,16 +59,32 @@ export const TextfieldButton = styled.button`
 `;
 
 export const EmojiDescription = styled.p`
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #fff;
   font-weight: bold;
   text-align: center;
 `;
-
 
 export const ScoreDescription = styled.p`
   font-size: 1.1rem;
   color: #fff;
   font-weight: bold;
   text-align: center;
+`;
+
+export const TellMoreWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const StyledButton = styled(Button)`
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledTextField = styled(TextField)`
+  margin-top: 10px;
 `;

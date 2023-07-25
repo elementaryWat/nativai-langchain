@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Button } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore/lite";
 import { db } from "../../utils/firebaseClient";
 import { useChat } from "../../store/chatbot/useChat";
@@ -15,9 +15,14 @@ import {
   FeedbackContainer,
   FeedbackSection,
   ScoreDescription,
+  StyledButton,
+  StyledTextField,
+  TellMoreWrapper,
 } from "./styled";
 import ScoreIcon from "@mui/icons-material/Score";
 import ChatIcon from "@mui/icons-material/Chat";
+import SendIcon from "@mui/icons-material/Send";
+import EditIcon from "@mui/icons-material/Edit";
 import { SCORE_FEEDBACK_VALUE } from "../../types/Message";
 // import { BsPencilFill } from "react-icons/bs";
 
@@ -28,6 +33,7 @@ const labels = [
 ];
 
 export default function FeedbackUser() {
+  const [showCommentField, setShowCommentField] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [wordCount, setWordCount] = useState(0);
@@ -48,10 +54,6 @@ export default function FeedbackUser() {
       );
     }
   }, [messages]);
-
-  const handleClose = () => {
-    trackCloseFeedback(chatId, username);
-  };
 
   const handleEmojiClick = (index: number) => {
     setRating(index);
@@ -139,7 +141,7 @@ export default function FeedbackUser() {
         <Typography
           sx={{
             fontWeight: "bold",
-            fontSize: { xs: "1rem", md: "2rem" },
+            fontSize: { xs: "1.25rem", md: "2rem" },
             color: "#000",
             textAlign: "center",
             // border: "10px solid #531757",
@@ -181,7 +183,7 @@ export default function FeedbackUser() {
             item
           >
             <ScoreIcon style={{ color: "#fff", fontSize: "50px" }} />
-            <ScoreDescription>{averageScore} Level</ScoreDescription>
+            <ScoreDescription>{averageScore} Nivel</ScoreDescription>
           </Grid>
           <Grid
             sx={{
@@ -193,7 +195,7 @@ export default function FeedbackUser() {
             item
           >
             <ChatIcon style={{ color: "#fff", fontSize: "50px" }} />
-            <ScoreDescription>{wordCount} Words Used</ScoreDescription>
+            <ScoreDescription>{wordCount} palabras usadas</ScoreDescription>
           </Grid>
         </Grid>
       </FeedbackSection>
@@ -201,7 +203,7 @@ export default function FeedbackUser() {
         <Typography
           sx={{
             fontWeight: "bold",
-            fontSize: "1.7rem",
+            fontSize: { xs: "0.75", md: "1.5rem" },
             textAlign: "center",
             padding: "0 0 ",
             "@media (max-width: 940px)": {
@@ -231,21 +233,62 @@ export default function FeedbackUser() {
               justifyContent="center"
               alignItems="center"
             >
-              <EmojiButton onClick={() => handleEmojiClick(index)}>
+              <EmojiButton
+                onClick={() => handleEmojiClick(index)}
+                style={{ backgroundColor: index === rating ? "grey" : "" }}
+              >
                 {label.emoji}
               </EmojiButton>
               <EmojiDescription>{label.description}</EmojiDescription>
             </Grid>
           ))}
         </Grid>
-        {/* <TextfieldButton>
-          <BsPencilFill />
-          Nos ayudas a mejorar....
-        </TextfieldButton> */}
+        <TellMoreWrapper>
+          <Button
+            variant="text"
+            color="secondary"
+            onClick={() => setShowCommentField(!showCommentField)}
+            startIcon={<EditIcon />}
+          >
+            Cuentanos más
+          </Button>
+
+          {showCommentField && (
+            <>
+              <StyledTextField
+                required
+                autoFocus
+                multiline
+                margin="dense"
+                id="name"
+                label="Comment"
+                type="text"
+                fullWidth
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <StyledButton
+                variant="text"
+                color="secondary"
+                onClick={() => {
+                  // Here, add your function to handle the comment submission
+                  console.log("Feedback sent");
+                }}
+                startIcon={<SendIcon />}
+              >
+                Enviar
+              </StyledButton>
+            </>
+          )}
+        </TellMoreWrapper>
       </FeedbackSection>
       <FeedbackSection>
-        <FeedbackButton onClick={redirectToTopicSelection}>
-          Start another Conversation
+        <FeedbackButton
+          variant="contained"
+          color="secondary"
+          onClick={redirectToTopicSelection}
+        >
+          Iniciar otra conversación
         </FeedbackButton>
       </FeedbackSection>
     </FeedbackContainer>
