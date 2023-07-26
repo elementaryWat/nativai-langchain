@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import '../style/global.css'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();

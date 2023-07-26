@@ -40,6 +40,13 @@ const AudioRecorder = ({ onStopRecording, loadingMessage }) => {
       disabled={loadingMessage}
       onClick={isRecording ? stopRecording : startRecording}
       color="primary"
+      style={{
+        backgroundColor:"#65236B",
+        position: "absolute",
+        top:"-50px",
+        width:"100px",
+        height:"100px",
+      }}
     >
       {isRecording ? <Stop /> : <Mic />}
     </Fab>

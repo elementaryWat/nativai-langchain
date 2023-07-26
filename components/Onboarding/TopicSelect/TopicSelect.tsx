@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography, Box } from "@mui/material";
-import { PageContainer, StyledRadioButton } from "../styled";
+import { PageContainer, StyledRadioButtonTopic } from "../styled";
 import { useChat } from "../../../store/chatbot/useChat";
 import { TOPICS } from "../../../utils/const";
 import FamilyIcon from "@mui/icons-material/FamilyRestroom";
@@ -11,6 +11,32 @@ import HobbiesIcon from "@mui/icons-material/SportsEsports";
 import HealthIcon from "@mui/icons-material/LocalHospital";
 import TechIcon from "@mui/icons-material/Devices";
 import EnvironmentIcon from "@mui/icons-material/Nature";
+import styled from "styled-components";
+
+const StyledTypographH4 = styled(Typography)`
+color: #000; 
+margin-bottom: 1rem;
+text-align: center;
+font-weight: 600;
+font-size:34px;
+font-style:normal;
+line-height:22px;
+`;
+
+
+
+const StyledGrid = styled(Grid)`
+  width: 100%;
+  height: 100%;
+  padding:1rem 0rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  // justify-content: stretch;
+  justify-content: center;
+  // align-items: center;
+  // background-color: #9d37a7;
+`;
 
 const TopicSelect: React.FC = () => {
   const { topicConversation, setTopicConversation } = useChat();
@@ -24,14 +50,15 @@ const TopicSelect: React.FC = () => {
     "technology-and-science": <TechIcon />,
     "environment-and-sustainability": <EnvironmentIcon />,
   };
+
   return (
-    <PageContainer>
-      <Typography variant="h4" mt={4} mb={2}>
+    <PageContainer flexDirection="column"  borderRadius='50px' >
+      <StyledTypographH4 >
         Elige un tema
-      </Typography>
-      <Grid container flexDirection="column">
+      </StyledTypographH4>
+      <StyledGrid container>
         {Object.keys(TOPICS).map((topicKey) => (
-          <StyledRadioButton
+          <StyledRadioButtonTopic
             key={topicKey}
             selected={topicConversation === topicKey}
             onClick={() => setTopicConversation(topicKey)}
@@ -42,9 +69,9 @@ const TopicSelect: React.FC = () => {
                 {TOPICS[topicKey]}
               </Typography>
             </Box>
-          </StyledRadioButton>
+          </StyledRadioButtonTopic>
         ))}
-      </Grid>
+      </StyledGrid>
     </PageContainer>
   );
 };
