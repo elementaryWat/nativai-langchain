@@ -27,7 +27,6 @@ const OnboardingPage: React.FC = () => {
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
   const { data: session } = useSession();
-
   // useEffect(()=>{
   //   if (!session) {
   //       router.push('/login');
