@@ -10,9 +10,15 @@ import NameInput from "../components/Onboarding/NameInput/NameInput";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
 import SigninButton from "../components/AuthComponent/SigninButton";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { SignOut } from "../components/AuthComponent/SignOut";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
 const OnboardingPage: React.FC = () => {
@@ -30,15 +36,19 @@ const OnboardingPage: React.FC = () => {
   //     }
   // },[session])
 
+  const {
+    getInitialMessage,
+    username,
+    setUsername,
+    levelConversation,
+    topicConversation,
+  } = useChat();
 
-
-  const { getInitialMessage, username, setUsername, levelConversation, topicConversation } = useChat();
-
-  useEffect(()=>{
+  useEffect(() => {
     if (session) {
-      setUsername(session.user.name)
-      }
-  },[session])
+      setUsername(session.user.name);
+    }
+  }, [session]);
 
   const goToChat = async () => {
     await getInitialMessage();
@@ -53,21 +63,20 @@ const OnboardingPage: React.FC = () => {
     <TopicSelect />,
   ];
 
- 
   const addUserIfNotExists = async (userData) => {
     const db = getFirestore();
-  
+
     // Verificar si el usuario ya existe en la colección "users"
     const userRef = doc(db, "users", userData.email);
     const userSnapshot = await getDoc(userRef);
-  
+
     if (userSnapshot.exists()) {
-      // El usuario ya existe
-      console.log("El usuario ya existe en la base de datos.");
+      // Update lastLogin timestamp
+      await updateDoc(userRef, { lastLogin: serverTimestamp() });
     } else {
       // El usuario no existe, agregarlo a la colección "users"
       try {
-        await setDoc(userRef, userData);
+        await setDoc(userRef, { ...userData, lastLogin: serverTimestamp() });
         console.log("Usuario agregado correctamente a la base de datos.");
       } catch (error) {
         console.error("Error al agregar el usuario:", error);
@@ -89,7 +98,6 @@ const OnboardingPage: React.FC = () => {
       addUserIfNotExists(userData);
     }
   }, [session]);
-
 
   const isNextDisabled = () =>
     // (activeStep === 1 && username === "") ||
