@@ -29,6 +29,27 @@ export const FeedbackSection = styled(Box)`
   }
 `;
 
+export const FeedbackSectionCommet = styled(Box)`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 100%;
+  height: auto;
+  & h6 {
+    margin-bottom: 10px;
+  }
+
+  & p {
+    margin-top: 10px;
+  }
+`;
+
+
+
+
 export const FeedbackButton = styled(Button)`
   padding: 0.5rem 1rem;
   border-radius: 30px;

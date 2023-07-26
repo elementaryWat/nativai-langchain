@@ -18,6 +18,7 @@ import {
   StyledButton,
   StyledTextField,
   TellMoreWrapper,
+  FeedbackSectionCommet,
 } from "./styled";
 import ScoreIcon from "@mui/icons-material/Score";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -199,7 +200,7 @@ export default function FeedbackUser() {
           </Grid>
         </Grid>
       </FeedbackSection>
-      <FeedbackSection>
+      <FeedbackSectionCommet>
         <Typography
           sx={{
             fontWeight: "bold",
@@ -281,7 +282,7 @@ export default function FeedbackUser() {
             </>
           )}
         </TellMoreWrapper>
-      </FeedbackSection>
+      </FeedbackSectionCommet>
       <FeedbackSection>
         <FeedbackButton
           variant="contained"
