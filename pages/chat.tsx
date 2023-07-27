@@ -33,12 +33,12 @@ const Chat: React.FC = () => {
     }
     trackStartEndChat(chatId, username, levelConversation, topicConversation);
     if (messages.length === 1) {
-      synthesizeSpeech(messages[0].content);
+      // synthesizeSpeech(messages[0].content);
     }
   }, []);
 
   useEffect(() => {
-    if (messages.length === 3) {
+    if (messages.length === 7) {
       router.replace("/feedback");
     }
   }, [messages]);
@@ -60,7 +60,7 @@ const Chat: React.FC = () => {
         levelConversation,
         topicConversation
       );
-      await synthesizeSpeech(response);
+      // await synthesizeSpeech(response);
       // const audioUrl = await synthesizeSpeech(response);
       // playAudio(audioUrl, isAudioPlaying, setAudioPlaying);
 

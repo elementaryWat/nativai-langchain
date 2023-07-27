@@ -45,7 +45,7 @@ export default function FeedbackUser() {
 
   useEffect(() => {
     if (messages.length > 0) generateFinalFeedback();
-    if (messages.length === 3) {
+    if (messages.length === 7) {
       trackStartEndChat(
         chatId,
         username,

@@ -19,11 +19,12 @@ const AudioRecorder = ({ onStopRecording, loadingMessage }) => {
   };
 
   const stopRecording = () => {
+    setIsRecording(false);
+
     if (isRecording) {
       Mp3Recorder.stop()
         .getMp3()
         .then(async ([buffer, blob]) => {
-          setIsRecording(false);
           const file = new File([blob], "recording.mp3", {
             type: blob.type,
             lastModified: Date.now(),

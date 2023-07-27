@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from "styled-components";
+import { styled, keyframes } from "@mui/system";
 import Fab from "@mui/material/Fab";
 
 export const ChatContainer = styled("div")`
@@ -7,16 +7,16 @@ export const ChatContainer = styled("div")`
   height: calc(var(--vh, 1vh) * 90);
 `;
 
-export const FixedInputContainer = styled("div")`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background-color: #9D37A7;
-  border-top: 1px solid #ccc;
-  height:15vh;
-  position: relative;
-`;
+export const FixedInputContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "16px",
+  backgroundColor: theme.palette.secondary.light,
+  borderTop: `1px solid ${theme.palette.divider}`,
+  height: "8vh",
+  position: "relative",
+}));
 
 const pulseAnimation = keyframes`
   0% {
@@ -30,15 +30,21 @@ const pulseAnimation = keyframes`
   }
 `;
 
-export const RecordingFab = styled(Fab)<{ isRecording: boolean }>`
-  background-color:"#65236B",
-  position: "absolute",
-  top:"-50px",
-  width:"100px",
-  height:"100px",
-  ${({ isRecording }) =>
-    isRecording &&
-    css`
-      animation: ${pulseAnimation} 1s infinite;
-    `}
-`;
+export const RecordingFab = styled(Fab)(
+  ({ theme, isRecording }: { theme: any; isRecording: boolean }) => ({
+    "&.MuiFab-root": {
+      backgroundColor: theme.palette.secondary.main,
+      position: "absolute",
+      top: "-2.5rem",
+      width: "5rem",
+      height: "5rem",
+    },
+
+    ...(isRecording && {
+      animation: `${pulseAnimation} 1s infinite`,
+    }),
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.dark,
+    },
+  })
+);

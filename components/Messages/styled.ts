@@ -8,13 +8,13 @@ export const StyledMessagesContainer = styled(Container)`
 `;
 
 export const MessageBubble = styled(Box)(
-  ({ role }: { role: "user" | "system" | "assistant" }) => ({
+  ({ theme, role }: { theme: any; role: "user" | "system" | "assistant" }) => ({
     display: "flex",
     justifyContent: "space-between",
-    background: role === "user" ? "#f1f1f1" : "#9D37A7",
+    background: role === "user" ? "#f1f1f1" : theme.palette.primary.main,
     padding: "10px 20px",
     borderRadius: "20px",
-    color: role === "user" ? "black" : "white",
+    color: role === "user" ? theme.palette.text : "white",
     marginBottom: "10px",
     width: "80%",
   })

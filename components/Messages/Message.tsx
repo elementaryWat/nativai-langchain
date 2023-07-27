@@ -97,7 +97,7 @@ const Message = ({
                     <>
                       <IconButton
                         aria-describedby={id}
-                        color="primary"
+                        color="secondary"
                         onClick={handleClick}
                       >
                         <FeedbackIcon />

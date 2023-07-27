@@ -122,11 +122,11 @@ const Stepperx: React.FC<StepperxProps> = ({
               width: "50px",
               height: "50px",
               borderRadius: "25px",
-              backgroundColor: "#6B45FA",
+              backgroundColor: "#673AB7",
               color: "#ffffff",
               border: "none",
               "&:hover": {
-                backgroundColor: "#643450",
+                backgroundColor: "#512DA8",
               },
             }}
           >

@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "../store";
 import { setPageView } from "../utils/analyticsMethods";
+import { theme } from "../utils/MUITheme";
 import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
-import '../style/global.css'
+import { ThemeProvider } from "@mui/material/styles";
+import "../style/global.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -28,10 +30,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <SessionProvider session={session}>
-      <Provider store={store}>
-        <Component {...pageProps} />
-        <Analytics />
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+          <Analytics />
+        </Provider>
+      </ThemeProvider>
     </SessionProvider>
   );
 }
