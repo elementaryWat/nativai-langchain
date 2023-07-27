@@ -38,10 +38,10 @@ const AudioRecorder = ({ onStopRecording, loadingMessage }) => {
   return (
     <RecordingFab
       onClick={isRecording ? stopRecording : startRecording}
-      color="primary"
       disabled={loadingMessage}
       aria-label="record"
       isRecording={isRecording}
+      color="primary"
     >
       {isRecording ? <Stop /> : <Mic />}
     </RecordingFab>

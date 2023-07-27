@@ -8,6 +8,7 @@ import { postChat, postFeedback } from "../utils/endpoints";
 // import FeedbackUser from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
+import { SignOut } from "../components/AuthComponent/SignOut";
 
 const Chat: React.FC = () => {
   const {
@@ -99,15 +100,18 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <ChatContainer>
-      {/* <Typography variant="h4" align="center">
+    <>
+      <SignOut />
+      <ChatContainer>
+        {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
       </Typography> */}
-      <MessagesContainer onSubmit={handleSubmit} />
-      <FixedInputContainer>
-        <Input onSubmit={handleSubmit} loadingMessage={loading} />
-      </FixedInputContainer>
-    </ChatContainer>
+        <MessagesContainer onSubmit={handleSubmit} />
+        <FixedInputContainer>
+          <Input onSubmit={handleSubmit} loadingMessage={loading} />
+        </FixedInputContainer>
+      </ChatContainer>
+    </>
   );
 };
 

@@ -1,21 +1,18 @@
 import styled from "styled-components";
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
+  width: 100%;
   color: white;
-  background: ${({ background }) => background || "transparent"};
+  background-color: #ffffff;
+  padding: 0 1rem;
+  // border-radius: 20px;
+  // background: ${({ background }) => background || "transparent"};
 `;
 
 export const StyledTextField = styled(TextField)`
@@ -44,11 +41,33 @@ export const Title = styled.h1`
 `;
 
 export const StyledRadioButton = styled(Button)<{ selected: boolean }>`
-  background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
+  background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+  color: white;
+  margin: 1rem 0;
+  width: 50%;
+  border-radius: 30px;
+  height: 100px;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.selected ? "#643453" : "#9d37a7")};
+  }
+`;
+
+export const StyledRadioButtonTopic = styled(Button)<{ selected: boolean }>`
+  background-color: ${(props) => (props.selected ? "#65236B" : "#9D37A7")};
   color: white;
   margin: 5px;
+  width: 40%;
+  border-radius: 30px;
+  height: 120px;
+
   &:hover {
-    background-color: ${(props) => (props.selected ? "#6e45ff" : "#bcbcbd")};
+    background-color: ${(props) => (props.selected ? "#65236B" : "#9D37A7")};
   }
 `;
 
