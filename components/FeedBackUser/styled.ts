@@ -47,11 +47,8 @@ export const FeedbackSectionCommet = styled(Box)`
   }
 `;
 
-
-
-
 export const FeedbackButton = styled(Button)`
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   border-radius: 30px;
 `;
 

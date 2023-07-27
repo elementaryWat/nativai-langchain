@@ -9,6 +9,7 @@ import { postChat, postFeedback } from "../utils/endpoints";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import { SignOut } from "../components/AuthComponent/SignOut";
+import { LENGTH_FEEDBACK } from "../utils/const";
 
 const Chat: React.FC = () => {
   const {
@@ -38,7 +39,7 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messages.length === 7) {
+    if (messages.length === LENGTH_FEEDBACK) {
       router.replace("/feedback");
     }
   }, [messages]);

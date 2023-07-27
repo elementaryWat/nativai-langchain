@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Button } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore/lite";
-import { db } from "../../utils/firebaseClient";
+import { Typography, Grid, Button, Chip } from "@mui/material";
 import { useChat } from "../../store/chatbot/useChat";
-import {
-  trackCloseFeedback,
-  trackFeedback,
-  trackStartEndChat,
-} from "../../utils/analyticsMethods";
+import { trackFeedback, trackStartEndChat } from "../../utils/analyticsMethods";
 import {
   EmojiButton,
   EmojiDescription,
@@ -25,6 +19,15 @@ import ChatIcon from "@mui/icons-material/Chat";
 import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import { SCORE_FEEDBACK_VALUE } from "../../types/Message";
+import { useRouter } from "next/router";
+import { LENGTH_FEEDBACK } from "../../utils/const";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -35,17 +38,26 @@ const labels = [
 
 export default function FeedbackUser() {
   const [showCommentField, setShowCommentField] = useState(false);
-  const [rating, setRating] = useState(0);
+  const [sendingComment, setSendingComment] = useState(false);
+  const [commentSent, setCommentSent] = useState(false);
+  const [rating, setRating] = useState(-1);
   const [comment, setComment] = useState("");
   const [wordCount, setWordCount] = useState(0);
   const [averageScore, setAverageScore] = useState("");
+  const router = useRouter();
 
-  const { chatId, username, messages, levelConversation, topicConversation } =
-    useChat();
+  const {
+    chatId,
+    username,
+    messages,
+    levelConversation,
+    topicConversation,
+    setTopicConversation,
+  } = useChat();
 
   useEffect(() => {
     if (messages.length > 0) generateFinalFeedback();
-    if (messages.length === 7) {
+    if (messages.length === LENGTH_FEEDBACK) {
       trackStartEndChat(
         chatId,
         username,
@@ -56,13 +68,11 @@ export default function FeedbackUser() {
     }
   }, [messages]);
 
-  const handleEmojiClick = (index: number) => {
-    setRating(index);
-  };
-
   const redirectToTopicSelection = () => {
-    // history.push("/topics");
-    console.log("redirectToTopicSelection");
+    setTopicConversation("");
+    setRating(-1);
+    router.replace("/topics");
+    // console.log("redirectToTopicSelection");
   };
 
   const generateFinalFeedback = () => {
@@ -98,24 +108,45 @@ export default function FeedbackUser() {
     setAverageScore(finalScore);
   };
 
-  const handleSubmit = async () => {
-    if (rating !== 0 && comment !== "") {
-      const docRef = await addDoc(collection(db, "feedbacks"), {
+  const addFirebaseDocIdNotExists = async () => {
+    const db = getFirestore();
+    const chatFeedBackRef = doc(db, "feedbacks", chatId);
+    console.log(chatFeedBackRef);
+    const chatFeedbackSnapshot = await getDoc(chatFeedBackRef);
+    if (!chatFeedbackSnapshot.exists()) {
+      await setDoc(chatFeedBackRef, {
         chatId,
         username,
         levelConversation,
         topicConversation,
         messages,
-        rating,
-        comment,
+      });
+      console.log("Document written with ID: ", chatFeedBackRef.id);
+    }
+    return chatFeedBackRef;
+  };
+
+  const handleSubmitRecommendation = async (index: number) => {
+    setRating(index);
+    if (rating !== -1) {
+      let docRef = await addFirebaseDocIdNotExists();
+      await updateDoc(docRef, {
+        recommendationScore: rating,
       });
       trackFeedback(chatId, username, messages.length, rating, comment);
+    }
+  };
 
-      console.log("Document written with ID: ", docRef.id);
-
-      // Clear the state
-      setRating(0);
+  const sendComment = async () => {
+    if (comment !== "") {
+      setSendingComment(true);
+      let docRef = await addFirebaseDocIdNotExists();
+      await updateDoc(docRef, {
+        comment,
+      });
+      setSendingComment(false);
       setComment("");
+      setCommentSent(true);
     }
   };
 
@@ -161,7 +192,7 @@ export default function FeedbackUser() {
         <Grid
           container
           sx={{
-            backgroundColor: "#511854",
+            backgroundColor: "primary.dark",
             // margin:"1rem 0",
             padding: ".5rem 0",
             display: "flex",
@@ -184,7 +215,7 @@ export default function FeedbackUser() {
             item
           >
             <ScoreIcon style={{ color: "#fff", fontSize: "50px" }} />
-            <ScoreDescription>{averageScore} Nivel</ScoreDescription>
+            <ScoreDescription>{averageScore} Level</ScoreDescription>
           </Grid>
           <Grid
             sx={{
@@ -221,7 +252,7 @@ export default function FeedbackUser() {
           flexDirection="row"
           justifyContent="space-around"
           sx={{
-            backgroundColor: "#511854",
+            backgroundColor: "primary.dark",
             padding: ".5rem 0",
           }}
         >
@@ -235,8 +266,11 @@ export default function FeedbackUser() {
               alignItems="center"
             >
               <EmojiButton
-                onClick={() => handleEmojiClick(index)}
-                style={{ backgroundColor: index === rating ? "grey" : "" }}
+                onClick={async () => await handleSubmitRecommendation(index)}
+                style={{
+                  backgroundColor: index === rating ? "grey" : "",
+                  borderRadius: 12,
+                }}
               >
                 {label.emoji}
               </EmojiButton>
@@ -271,14 +305,19 @@ export default function FeedbackUser() {
               <StyledButton
                 variant="text"
                 color="secondary"
-                onClick={() => {
-                  // Here, add your function to handle the comment submission
-                  console.log("Feedback sent");
-                }}
+                disabled={sendingComment}
+                onClick={sendComment}
                 startIcon={<SendIcon />}
               >
                 Enviar
               </StyledButton>
+              {commentSent && (
+                <Chip
+                  label="Muchas gracias por tu sugerencia!"
+                  color="primary"
+                  onDelete={() => setCommentSent(false)}
+                />
+              )}
             </>
           )}
         </TellMoreWrapper>
