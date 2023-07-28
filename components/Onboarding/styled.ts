@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, ButtonProps, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const PageContainer = styled(Grid)<{ background?: string }>`
@@ -40,27 +40,27 @@ export const Title = styled("h1")`
   margin-bottom: 2rem;
 `;
 
-export const StyledRadioButton = styled(Button)(
-  ({ theme, selected }: { theme: any; selected: boolean }) => ({
+export const StyledRadioButton = styled(Button)<
+  ButtonProps & { selected: boolean }
+>(({ theme, selected }: { theme: any; selected: boolean }) => ({
+  backgroundColor: selected
+    ? theme.palette.primary.dark
+    : theme.palette.primary.light,
+  color: selected ? theme.palette.text.secondary : theme.palette.text.main,
+  margin: "1rem 0",
+  width: "50%",
+  borderRadius: "30px",
+  height: "100px",
+  "&:hover": {
     backgroundColor: selected
-      ? theme.palette.primary.dark
-      : theme.palette.primary.light,
-    color: selected ? theme.palette.text.secondary : theme.palette.text.main,
-    margin: "1rem 0",
-    width: "50%",
-    borderRadius: "30px",
-    height: "100px",
-    "&:hover": {
-      backgroundColor: selected
-        ? theme.palette.secondary.dark
-        : theme.palette.secondary.light,
-    },
-    "@media screen and (max-width: 768px)": {
-      width: "90%",
-      fontSize: "14px",
-    },
-  })
-);
+      ? theme.palette.secondary.dark
+      : theme.palette.secondary.light,
+  },
+  "@media screen and (max-width: 768px)": {
+    width: "90%",
+    fontSize: "14px",
+  },
+}));
 
 export const StyledRadioButtonTopic = styled(Button)(
   ({ theme, selected }: { theme: any; selected: boolean }) => ({
