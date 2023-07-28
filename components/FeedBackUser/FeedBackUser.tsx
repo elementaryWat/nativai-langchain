@@ -83,7 +83,7 @@ export default function FeedbackUser() {
     messages.forEach((message) => {
       if (message.role === "user") {
         if (message.feedback) {
-          totalScore += SCORE_FEEDBACK_VALUE[message.feedback.score];
+          totalScore += message.feedback.general_score;
           totalUserMessages += 1;
         }
 
@@ -98,9 +98,9 @@ export default function FeedbackUser() {
     let finalScore: "Basic" | "Intermediate" | "Advanced" = "Basic";
 
     // Convert numeric score back to string value
-    if (avgScore >= 2.5) {
+    if (avgScore >= 4) {
       finalScore = "Advanced";
-    } else if (avgScore >= 1.5) {
+    } else if (avgScore >= 2.5) {
       finalScore = "Intermediate";
     }
 
@@ -111,7 +111,6 @@ export default function FeedbackUser() {
   const addFirebaseDocIdNotExists = async () => {
     const db = getFirestore();
     const chatFeedBackRef = doc(db, "feedbacks", chatId);
-    console.log(chatFeedBackRef);
     const chatFeedbackSnapshot = await getDoc(chatFeedBackRef);
     if (!chatFeedbackSnapshot.exists()) {
       await setDoc(chatFeedBackRef, {
@@ -121,19 +120,18 @@ export default function FeedbackUser() {
         topicConversation,
         messages,
       });
-      console.log("Document written with ID: ", chatFeedBackRef.id);
     }
     return chatFeedBackRef;
   };
 
   const handleSubmitRecommendation = async (index: number) => {
     setRating(index);
-    if (rating !== -1) {
+    if (index !== -1) {
       let docRef = await addFirebaseDocIdNotExists();
       await updateDoc(docRef, {
-        recommendationScore: rating,
+        recommendationScore: index,
       });
-      trackFeedback(chatId, username, messages.length, rating, comment);
+      trackFeedback(chatId, username, messages.length, index, comment);
     }
   };
 

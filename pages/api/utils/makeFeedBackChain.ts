@@ -10,13 +10,11 @@ export const makeFeedbackChain = () => {
     timeout: 20000,
   });
   const prompt = PromptTemplate.fromTemplate(
-    `You are an english native speaker that gives feedback for improving my english skills based on the response to a message.
-    Message: # {message} #.
-    Response: # {response} #.
-    Give me feedback on suggestions to improve the grammar and vocabulary for the answer.
-    Also give me an score that reflects the english level of the response in a qualitative way.
-    The options for the score are: Basic (if the sentence has many grammar mistakes and a poor vocabulary), Intermediate (if has a few grammar mistakes and a good vocabulary), Advanced (if the sentence doesn't have grammar mistakes and a rich vocabulary)
-    Provide the output in a JSON format with this keys: grammar_feedback, vocabulary_feedback, answer_suggestions, score
+    `Act as an English speaker tasked with providing feedback on my English skills.
+      Given a message delimited by "", give relevant grammar corrections and suggest vocabulary improvements.
+      Additionally, based on the feedback, score the proficiency level of the response in 0-5 scale. 
+      Provide the output in a JSON format with the keys: grammar_feedback ,grammar_score, vocabulary_score, vocabulary_feedback, general_score.
+      Message: ""{{ response }}"".
     `
   );
   const chain = new LLMChain({ llm: model, prompt });
