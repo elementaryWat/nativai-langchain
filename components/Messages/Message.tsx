@@ -1,7 +1,8 @@
 import { Button, CircularProgress, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import { IconButton } from "@mui/material";
-import FeedbackIcon from "@mui/icons-material/Feedback";
+import FeedbackIcon from "@mui/icons-material/Info";
+import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import { Message as MessageType } from "../../types/Message";
 import { MessageBubble, MessageContainer } from "./styled";
 // import PlayIcon from "@mui/icons-material/VolumeUp";
@@ -97,10 +98,16 @@ const Message = ({
                     <>
                       <IconButton
                         aria-describedby={id}
-                        color="secondary"
+                        color={
+                          feedback.general_score >= 4 ? "success" : "warning"
+                        }
                         onClick={handleClick}
                       >
-                        <FeedbackIcon />
+                        {feedback.general_score >= 4 ? (
+                          <TipsAndUpdatesIcon />
+                        ) : (
+                          <FeedbackIcon />
+                        )}
                       </IconButton>
                       <FeedbackPopover
                         id={id}
