@@ -18,7 +18,6 @@ import ScoreIcon from "@mui/icons-material/Score";
 import ChatIcon from "@mui/icons-material/Chat";
 import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
-import { SCORE_FEEDBACK_VALUE } from "../../types/Message";
 import { useRouter } from "next/router";
 import { LENGTH_FEEDBACK } from "../../utils/const";
 import {
@@ -129,7 +128,8 @@ export default function FeedbackUser() {
     if (index !== -1) {
       let docRef = await addFirebaseDocIdNotExists();
       await updateDoc(docRef, {
-        recommendationScore: index,
+        rating: index > 1 ? 5 : (index = 1 ? 3 : 1), //Change of scale for rating
+        recommendationScore: index + 1,
       });
       trackFeedback(chatId, username, messages.length, index, comment);
     }

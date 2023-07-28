@@ -1,8 +1,3 @@
-export const SCORE_FEEDBACK_VALUE = {
-  Basic: 1,
-  Intermediate: 2,
-  Advanced: 3,
-};
 export interface FeedBack {
   grammar_feedback: string;
   grammar_score: number;
