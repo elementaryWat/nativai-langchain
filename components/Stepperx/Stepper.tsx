@@ -78,7 +78,7 @@ const Stepperx: React.FC<StepperxProps> = ({
         // height: "95vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "start",
+        justifyContent: "space-evenly",
       }}
     >
       <Box
