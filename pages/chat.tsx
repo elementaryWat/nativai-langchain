@@ -85,6 +85,7 @@ const Chat: React.FC = () => {
         "Error sending transcript to the Chat Completion API:",
         error
       );
+      setLoadingStatus(false);
       setErrorFeedback();
       trackError(error);
     }
