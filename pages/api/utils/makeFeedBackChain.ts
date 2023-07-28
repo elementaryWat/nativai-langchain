@@ -7,13 +7,19 @@ export const makeFeedbackChain = () => {
   const model = new OpenAI({
     modelName: "gpt-3.5-turbo",
     temperature: 0,
+    topP: 1,
     timeout: 20000,
   });
   const prompt = PromptTemplate.fromTemplate(
-    `Act as an English speaker tasked with providing feedback on my English skills.
-    Given this message delimited by ///:///{{ response }}///.
-    Give relevant grammar corrections and suggest vocabulary improvements giving examples to give more context. Additionally, based on the feedback, score the proficiency level of the response in 0-5 scale. 
-    Provide the output in a JSON format with the keys: grammar_feedback ,grammar_score, vocabulary_score, vocabulary_feedback, general_score.
+    `As a fluent English speaker, evaluate my English proficiency in my response to a message. 
+    Given the messages delimited by ///:
+    Message:/// {message} ///.
+    and the response:/// {response} ///.
+    Offer precise suggestions for grammar and vocabulary improvement, supplemented with examples.
+    Don't be vague and enrich your feedback with examples for clearer understanding.
+    Assign a proficiency score from 0-5 for both grammar and vocabulary.
+    Your feedback should be in Spanish, but maintaining original English terms when referencing specific vocabulary or grammar points.
+    Provide the output in a JSON object with the following keys: grammar_feedback,grammar_score, vocabulary_score, vocabulary_feedback, general_score.   
     `
   );
   const chain = new LLMChain({ llm: model, prompt });

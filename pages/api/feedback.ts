@@ -19,7 +19,7 @@ export default async function handler(
   try {
     //create chain
     const feedbackChain = makeFeedbackChain();
-    const feedback = await feedbackChain.call({ response });
+    const feedback = await feedbackChain.call({ message, response });
     console.log(feedback);
     res.status(200).json({
       feedback: JSON.parse(feedback.text),

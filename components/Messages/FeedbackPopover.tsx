@@ -45,9 +45,9 @@ const FeedbackPopover = ({
       </Typography>
       <Typography variant="subtitle1" gutterBottom color="secondary">
         Score:{" "}
-        {feedback.general_score > 4
+        {feedback.general_score >= 4
           ? "Advanced"
-          : feedback.general_score > 2.5
+          : feedback.general_score >= 2.5
           ? "Intermediate"
           : "Basic"}
       </Typography>
