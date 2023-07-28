@@ -14,6 +14,7 @@ export const AI_INTRODUCTION_PROMPT =
 //     Provide the output in a JSON object with the following keys: grammar_feedback,grammar_score, vocabulary_score, vocabulary_feedback, general_score.
 //     `;
 export const AI_FEEDBACK_PROMPT = `
+Como hablante fluido de inglés, tu tarea es realizar las siguientes acciones:
 1 - Ofrecer una retroalimentación integral y lo más específica posible sobre aspectos a mejorar en la gramática y el vocabulario a un mensaje de usuario delimitado por <<>> y sugerir mejoras también teniendo en cuenta el contexto de la conversación también delimitado por <<>>.
 2 - Asignar una puntuación de competencia de 0-5 tanto para gramática como para vocabulario.
 3 - Asegúrate de brindar la retroalimentación en español pero mantener los términos originales en inglés cuando se haga referencia a puntos específicos de vocabulario o gramática.
