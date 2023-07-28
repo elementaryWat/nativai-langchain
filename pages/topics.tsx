@@ -27,8 +27,10 @@ const TopicPage: React.FC = () => {
       container
       py={4}
       height="calc(var(--vh, 1vh) * 95)"
-      justifyContent="space-around"
+      flexDirection="column"
+      justifyContent="start"
       alignItems="center"
+      flexWrap="nowrap"
     >
       <Grid>
         <TopicSelect />
