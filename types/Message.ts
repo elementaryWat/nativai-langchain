@@ -1,6 +1,14 @@
+export const SCORE_FEEDBACK_VALUE = {
+  Basic: 1,
+  Intermediate: 2,
+  Advanced: 3,
+};
 export interface FeedBack {
-  feedback: string;
-  score: number;
+  grammar_feedback: string;
+  grammar_score: number;
+  vocabulary_feedback: string;
+  vocabulary_score: number;
+  general_score: number;
 }
 
 export interface Message {
@@ -12,7 +20,6 @@ export interface Message {
   audioPlaying?: boolean;
 }
 
-
 export interface User {
   uid: string;
   email: string;
@@ -20,4 +27,3 @@ export interface User {
   image?: string;
   chat?: Message[];
 }
-

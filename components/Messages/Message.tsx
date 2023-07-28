@@ -29,7 +29,7 @@ const Message = ({
   // const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    trackOpenFeedbackMessage(editedMessage, feedback.feedback);
+    trackOpenFeedbackMessage(editedMessage, JSON.stringify(feedback));
   };
 
   const handleClose = () => {
@@ -97,7 +97,7 @@ const Message = ({
                     <>
                       <IconButton
                         aria-describedby={id}
-                        color="primary"
+                        color="secondary"
                         onClick={handleClick}
                       >
                         <FeedbackIcon />

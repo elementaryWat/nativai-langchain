@@ -1,48 +1,43 @@
-.signOut_container{
+.signOut_container {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #d1c4e9;
+  font-weight: bold;
+  padding: 0 2rem;
+}
+
+.signOut_saludo {
+  color: #111;
+  padding: 1rem;
+}
+
+.signOut_button {
+  margin: 0 2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: bold;
+  border-radius: 100px;
+  background: #673ab7;
+  color: #fff;
+}
+
+.signOut_button:hover {
+  background-color: #d1c4e9;
+  color: #111;
+}
+
+@media (max-width: 967px) {
+  .signOut_container {
     width: 100vw;
     height: 10vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color:#ad78f3;
+    color: #ad78f3;
     font-weight: bold;
-    padding: 0 2rem;
-}
-
-
-.signOut_saludo{
-    color:#111;
-    padding: 1rem;
-}
-
-
-.signOut_button{
-    margin:0 2rem;
-    padding: .5rem 1rem;
-    border: none;
-    font-weight: bold;
-    border-radius: 100px;
-    background: #6B45FA;   
-    color: #fff;
-}
-
-.signOut_button:hover{
-    background-color: #ad78f3;
-    color: #111;
-    
-}
-
-
-@media (max-width: 967px) {
-    .signOut_container{
-        width: 100vw;
-        height: 10vh;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color:#ad78f3;
-        font-weight: bold;
-        padding: 0;
-    }
-    
+    padding: 0;
+  }
 }

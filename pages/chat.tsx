@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Input from "../components/Input";
 import MessagesContainer from "../components/Messages/MessagesContainer";
 import { ChatContainer, FixedInputContainer } from "../components/styles";
 import { playAudio, synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
-import FeedbackDialog from "../components/FeedBackUser/FeedBackUser";
+// import FeedbackUser from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import { SignOut } from "../components/AuthComponent/SignOut";
+import { LENGTH_FEEDBACK } from "../utils/const";
 
 const Chat: React.FC = () => {
   const {
     chatId,
     username,
     messages,
-    isAudioPlaying,
+    // isAudioPlaying,
     loading,
     levelConversation,
     topicConversation,
@@ -23,10 +24,8 @@ const Chat: React.FC = () => {
     addFeedBack,
     setLoadingStatus,
     setErrorFeedback,
-    setAudioPlaying,
+    // setAudioPlaying,
   } = useChat();
-
-  const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,15 +39,8 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messages.length === 7) {
-      setOpenDialog(true);
-      trackStartEndChat(
-        chatId,
-        username,
-        levelConversation,
-        topicConversation,
-        false
-      );
+    if (messages.length === LENGTH_FEEDBACK) {
+      router.replace("/feedback");
     }
   }, [messages]);
 
@@ -110,17 +102,16 @@ const Chat: React.FC = () => {
 
   return (
     <>
-    <SignOut/>
-    <ChatContainer>
-      {/* <Typography variant="h4" align="center">
+      <SignOut />
+      <ChatContainer>
+        {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
       </Typography> */}
-      <MessagesContainer onSubmit={handleSubmit} />
-      <FixedInputContainer>
-        <Input onSubmit={handleSubmit} loadingMessage={loading} />
-      </FixedInputContainer>
-      <FeedbackDialog open={openDialog} setOpen={setOpenDialog} />
-    </ChatContainer>
+        <MessagesContainer onSubmit={handleSubmit} />
+        <FixedInputContainer>
+          <Input onSubmit={handleSubmit} loadingMessage={loading} />
+        </FixedInputContainer>
+      </ChatContainer>
     </>
   );
 };

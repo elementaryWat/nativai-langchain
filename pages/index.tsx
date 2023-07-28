@@ -6,10 +6,8 @@ import GettingStarted from "../components/Onboarding/GettingStarted/GettingStart
 import { PageContainer } from "../components/Onboarding/styled";
 import { useRouter } from "next/router";
 import { useChat } from "../store/chatbot/useChat";
-import NameInput from "../components/Onboarding/NameInput/NameInput";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
-import SigninButton from "../components/AuthComponent/SigninButton";
 import { useEffect } from "react";
 import { SignOut } from "../components/AuthComponent/SignOut";
 import {
