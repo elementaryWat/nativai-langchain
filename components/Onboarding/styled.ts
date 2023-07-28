@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 export const PageContainer = styled(Grid)<{ background?: string }>`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -72,7 +72,7 @@ export const StyledRadioButtonTopic = styled(Button)<
   margin: "5px",
   width: "40%",
   borderRadius: "30px",
-  height: "120px",
+  height: "100px",
   "&:hover": {
     backgroundColor: selected
       ? theme.palette.secondary.dark
