@@ -62,23 +62,23 @@ export const StyledRadioButton = styled(Button)<
   },
 }));
 
-export const StyledRadioButtonTopic = styled(Button)(
-  ({ theme, selected }: { theme: any; selected: boolean }) => ({
+export const StyledRadioButtonTopic = styled(Button)<
+  ButtonProps & { selected: boolean }
+>(({ theme, selected }: { theme: any; selected: boolean }) => ({
+  backgroundColor: selected
+    ? theme.palette.primary.dark
+    : theme.palette.primary.light,
+  color: selected ? theme.palette.text.secondary : theme.palette.text.main,
+  margin: "5px",
+  width: "40%",
+  borderRadius: "30px",
+  height: "120px",
+  "&:hover": {
     backgroundColor: selected
-      ? theme.palette.primary.dark
-      : theme.palette.primary.light,
-    color: selected ? theme.palette.text.secondary : theme.palette.text.main,
-    margin: "5px",
-    width: "40%",
-    borderRadius: "30px",
-    height: "120px",
-    "&:hover": {
-      backgroundColor: selected
-        ? theme.palette.secondary.dark
-        : theme.palette.secondary.light,
-    },
-  })
-);
+      ? theme.palette.secondary.dark
+      : theme.palette.secondary.light,
+  },
+}));
 
 export const StyledButton = styled(Button)`
   margin-top: 20px;
