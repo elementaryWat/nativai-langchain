@@ -185,7 +185,7 @@ export default function FeedbackUser() {
           mb={4}
           variant="h4"
         >
-          Bien hecho Augusto Romero!!
+          Bien hecho {username}!!
         </Typography>
         <Grid
           container
