@@ -47,7 +47,7 @@ export const StyledRadioButton = styled(Button)<
     ? theme.palette.primary.dark
     : theme.palette.primary.light,
   color: selected ? theme.palette.text.secondary : theme.palette.text.main,
-  margin: "1rem 0",
+  margin: ".4rem 0",
   width: "50%",
   borderRadius: "30px",
   height: "100px",
