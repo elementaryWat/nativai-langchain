@@ -28,14 +28,14 @@ const TopicPage: React.FC = () => {
       py={4}
       height="calc(var(--vh, 1vh) * 95)"
       flexDirection="column"
-      justifyContent="start"
+      justifyContent="space-evenly"
       alignItems="center"
       flexWrap="nowrap"
     >
-      <Grid>
+      <Grid item>
         <TopicSelect />
       </Grid>
-      <Grid>
+      <Grid item>
         <StyledButton
           disabled={topicConversation === ""}
           onClick={goToChat}
