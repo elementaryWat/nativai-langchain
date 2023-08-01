@@ -10,6 +10,8 @@ import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import { SignOut } from "../components/AuthComponent/SignOut";
 import { LENGTH_FEEDBACK } from "../utils/const";
+import { addNewChatUsage } from "../utils/userUsageUpdate";
+import { useSession } from "next-auth/react";
 
 const Chat: React.FC = () => {
   const {
@@ -27,14 +29,16 @@ const Chat: React.FC = () => {
     // setAudioPlaying,
   } = useChat();
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (messages.length === 0) {
       router.replace("/");
     }
-    trackStartEndChat(chatId, username, levelConversation, topicConversation);
     if (messages.length === 1) {
       synthesizeSpeech(messages[0].content);
+      trackStartEndChat(chatId, username, levelConversation, topicConversation);
+      addNewChatUsage(session.user.email);
     }
   }, []);
 

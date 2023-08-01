@@ -24,6 +24,7 @@ import {
   setAudioPlayingAction,
   removeLastAIResponseAction,
   editLastUserMessageAction,
+  setChatIdAction,
 } from "./chatbotSlice";
 import { INTRODUCTIONS, TOPICS } from "../../utils/const";
 import { promptIntroduction } from "../../pages/api/utils/promptTemplates";
@@ -67,6 +68,13 @@ export const useChat = () => {
   //     getInitialMessage();
   //   }
   // }, [messages, username, levelConversation, topicConversation]);
+
+  const setChatId = useCallback(
+    (chatId: string) => {
+      dispatch(setChatIdAction(chatId));
+    },
+    [dispatch]
+  );
 
   const setUsername = useCallback(
     (username: string) => {
@@ -150,6 +158,7 @@ export const useChat = () => {
     loading,
     levelConversation,
     topicConversation,
+    setChatId,
     getInitialMessage,
     setUsername,
     addMessage,

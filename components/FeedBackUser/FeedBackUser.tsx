@@ -27,6 +27,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { useSession } from "next-auth/react";
+import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -44,6 +46,7 @@ export default function FeedbackUser() {
   const [wordCount, setWordCount] = useState(0);
   const [averageScore, setAverageScore] = useState("");
   const router = useRouter();
+  const { data: session } = useSession();
 
   const {
     chatId,
@@ -51,11 +54,15 @@ export default function FeedbackUser() {
     messages,
     levelConversation,
     topicConversation,
+    setChatId,
     setTopicConversation,
   } = useChat();
 
   useEffect(() => {
     if (messages.length > 0) generateFinalFeedback();
+  }, []);
+
+  useEffect(() => {
     if (messages.length === LENGTH_FEEDBACK) {
       trackStartEndChat(
         chatId,
@@ -70,6 +77,7 @@ export default function FeedbackUser() {
   const redirectToTopicSelection = () => {
     setTopicConversation("");
     setRating(-1);
+    setChatId(`chat-${new Date().toISOString()}`);
     router.replace("/topics");
     // console.log("redirectToTopicSelection");
   };
@@ -105,6 +113,11 @@ export default function FeedbackUser() {
 
     setWordCount(wordsUsed.size);
     setAverageScore(finalScore);
+    updateUsageStatistics(
+      session.user.email,
+      wordsUsed.size,
+      topicConversation
+    );
   };
 
   const addFirebaseDocIdNotExists = async () => {

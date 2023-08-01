@@ -66,14 +66,17 @@ const OnboardingPage: React.FC = () => {
     // Verificar si el usuario ya existe en la colección "users"
     const userRef = doc(db, "users", userData.email);
     const userSnapshot = await getDoc(userRef);
-
     if (userSnapshot.exists()) {
       // Update lastLogin timestamp
       await updateDoc(userRef, { lastLogin: serverTimestamp() });
     } else {
       // El usuario no existe, agregarlo a la colección "users"
       try {
-        await setDoc(userRef, { ...userData, lastLogin: serverTimestamp() });
+        await setDoc(userRef, {
+          ...userData,
+          accountCreated: serverTimestamp(),
+          lastLogin: serverTimestamp(),
+        });
         console.log("Usuario agregado correctamente a la base de datos.");
       } catch (error) {
         console.error("Error al agregar el usuario:", error);

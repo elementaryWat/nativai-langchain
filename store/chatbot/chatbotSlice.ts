@@ -27,6 +27,9 @@ export const chatbotConfigSlice = createSlice({
   name: "chatbot",
   initialState,
   reducers: {
+    setChatIdAction: (state, action: PayloadAction<string>) => {
+      state.id = action.payload;
+    },
     setUsernameAction: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
     },
@@ -76,6 +79,7 @@ export const chatbotConfigSlice = createSlice({
 });
 
 export const {
+  setChatIdAction,
   setUsernameAction,
   setLevel,
   setTopic,
