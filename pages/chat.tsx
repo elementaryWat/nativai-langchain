@@ -12,6 +12,7 @@ import { SignOut } from "../components/AuthComponent/SignOut";
 import { LENGTH_FEEDBACK } from "../utils/const";
 import { addNewChatUsage } from "../utils/userUsageUpdate";
 import { useSession } from "next-auth/react";
+import MenuAppBar from "../components/base/Header";
 
 const Chat: React.FC = () => {
   const {
@@ -107,7 +108,7 @@ const Chat: React.FC = () => {
 
   return (
     <>
-      <SignOut />
+      <MenuAppBar />
       <ChatContainer>
         {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
