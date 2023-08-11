@@ -4,7 +4,7 @@ import Fab from "@mui/material/Fab";
 export const ChatContainer = styled("div")`
   display: flex;
   flex-direction: column;
-  height: calc(var(--vh, 1vh) * 90);
+  height: calc(var(--vh, 1vh) * 95);
 `;
 
 export const FixedInputContainer = styled("div")(({ theme }) => ({
