@@ -30,14 +30,15 @@ const pulseAnimation = keyframes`
   }
 `;
 
-export const RecordingFab = styled(Fab)(
+export const StyledFab = styled(Fab)(
   ({ theme, isRecording }: { theme: any; isRecording: boolean }) => ({
     "&.MuiFab-root": {
-      backgroundColor: theme.palette.secondary.main,
+      // backgroundColor: theme.palette.secondary.main,
+      backgroundColor: "#65236B",
       position: "absolute",
-      top: "-2.5rem",
-      width: "5rem",
-      height: "5rem",
+      top: "-50px",
+      width: "100px",
+      height: "100px",
     },
 
     ...(isRecording && {

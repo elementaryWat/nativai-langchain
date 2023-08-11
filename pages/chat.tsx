@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import MessagesContainer from "../components/Messages/MessagesContainer";
-import { ChatContainer, FixedInputContainer } from "../components/styles";
+import {
+  ChatContainer,
+  FixedInputContainer,
+  StyledFab,
+} from "../components/styles";
 import { playAudio, synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
 import { postChat, postFeedback } from "../utils/endpoints";
 // import FeedbackUser from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
-import { SignOut } from "../components/AuthComponent/SignOut";
+import GradingIcon from "@mui/icons-material/Grading";
 import { LENGTH_FEEDBACK } from "../utils/const";
 import { addNewChatUsage } from "../utils/userUsageUpdate";
 import { useSession } from "next-auth/react";
 import MenuAppBar from "../components/base/Header";
+import { Grid } from "@mui/material";
 
 const Chat: React.FC = () => {
   const {
@@ -31,13 +36,14 @@ const Chat: React.FC = () => {
   } = useChat();
   const router = useRouter();
   const { data: session } = useSession();
+  const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
 
   useEffect(() => {
     if (messages.length === 0) {
       router.replace("/");
     }
     if (messages.length === 1) {
-      synthesizeSpeech(messages[0].content);
+      // synthesizeSpeech(messages[0].content);
       trackStartEndChat(chatId, username, levelConversation, topicConversation);
       addNewChatUsage(session.user.email);
     }
@@ -45,7 +51,8 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (messages.length === LENGTH_FEEDBACK) {
-      router.replace("/feedback");
+      // router.replace("/feedback");
+      setReachedFeedbackLimit(true);
     }
   }, [messages]);
 
@@ -115,7 +122,19 @@ const Chat: React.FC = () => {
       </Typography> */}
         <MessagesContainer onSubmit={handleSubmit} />
         <FixedInputContainer>
-          <Input onSubmit={handleSubmit} loadingMessage={loading} />
+          {reachedFeedbackLimit ? (
+            <Grid container justifyContent="center" spacing={1}>
+              <StyledFab
+                onClick={() => router.replace("/feedback")}
+                aria-label="feedback"
+                color="primary"
+              >
+                <GradingIcon />
+              </StyledFab>
+            </Grid>
+          ) : (
+            <Input onSubmit={handleSubmit} loadingMessage={loading} />
+          )}
         </FixedInputContainer>
       </ChatContainer>
     </>
