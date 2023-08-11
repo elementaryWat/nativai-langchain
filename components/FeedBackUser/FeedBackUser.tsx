@@ -19,7 +19,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
-import { LENGTH_FEEDBACK } from "../../utils/const";
+import { INTERACTIONS_LIMIT } from "../../utils/const";
 import {
   doc,
   getDoc,
@@ -29,6 +29,7 @@ import {
 } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { updateUsageStatistics } from "../../utils/userUsageUpdate";
+import CoffeeIcon from "@mui/icons-material/Coffee";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -59,11 +60,15 @@ export default function FeedbackUser() {
   } = useChat();
 
   useEffect(() => {
-    if (messages.length > 0) generateFinalFeedback();
+    if (messages.length > 0 && session) {
+      generateFinalFeedback();
+      fetchCoffees();
+      decrementCoffee();
+    }
   }, []);
 
   useEffect(() => {
-    if (messages.length === LENGTH_FEEDBACK) {
+    if (messages.length === INTERACTIONS_LIMIT) {
       trackStartEndChat(
         chatId,
         username,
@@ -80,6 +85,28 @@ export default function FeedbackUser() {
     setChatId(`chat-${new Date().toISOString()}`);
     router.replace("/topics");
     // console.log("redirectToTopicSelection");
+  };
+
+  const [coffees, setCoffees] = useState(3); // Default 3 coffees
+
+  // Function to fetch coffees count from Firestore database
+  const fetchCoffees = async () => {
+    const db = getFirestore();
+    const userRef = doc(db, "users", session.user.email);
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+      setCoffees(userSnapshot.data().coffees || 3);
+    }
+  };
+
+  // Decrement coffee count in Firestore
+  const decrementCoffee = async () => {
+    const db = getFirestore();
+    const userRef = doc(db, "users", session.user.email);
+    await updateDoc(userRef, {
+      coffees: coffees - 1,
+    });
   };
 
   const generateFinalFeedback = () => {
@@ -334,6 +361,20 @@ export default function FeedbackUser() {
         </TellMoreWrapper>
       </FeedbackSectionCommet>
       <FeedbackSection>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "0.75", md: "1.5rem" },
+            textAlign: "center",
+            padding: "0 0 ",
+            "@media (max-width: 940px)": {
+              fontSize: "1.1rem",
+            },
+          }}
+          variant="h6"
+        >
+          Daily coffees remaining: {coffees} <CoffeeIcon />
+        </Typography>
         <FeedbackButton
           variant="contained"
           color="secondary"

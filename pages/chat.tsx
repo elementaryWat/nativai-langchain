@@ -13,10 +13,10 @@ import { postChat, postFeedback } from "../utils/endpoints";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import GradingIcon from "@mui/icons-material/Grading";
-import { LENGTH_FEEDBACK } from "../utils/const";
+import { INTERACTIONS_LIMIT } from "../utils/const";
 import { addNewChatUsage } from "../utils/userUsageUpdate";
 import { useSession } from "next-auth/react";
-import MenuAppBar from "../components/base/Header";
+import ChatMenuBar from "../components/base/Header";
 import { Grid } from "@mui/material";
 
 const Chat: React.FC = () => {
@@ -37,6 +37,8 @@ const Chat: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
+  const [interactionsRemaining, setInteractionsRemaining] =
+    useState(INTERACTIONS_LIMIT);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -50,7 +52,7 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messages.length === LENGTH_FEEDBACK) {
+    if (interactionsRemaining === 0) {
       // router.replace("/feedback");
       setReachedFeedbackLimit(true);
     }
@@ -63,6 +65,9 @@ const Chat: React.FC = () => {
         content: message,
         loadingFeedback: false,
       });
+      setInteractionsRemaining(
+        (interactionsRemaining) => interactionsRemaining - 1
+      );
     }
     setLoadingStatus(true);
     try {
@@ -115,7 +120,7 @@ const Chat: React.FC = () => {
 
   return (
     <>
-      <MenuAppBar />
+      <ChatMenuBar interactionsRemaining={interactionsRemaining} />
       <ChatContainer>
         {/* <Typography variant="h4" align="center">
         Interviewer Chatbot

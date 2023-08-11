@@ -18,6 +18,7 @@
     "@vercel/analytics": "^1.0.1",
     "aws-sdk": "^2.1387.0",
     "bootstrap-icons": "^1.10.5",
+    "date-fns": "^2.30.0",
     "dotenv": "^16.0.3",
     "fetch-blob": "^4.0.0",
     "firebase": "^9.22.1",
