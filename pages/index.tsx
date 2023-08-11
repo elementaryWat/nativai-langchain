@@ -18,6 +18,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
+import { differenceInDays } from "date-fns";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
@@ -62,20 +63,34 @@ const OnboardingPage: React.FC = () => {
 
   const addUserIfNotExists = async (userData) => {
     const db = getFirestore();
-
-    // Verificar si el usuario ya existe en la colección "users"
     const userRef = doc(db, "users", userData.email);
     const userSnapshot = await getDoc(userRef);
+
     if (userSnapshot.exists()) {
-      // Update lastLogin timestamp
-      await updateDoc(userRef, { lastLogin: serverTimestamp() });
+      const userLastLoginDate = userSnapshot.data().lastLogin?.toDate(); // Convert Firestore timestamp to JavaScript Date object
+      const currentDate = new Date();
+
+      // If there's no lastLogin or if lastLogin isn't today
+      if (
+        !userLastLoginDate ||
+        differenceInDays(currentDate, userLastLoginDate) !== 0
+      ) {
+        await updateDoc(userRef, {
+          lastLogin: serverTimestamp(),
+          coffees: 3, // Reset coffees count to 3
+        });
+      } else {
+        await updateDoc(userRef, {
+          coffees: userSnapshot.data().coffees || 3, // Set coffees count to 3 if its not defined
+        });
+      }
     } else {
-      // El usuario no existe, agregarlo a la colección "users"
       try {
         await setDoc(userRef, {
           ...userData,
           accountCreated: serverTimestamp(),
           lastLogin: serverTimestamp(),
+          coffees: 3, // Set initial coffees count to 3
         });
         console.log("Usuario agregado correctamente a la base de datos.");
       } catch (error) {

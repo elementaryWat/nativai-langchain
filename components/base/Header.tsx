@@ -6,11 +6,14 @@ import Typography from "@mui/material/Typography";
 import Face4Icon from "@mui/icons-material/Face4";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import CoffeeIcon from "@mui/icons-material/Coffee";
 import { IconButton } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+interface ChatMenuBarProps {
+  interactionsRemaining: number;
+}
 
-export default function MenuAppBar() {
+const ChatMenuBar: React.FC<ChatMenuBarProps> = ({ interactionsRemaining }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,7 +33,7 @@ export default function MenuAppBar() {
           </Typography>
           <div>
             <IconButton size="large" color="inherit">
-              <CoffeeIcon /> 1
+              <ElectricBoltIcon /> {interactionsRemaining}
             </IconButton>
             <IconButton
               size="large"
@@ -64,4 +67,6 @@ export default function MenuAppBar() {
       </AppBar>
     </Box>
   );
-}
+};
+
+export default ChatMenuBar;
