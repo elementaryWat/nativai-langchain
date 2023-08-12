@@ -10,7 +10,7 @@ import {
   MessagesPlaceholder,
   SystemMessagePromptTemplate,
 } from "langchain/prompts";
-import { INTRODUCTIONS, TOPICS } from "../../../utils/const";
+import { INTRODUCTIONS, TOPICS } from "../../../constants";
 import { promptIntroduction, promptSystem } from "./promptTemplates";
 
 export const makeChatChain = async (

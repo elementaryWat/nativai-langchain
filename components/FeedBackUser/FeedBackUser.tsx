@@ -19,7 +19,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
-import { INTERACTIONS_LIMIT } from "../../utils/const";
+import { INTERACTIONS_LIMIT } from "../../constants";
 import {
   doc,
   getDoc,
@@ -30,6 +30,7 @@ import {
 import { useSession } from "next-auth/react";
 import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 import CoffeeIcon from "@mui/icons-material/Coffee";
+import { ProModal } from "../ProModal/ProModal";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -48,6 +49,7 @@ export default function FeedbackUser() {
   const [averageScore, setAverageScore] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
+  const [showProModal, setShowProModal] = useState(false);
 
   const {
     chatId,
@@ -373,16 +375,18 @@ export default function FeedbackUser() {
           }}
           variant="h6"
         >
-          Daily coffees remaining: {coffees} <CoffeeIcon />
+          Cafés diarios restantes: {coffees} <CoffeeIcon />
         </Typography>
         <FeedbackButton
           variant="contained"
           color="secondary"
-          onClick={redirectToTopicSelection}
+          // onClick={redirectToTopicSelection}
+          onClick={() => setShowProModal(true)}
         >
           Iniciar otra conversación
         </FeedbackButton>
       </FeedbackSection>
+      <ProModal isOpen={showProModal} onClose={() => setShowProModal(false)} />
     </FeedbackContainer>
   );
 }
