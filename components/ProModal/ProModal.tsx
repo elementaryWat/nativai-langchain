@@ -26,8 +26,8 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   const onSubscribe = async () => {
     try {
       setLoading(true);
-      //   const response = await axios.get("/api/stripe");
-      //   window.location.href = response.data.url;
+      const response = await axios.post("/api/payments/create-subscription");
+      window.location.href = response.data.init_point;
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
