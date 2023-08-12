@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { PageContainer, StyledRadioButtonTopic } from "../styled";
 import { useChat } from "../../../store/chatbot/useChat";
-import { TOPICS } from "../../../utils/const";
+import { TOPICS } from "../../../constants";
 import FamilyIcon from "@mui/icons-material/FamilyRestroom";
 import WorkIcon from "@mui/icons-material/Work";
 import TravelIcon from "@mui/icons-material/Flight";
@@ -14,21 +14,19 @@ import EnvironmentIcon from "@mui/icons-material/Nature";
 import styled from "styled-components";
 
 const StyledTypographH4 = styled(Typography)`
-color: #000; 
-margin-bottom: 1rem;
-text-align: center;
-font-weight: 600;
-font-size:34px;
-font-style:normal;
-line-height:22px;
+  color: #000;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 34px;
+  font-style: normal;
+  line-height: 22px;
 `;
-
-
 
 const StyledGrid = styled(Grid)`
   width: 100%;
   height: 100%;
-  padding:1rem 0rem;
+  padding: 1rem 0rem;
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
@@ -52,10 +50,8 @@ const TopicSelect: React.FC = () => {
   };
 
   return (
-    <PageContainer flexDirection="column"  borderRadius='50px' >
-      <StyledTypographH4 >
-        Elige un tema
-      </StyledTypographH4>
+    <PageContainer flexDirection="column" borderRadius="50px">
+      <StyledTypographH4>Elige un tema</StyledTypographH4>
       <StyledGrid container>
         {Object.keys(TOPICS).map((topicKey) => (
           <StyledRadioButtonTopic

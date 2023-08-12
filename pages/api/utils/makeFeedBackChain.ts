@@ -2,7 +2,7 @@ import { LLMChain } from "langchain/chains";
 
 import { PromptTemplate } from "langchain/prompts";
 import { OpenAI } from "langchain/llms/openai";
-import { AI_FEEDBACK_PROMPT } from "../../../utils/const";
+import { AI_FEEDBACK_PROMPT } from "../../../constants";
 
 export const makeFeedbackChain = () => {
   const model = new OpenAI({

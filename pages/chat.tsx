@@ -13,7 +13,7 @@ import { postChat, postFeedback } from "../utils/endpoints";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import GradingIcon from "@mui/icons-material/Grading";
-import { INTERACTIONS_LIMIT } from "../utils/const";
+import { INTERACTIONS_LIMIT } from "../constants";
 import { addNewChatUsage } from "../utils/userUsageUpdate";
 import { useSession } from "next-auth/react";
 import ChatMenuBar from "../components/base/Header";

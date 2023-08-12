@@ -53,3 +53,36 @@ export const INTRODUCTIONS = {
   "environment-and-sustainability":
     "what steps have you taken to reduce your carbon footprint recently?",
 };
+
+export const tools = [
+  {
+    label: "Sesiones de Práctica Ilimitadas",
+    href: "/conversation",
+    color: "text-violet-500",
+    bgColor: "bg-violet-500/10",
+  },
+  {
+    label: "Correcciones Avanzadas de Gramática",
+    href: "/music",
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-500/10",
+  },
+  {
+    label: "Constructor de Vocabulario",
+    color: "text-pink-700",
+    bgColor: "bg-pink-700/10",
+    href: "/image",
+  },
+  {
+    label: "Simulaciones de Escenarios de la Vida Real",
+    color: "text-orange-700",
+    bgColor: "bg-orange-700/10",
+    href: "/video",
+  },
+  {
+    label: "Soporte Prioritario",
+    color: "text-green-700",
+    bgColor: "bg-green-700/10",
+    href: "/code",
+  },
+];

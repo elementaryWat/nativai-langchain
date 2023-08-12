@@ -1,5 +1,5 @@
 import { PromptTemplate } from "langchain";
-import { AI_INTRODUCTION_PROMPT, SYSTEM_PROMPT } from "../../../utils/const";
+import { AI_INTRODUCTION_PROMPT, SYSTEM_PROMPT } from "../../../constants";
 
 export const promptSystem = new PromptTemplate({
   template: SYSTEM_PROMPT,
