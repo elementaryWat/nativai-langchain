@@ -9,6 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   mercadopage.configure({
     access_token: process.env.MERCADOPAGO_API_KEY,
   });
+  console.log(process.env.MERCADOPAGO_API_KEY);
 
   try {
     const result = await mercadopage.preapproval.create({
@@ -25,8 +26,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       back_url: process.env.MERCADOPAGO_BACK_URL,
       notification_url: process.env.MERCADOPAGO_NOTIFICATION_URL,
     });
-
-    console.log(result);
     res.json(result.body);
   } catch (error) {
     console.log(error);
