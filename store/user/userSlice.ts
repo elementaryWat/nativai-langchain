@@ -7,6 +7,7 @@ const initialState: User = {
   level: "",
   coffees: 0,
   subscriptionStatus: "inactive",
+  hasCompletedOnboarding: false,
 };
 
 export const userConfigSlice = createSlice({
@@ -34,6 +35,12 @@ export const userConfigSlice = createSlice({
     setSubscriptionStatusAction: (state, action: PayloadAction<string>) => {
       state.subscriptionStatus = action.payload;
     },
+    setHasCompletedOnboardingAction: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.hasCompletedOnboarding = action.payload;
+    },
     setUserDataAction: (state, action: PayloadAction<User>) => {
       state.email = action.payload.email;
       state.name = action.payload.name;
@@ -41,6 +48,7 @@ export const userConfigSlice = createSlice({
       state.level = action.payload.level;
       state.coffees = action.payload.coffees;
       state.subscriptionStatus = action.payload.subscriptionStatus;
+      state.hasCompletedOnboarding = action.payload.hasCompletedOnboarding;
     },
   },
 });
@@ -53,6 +61,7 @@ export const {
   incrementCoffeesAction,
   decrementCoffeesAction,
   setSubscriptionStatusAction,
+  setHasCompletedOnboardingAction,
   setUserDataAction,
 } = userConfigSlice.actions;
 

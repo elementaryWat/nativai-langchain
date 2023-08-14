@@ -4,7 +4,6 @@ import { FeedBack, Message as MessageType } from "../../types/Message";
 interface ChatbotState {
   id: string;
   username: string;
-  level: string;
   topic: string;
   lastUserMessageIndex: number;
   messages: MessageType[];
@@ -15,7 +14,6 @@ interface ChatbotState {
 const initialState: ChatbotState = {
   id: `chat-${new Date().toISOString()}`,
   username: "",
-  level: "",
   topic: "",
   lastUserMessageIndex: 1,
   messages: [],
@@ -32,9 +30,6 @@ export const chatbotConfigSlice = createSlice({
     },
     setUsernameAction: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
-    },
-    setLevel: (state, action: PayloadAction<string>) => {
-      state.level = action.payload;
     },
     setTopic: (state, action: PayloadAction<string>) => {
       state.topic = action.payload;
@@ -81,7 +76,6 @@ export const chatbotConfigSlice = createSlice({
 export const {
   setChatIdAction,
   setUsernameAction,
-  setLevel,
   setTopic,
   setMessagesAction,
   addMessageAction,

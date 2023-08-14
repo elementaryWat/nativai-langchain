@@ -8,6 +8,7 @@ import {
   selectCoffees,
   selectSubscriptionStatus,
   selectUserState,
+  selectHasCompletedOnboarding,
 } from "./selectors";
 import {
   setEmailAction,
@@ -16,6 +17,7 @@ import {
   setCoffeesAction,
   setSubscriptionStatusAction,
   setUserDataAction,
+  setHasCompletedOnboardingAction,
 } from "./userSlice";
 import { User } from "../../types/User";
 
@@ -27,6 +29,7 @@ export const useUserData = () => {
   const level = useSelector(selectLevel);
   const coffees = useSelector(selectCoffees);
   const subscriptionStatus = useSelector(selectSubscriptionStatus);
+  const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
 
   const setEmail = useCallback(
     (newEmail: string) => {
@@ -63,6 +66,13 @@ export const useUserData = () => {
     [dispatch]
   );
 
+  const setHasCompletedOnboarding = useCallback(
+    (status: boolean) => {
+      dispatch(setHasCompletedOnboardingAction(status));
+    },
+    [dispatch]
+  );
+
   const setUserData = useCallback(
     (data: User) => {
       dispatch(setUserDataAction(data));
@@ -77,11 +87,13 @@ export const useUserData = () => {
     level,
     coffees,
     subscriptionStatus,
+    hasCompletedOnboarding,
     setEmail,
     setName,
     setLevel,
     setCoffees,
     setSubscriptionStatus,
+    setHasCompletedOnboarding,
     setUserData,
   };
 };

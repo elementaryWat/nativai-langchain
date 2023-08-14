@@ -7,6 +7,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { Message } from "../types/Message";
 import { Subscription } from "../types/Subscription";
 import { User } from "../types/User";
 const SUBSCRIPTIONS_COLLECTION = "subscriptions";
@@ -92,4 +93,39 @@ export const addSubscriptionIfNotExists = async (
       console.error("Error adding the subscription:", error);
     }
   }
+};
+
+export const addFeedbackIfNotExists = async (
+  chatId: string,
+  username: string,
+  level: string,
+  topicConversation: string,
+  messages: Message[]
+) => {
+  const db = getFirestore();
+  const chatFeedBackRef = doc(db, "feedbacks", chatId);
+  const chatFeedbackSnapshot = await getDoc(chatFeedBackRef);
+  if (!chatFeedbackSnapshot.exists()) {
+    await setDoc(chatFeedBackRef, {
+      chatId,
+      username,
+      level,
+      topicConversation,
+      messages,
+    });
+  }
+  return chatFeedBackRef;
+};
+
+export const decrementCoffee = async (
+  userEmail: string,
+  currentCoffees: number,
+  setCoffeesCallback: (currentCoffees: number) => void
+) => {
+  const db = getFirestore();
+  const userRef = doc(db, "users", userEmail);
+  await updateDoc(userRef, {
+    coffees: currentCoffees - 1,
+  });
+  setCoffeesCallback(currentCoffees - 1);
 };

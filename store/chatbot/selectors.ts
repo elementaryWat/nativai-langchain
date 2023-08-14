@@ -13,11 +13,6 @@ export const selectUsername = createSelector(
   (chat) => chat.username
 );
 
-export const selectLevel = createSelector(
-  selectChatbotState,
-  (chat) => chat.level
-);
-
 export const selectTopic = createSelector(
   selectChatbotState,
   (chat) => chat.topic

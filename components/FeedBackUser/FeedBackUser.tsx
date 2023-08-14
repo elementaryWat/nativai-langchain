@@ -20,17 +20,16 @@ import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
 import { INTERACTIONS_LIMIT } from "../../constants";
-import {
-  doc,
-  getDoc,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { ProModal } from "../ProModal/ProModal";
+import { useUserData } from "../../store/user/useUserData";
+import {
+  addFeedbackIfNotExists,
+  decrementCoffee,
+} from "../../utils/firebaseFunctions";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -55,29 +54,23 @@ export default function FeedbackUser() {
     chatId,
     username,
     messages,
-    levelConversation,
     topicConversation,
     setChatId,
     setTopicConversation,
   } = useChat();
 
+  const { email, level, coffees, setCoffees } = useUserData();
+
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
-      fetchCoffees();
-      decrementCoffee();
+      decrementCoffee(email, coffees, setCoffees);
     }
   }, []);
 
   useEffect(() => {
     if (messages.length === INTERACTIONS_LIMIT) {
-      trackStartEndChat(
-        chatId,
-        username,
-        levelConversation,
-        topicConversation,
-        false
-      );
+      trackStartEndChat(chatId, username, level, topicConversation, false);
     }
   }, [messages]);
 
@@ -87,28 +80,6 @@ export default function FeedbackUser() {
     setChatId(`chat-${new Date().toISOString()}`);
     router.replace("/topics");
     // console.log("redirectToTopicSelection");
-  };
-
-  const [coffees, setCoffees] = useState(3); // Default 3 coffees
-
-  // Function to fetch coffees count from Firestore database
-  const fetchCoffees = async () => {
-    const db = getFirestore();
-    const userRef = doc(db, "users", session.user.email);
-    const userSnapshot = await getDoc(userRef);
-
-    if (userSnapshot.exists()) {
-      setCoffees(userSnapshot.data().coffees || 3);
-    }
-  };
-
-  // Decrement coffee count in Firestore
-  const decrementCoffee = async () => {
-    const db = getFirestore();
-    const userRef = doc(db, "users", session.user.email);
-    await updateDoc(userRef, {
-      coffees: coffees - 1,
-    });
   };
 
   const generateFinalFeedback = () => {
@@ -149,26 +120,16 @@ export default function FeedbackUser() {
     );
   };
 
-  const addFirebaseDocIdNotExists = async () => {
-    const db = getFirestore();
-    const chatFeedBackRef = doc(db, "feedbacks", chatId);
-    const chatFeedbackSnapshot = await getDoc(chatFeedBackRef);
-    if (!chatFeedbackSnapshot.exists()) {
-      await setDoc(chatFeedBackRef, {
-        chatId,
-        username,
-        levelConversation,
-        topicConversation,
-        messages,
-      });
-    }
-    return chatFeedBackRef;
-  };
-
   const handleSubmitRecommendation = async (index: number) => {
     setRating(index);
     if (index !== -1) {
-      let docRef = await addFirebaseDocIdNotExists();
+      let docRef = await addFeedbackIfNotExists(
+        chatId,
+        username,
+        level,
+        topicConversation,
+        messages
+      );
       await updateDoc(docRef, {
         rating: index > 1 ? 5 : (index = 1 ? 3 : 1), //Change of scale for rating
         recommendationScore: index + 1,
@@ -180,7 +141,13 @@ export default function FeedbackUser() {
   const sendComment = async () => {
     if (comment !== "") {
       setSendingComment(true);
-      let docRef = await addFirebaseDocIdNotExists();
+      let docRef = await addFeedbackIfNotExists(
+        chatId,
+        username,
+        level,
+        topicConversation,
+        messages
+      );
       await updateDoc(docRef, {
         comment,
       });

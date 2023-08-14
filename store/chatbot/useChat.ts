@@ -6,14 +6,12 @@ import {
   selectTopic,
   selectLoading,
   selectMessages,
-  selectLevel,
   selectChatId,
   selectUsername,
   selectIsAudioPlaying,
 } from "./selectors";
 import {
   addMessageAction,
-  setLevel,
   setLoading,
   addFeedBackToLastMessage,
   setLastUserMessageIndex,
@@ -33,7 +31,6 @@ export const useChat = () => {
   const dispatch = useDispatch();
   const chatId = useSelector(selectChatId);
   const username = useSelector(selectUsername);
-  const levelConversation = useSelector(selectLevel);
   const topicConversation = useSelector(selectTopic);
   const messages = useSelector(selectMessages);
   const isAudioPlaying = useSelector(selectIsAudioPlaying);
@@ -79,13 +76,6 @@ export const useChat = () => {
   const setUsername = useCallback(
     (username: string) => {
       dispatch(setUsernameAction(username));
-    },
-    [dispatch]
-  );
-
-  const setLevelConversation = useCallback(
-    (level: string) => {
-      dispatch(setLevel(level));
     },
     [dispatch]
   );
@@ -156,7 +146,6 @@ export const useChat = () => {
     messages,
     isAudioPlaying,
     loading,
-    levelConversation,
     topicConversation,
     setChatId,
     getInitialMessage,
@@ -168,7 +157,6 @@ export const useChat = () => {
     addFeedBack,
     setErrorFeedback,
     setLoadingStatus,
-    setLevelConversation,
     setTopicConversation,
   };
 };

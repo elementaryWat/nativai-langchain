@@ -13,11 +13,12 @@ import { postChat, postFeedback } from "../utils/endpoints";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
 import GradingIcon from "@mui/icons-material/Grading";
-import { INTERACTIONS_LIMIT } from "../constants";
 import { addNewChatUsage } from "../utils/userUsageUpdate";
 import { useSession } from "next-auth/react";
-import ChatMenuBar from "../components/base/Header";
 import { Grid } from "@mui/material";
+import ChatMenuBar from "../components/base/Header";
+import { INTERACTIONS_LIMIT } from "../constants";
+import { useUserData } from "../store/user/useUserData";
 
 const Chat: React.FC = () => {
   const {
@@ -26,7 +27,6 @@ const Chat: React.FC = () => {
     messages,
     // isAudioPlaying,
     loading,
-    levelConversation,
     topicConversation,
     addMessage,
     addFeedBack,
@@ -34,6 +34,8 @@ const Chat: React.FC = () => {
     setErrorFeedback,
     // setAudioPlaying,
   } = useChat();
+
+  const { level } = useUserData();
   const router = useRouter();
   const { data: session } = useSession();
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
@@ -46,7 +48,7 @@ const Chat: React.FC = () => {
     }
     if (messages.length === 1) {
       // synthesizeSpeech(messages[0].content);
-      trackStartEndChat(chatId, username, levelConversation, topicConversation);
+      trackStartEndChat(chatId, username, level, topicConversation);
       addNewChatUsage(session.user.email);
     }
   }, []);
@@ -75,7 +77,7 @@ const Chat: React.FC = () => {
         chatId,
         username,
         message,
-        levelConversation,
+        level,
         topicConversation
       );
       await synthesizeSpeech(response);

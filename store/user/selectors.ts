@@ -27,3 +27,8 @@ export const selectSubscriptionStatus = createSelector(
   selectUserState,
   (user) => user.subscriptionStatus
 );
+
+export const selectHasCompletedOnboarding = createSelector(
+  selectUserState,
+  (user) => user.hasCompletedOnboarding
+);

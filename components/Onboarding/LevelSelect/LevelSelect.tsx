@@ -3,6 +3,7 @@ import { Grid, Typography, Box } from "@mui/material";
 import { PageContainer, StyledRadioButton } from "../styled";
 import { useChat } from "../../../store/chatbot/useChat";
 import styled from "styled-components";
+import { useUserData } from "../../../store/user/useUserData";
 
 const levelDescriptions = {
   "B1 - Intermediate": "Soy capaz de tener una conversación simple",
@@ -24,7 +25,7 @@ const StyledTypographH4 = styled(Typography)`
 `;
 
 const LevelSelect: React.FC = () => {
-  const { levelConversation, setLevelConversation } = useChat();
+  const { level: levelConversation, setLevel } = useUserData();
 
   return (
     <PageContainer flexDirection="column" borderRadius="50px">
@@ -40,7 +41,7 @@ const LevelSelect: React.FC = () => {
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton
             key={level}
-            onClick={() => setLevelConversation(level)}
+            onClick={() => setLevel(level)}
             selected={levelConversation === level}
           >
             <Box width="100%">

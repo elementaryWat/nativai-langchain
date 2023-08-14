@@ -5,6 +5,7 @@ export interface User {
   name: string;
   level?: string;
   coffees?: number;
+  hasCompletedOnboarding?: boolean;
   subscriptionStatus?: string; // could be "active", "inactive", etc.
   image?: string;
   chats?: Chat[];

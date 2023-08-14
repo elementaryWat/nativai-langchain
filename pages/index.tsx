@@ -27,15 +27,10 @@ const OnboardingPage: React.FC = () => {
   //     }
   // },[session])
 
-  const {
-    getInitialMessage,
-    username,
-    setUsername,
-    levelConversation,
-    topicConversation,
-  } = useChat();
+  const { getInitialMessage, username, setUsername, topicConversation } =
+    useChat();
 
-  const { setUserData } = useUserData();
+  const { setUserData, level } = useUserData();
 
   const goToChat = async () => {
     await getInitialMessage();
@@ -60,7 +55,7 @@ const OnboardingPage: React.FC = () => {
         };
 
         let currentUser = await addUserIfNotExists(userData);
-        // setUsername(currentUser.name);
+        setUsername(currentUser.name);
         setUserData(currentUser);
       };
       setCurrentUserData();
@@ -69,7 +64,7 @@ const OnboardingPage: React.FC = () => {
 
   const isNextDisabled = () =>
     // (activeStep === 1 && username === "") ||
-    (activeStep === 1 && levelConversation === "") ||
+    (activeStep === 1 && level === "") ||
     (activeStep === 2 && topicConversation === "");
 
   return (
