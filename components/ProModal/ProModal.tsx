@@ -13,21 +13,49 @@ import {
 } from "@mui/material";
 import { useProModal } from "../../hooks/use-pro-modal";
 import { tools } from "../../constants";
+import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
 
 interface ProModalProps {
   isOpen: boolean;
   onClose: () => void;
+  userEmail: string;
 }
 
-export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
+export const ProModal: React.FC<ProModalProps> = ({
+  isOpen,
+  onClose,
+  userEmail,
+}) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-
+  const TEST_USER = "test_user_1060745452@testuser.com";
   const onSubscribe = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/payments/create-subscription");
-      window.location.href = response.data.init_point;
+      const response = await axios.post(
+        "/api/payments/create-subscription-config",
+        {
+          payer_email: TEST_USER,
+        }
+      );
+
+      const { data } = response;
+
+      if (data && data.id) {
+        const subscriptionDetails = {
+          userId: userEmail,
+          userIdTest: TEST_USER,
+          subscriptionStatus: data.status,
+          subscriptionId: data.id,
+          dateCreated: data.date_created,
+        };
+
+        await addSubscriptionIfNotExists(subscriptionDetails);
+
+        window.location.href = data.init_point;
+      } else {
+        toast.error("Invalid response from server.");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

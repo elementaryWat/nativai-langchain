@@ -15,10 +15,7 @@ export interface Message {
   audioPlaying?: boolean;
 }
 
-export interface User {
-  uid: string;
-  email: string;
-  name: string;
-  image?: string;
-  chat?: Message[];
+export interface Chat {
+  id: string;
+  messages: Message[];
 }

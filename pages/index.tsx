@@ -10,15 +10,7 @@ import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SignOut } from "../components/AuthComponent/SignOut";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
-import { differenceInDays } from "date-fns";
+import { addUserIfNotExists } from "../utils/firebaseFunctions";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
@@ -61,44 +53,6 @@ const OnboardingPage: React.FC = () => {
     <TopicSelect />,
   ];
 
-  const addUserIfNotExists = async (userData) => {
-    const db = getFirestore();
-    const userRef = doc(db, "users", userData.email);
-    const userSnapshot = await getDoc(userRef);
-
-    if (userSnapshot.exists()) {
-      const userLastLoginDate = userSnapshot.data().lastLogin?.toDate(); // Convert Firestore timestamp to JavaScript Date object
-      const currentDate = new Date();
-
-      // If there's no lastLogin or if lastLogin isn't today
-      if (
-        !userLastLoginDate ||
-        differenceInDays(currentDate, userLastLoginDate) !== 0
-      ) {
-        await updateDoc(userRef, {
-          lastLogin: serverTimestamp(),
-          coffees: 3, // Reset coffees count to 3
-        });
-      } else {
-        await updateDoc(userRef, {
-          coffees: userSnapshot.data().coffees || 3, // Set coffees count to 3 if its not defined
-        });
-      }
-    } else {
-      try {
-        await setDoc(userRef, {
-          ...userData,
-          accountCreated: serverTimestamp(),
-          lastLogin: serverTimestamp(),
-          coffees: 3, // Set initial coffees count to 3
-        });
-        console.log("Usuario agregado correctamente a la base de datos.");
-      } catch (error) {
-        console.error("Error al agregar el usuario:", error);
-      }
-    }
-  };
-
   useEffect(() => {
     if (session && session.user) {
       // Crear el objeto userData con los datos del usuario
@@ -106,7 +60,7 @@ const OnboardingPage: React.FC = () => {
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
-        chat: [], // Puedes inicializar el chat como un array vacío
+        chats: [], // Puedes inicializar el chat como un array vacío
       };
 
       // Llamar a la función para agregar el usuario a la colección "users"

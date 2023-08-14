@@ -1,34 +1,50 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import mercadopage from "mercadopago";
-
-const receiveWebhookHandler = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+import mercadopago from "mercadopago";
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
 
-  mercadopage.configure({
+  mercadopago.configure({
     access_token: process.env.MERCADOPAGO_API_KEY,
   });
 
   try {
-    const payment = req.query;
-    console.log(payment);
+    const transaction = req.query;
+    console.log(transaction);
 
-    if (payment.type === "payment") {
-      const data = await mercadopage.payment.findById(
-        payment["data.id"] as string
-      );
-      console.log(data);
+    if (req.body.type === "test") {
+      return res.status(200).send("Valid test.");
     }
 
+    if (transaction.type === "subscription_preapproval") {
+      const preapproval_data = await mercadopago.preapproval.findById(
+        transaction["data.id"] as string
+      );
+      console.log(preapproval_data);
+
+      // Forward the payment details to your Google Cloud Function endpoint
+      await fetch("https://receivewebhookevent-t6ijlufl2a-uc.a.run.app", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transactionType: transaction.type,
+          subscriptionId: preapproval_data.body.id,
+          subscriptionStatus: preapproval_data.body.status,
+          expirationDate: preapproval_data.body?.auto_recurring?.end_date,
+        }),
+      });
+    } else if (transaction.type === "subscription_authorized_payment") {
+      const payment_data = await mercadopago.payment.findById(
+        transaction["data.id"] as string
+      );
+      console.log(payment_data);
+    }
     res.status(204).end();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: "Something goes wrong" });
   }
 };
-
-export default receiveWebhookHandler;

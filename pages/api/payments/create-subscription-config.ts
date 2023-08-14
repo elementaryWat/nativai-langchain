@@ -9,11 +9,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   mercadopage.configure({
     access_token: process.env.MERCADOPAGO_API_KEY,
   });
-  console.log(process.env.MERCADOPAGO_API_KEY);
+  const { payer_email } = req.body;
+
+  if (!payer_email) {
+    return res
+      .status(400)
+      .json({ message: "Payer Email parameter is missing" });
+  }
 
   try {
     const result = await mercadopage.preapproval.create({
-      id: process.env.MERCADOPAGO_ID,
       auto_recurring: {
         frequency: 1,
         frequency_type: "months",
@@ -22,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
       external_reference: "Premium",
       reason: "Premium plan",
-      payer_email: "test_user_1425278301@testuser.com",
+      payer_email,
       back_url: process.env.MERCADOPAGO_BACK_URL,
       notification_url: process.env.MERCADOPAGO_NOTIFICATION_URL,
     });
