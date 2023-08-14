@@ -26,8 +26,8 @@ import {
   editLastUserMessageAction,
   setChatIdAction,
 } from "./chatbotSlice";
-import { INTRODUCTIONS, TOPICS } from "../../constants";
 import { promptIntroduction } from "../../pages/api/utils/promptTemplates";
+import { INTRODUCTIONS, TOPICS } from "../../constants";
 
 export const useChat = () => {
   const dispatch = useDispatch();

@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SignOut } from "../components/AuthComponent/SignOut";
 import { addUserIfNotExists } from "../utils/firebaseFunctions";
+import { useUserData } from "../store/user/useUserData";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
@@ -34,11 +35,7 @@ const OnboardingPage: React.FC = () => {
     topicConversation,
   } = useChat();
 
-  useEffect(() => {
-    if (session) {
-      setUsername(session.user.name);
-    }
-  }, [session]);
+  const { setUserData } = useUserData();
 
   const goToChat = async () => {
     await getInitialMessage();
@@ -55,16 +52,18 @@ const OnboardingPage: React.FC = () => {
 
   useEffect(() => {
     if (session && session.user) {
-      // Crear el objeto userData con los datos del usuario
-      const userData = {
-        name: session.user.name,
-        email: session.user.email,
-        image: session.user.image,
-        chats: [], // Puedes inicializar el chat como un array vacío
-      };
+      const setCurrentUserData = async () => {
+        const userData = {
+          name: session.user.name,
+          email: session.user.email,
+          image: session.user.image,
+        };
 
-      // Llamar a la función para agregar el usuario a la colección "users"
-      addUserIfNotExists(userData);
+        let currentUser = await addUserIfNotExists(userData);
+        // setUsername(currentUser.name);
+        setUserData(currentUser);
+      };
+      setCurrentUserData();
     }
   }, [session]);
 
