@@ -21,9 +21,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const preapproval_data = await mercadopago.preapproval.findById(
         transaction["data.id"] as string
       );
-      console.log(preapproval_data);
 
-      // Forward the payment details to your Google Cloud Function endpoint
+      // Forward the payment details to Google Cloud Function endpointå
       await fetch("https://receivewebhookevent-t6ijlufl2a-uc.a.run.app", {
         method: "POST",
         headers: {
@@ -37,6 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }),
       });
     } else if (transaction.type === "subscription_authorized_payment") {
+      console.log(transaction["data.id"]);
       const payment_data = await mercadopago.payment.findById(
         transaction["data.id"] as string
       );
