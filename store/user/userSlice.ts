@@ -1,68 +1,55 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../types/User";
+import { fetchUserDataAction, updateUserDataAction } from "./asyncActions";
 
-const initialState: User = {
-  email: "",
-  name: "",
-  level: "",
-  coffees: 0,
-  subscriptionStatus: "inactive",
-  hasCompletedOnboarding: false,
+const initialState: { userData: User; status: string; error: string } = {
+  userData: {
+    email: "",
+    name: "",
+    level: "",
+    coffees: 0,
+    subscriptionStatus: "pending",
+    subscriptionId: "",
+    hasCompletedOnboarding: false,
+  },
+  status: "",
+  error: "",
 };
 
 export const userConfigSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    setEmailAction: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
-    },
-    setNameAction: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
-    },
-    setLevelAction: (state, action: PayloadAction<string>) => {
-      state.level = action.payload;
-    },
-    setCoffeesAction: (state, action: PayloadAction<number>) => {
-      state.coffees = action.payload;
-    },
-    incrementCoffeesAction: (state) => {
-      state.coffees += 1;
-    },
-    decrementCoffeesAction: (state) => {
-      state.coffees -= 1;
-    },
-    setSubscriptionStatusAction: (state, action: PayloadAction<string>) => {
-      state.subscriptionStatus = action.payload;
-    },
-    setHasCompletedOnboardingAction: (
-      state,
-      action: PayloadAction<boolean>
-    ) => {
-      state.hasCompletedOnboarding = action.payload;
-    },
-    setUserDataAction: (state, action: PayloadAction<User>) => {
-      state.email = action.payload.email;
-      state.name = action.payload.name;
-      state.image = action.payload.image;
-      state.level = action.payload.level;
-      state.coffees = action.payload.coffees;
-      state.subscriptionStatus = action.payload.subscriptionStatus;
-      state.hasCompletedOnboarding = action.payload.hasCompletedOnboarding;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserDataAction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchUserDataAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userData = action.payload;
+      })
+      .addCase(fetchUserDataAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(updateUserDataAction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserDataAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        // merge updated data with existing userData
+        state.userData = { ...state.userData, ...action.payload };
+      })
+      .addCase(updateUserDataAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 
-export const {
-  setEmailAction,
-  setNameAction,
-  setLevelAction,
-  setCoffeesAction,
-  incrementCoffeesAction,
-  decrementCoffeesAction,
-  setSubscriptionStatusAction,
-  setHasCompletedOnboardingAction,
-  setUserDataAction,
-} = userConfigSlice.actions;
+// export const {
+
+// } = userConfigSlice.actions;
 
 export default userConfigSlice;

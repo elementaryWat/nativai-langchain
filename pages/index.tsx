@@ -27,16 +27,15 @@ const OnboardingPage: React.FC = () => {
   //     }
   // },[session])
 
-  const { getInitialMessage, username, setUsername, topicConversation } =
-    useChat();
+  const { getInitialMessage, setUsername, topicConversation } = useChat();
 
-  const { setUserData, level } = useUserData();
+  const { userData: userLocalData, level, fetchUserData } = useUserData();
 
-  const goToChat = async () => {
+  const lastStepOnboardingHandler = async () => {
     await getInitialMessage();
     router.push("/chat");
   };
-  const nextHandlers = [null, null, goToChat];
+  const nextHandlers = [null, null, lastStepOnboardingHandler];
 
   const stepComponents = [
     <GettingStarted />,
@@ -47,18 +46,7 @@ const OnboardingPage: React.FC = () => {
 
   useEffect(() => {
     if (session && session.user) {
-      const setCurrentUserData = async () => {
-        const userData = {
-          name: session.user.name,
-          email: session.user.email,
-          image: session.user.image,
-        };
-
-        let currentUser = await addUserIfNotExists(userData);
-        setUsername(currentUser.name);
-        setUserData(currentUser);
-      };
-      setCurrentUserData();
+      fetchUserData(session.user.name, session.user.email, session.user.image);
     }
   }, [session]);
 

@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
-import { RootState } from "..";
+import { AppState } from "..";
 
-const selectChatbotState = (state: RootState) => state.chatbot;
+const selectChatbotState = (state: AppState) => state.chatbot;
 
 export const selectChatId = createSelector(
   selectChatbotState,

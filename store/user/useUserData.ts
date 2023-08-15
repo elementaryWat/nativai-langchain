@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import {
   selectEmail,
@@ -10,19 +9,12 @@ import {
   selectUserState,
   selectHasCompletedOnboarding,
 } from "./selectors";
-import {
-  setEmailAction,
-  setNameAction,
-  setLevelAction,
-  setCoffeesAction,
-  setSubscriptionStatusAction,
-  setUserDataAction,
-  setHasCompletedOnboardingAction,
-} from "./userSlice";
-import { User } from "../../types/User";
+import { fetchUserDataAction, updateUserDataAction } from "./asyncActions";
+import { useAppDispatch } from "..";
+import { UserUpdate } from "../../types/User";
 
 export const useUserData = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
   const username = useSelector(selectUsername);
@@ -31,51 +23,16 @@ export const useUserData = () => {
   const subscriptionStatus = useSelector(selectSubscriptionStatus);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
 
-  const setEmail = useCallback(
-    (newEmail: string) => {
-      dispatch(setEmailAction(newEmail));
-    },
-    [dispatch]
-  );
-
-  const setName = useCallback(
-    (newUsername: string) => {
-      dispatch(setNameAction(newUsername));
-    },
-    [dispatch]
-  );
-
-  const setLevel = useCallback(
-    (newLevel: string) => {
-      dispatch(setLevelAction(newLevel));
-    },
-    [dispatch]
-  );
-
-  const setCoffees = useCallback(
-    (newCoffees: number) => {
-      dispatch(setCoffeesAction(newCoffees));
-    },
-    [dispatch]
-  );
-
-  const setSubscriptionStatus = useCallback(
-    (newStatus: string) => {
-      dispatch(setSubscriptionStatusAction(newStatus));
-    },
-    [dispatch]
-  );
-
-  const setHasCompletedOnboarding = useCallback(
-    (status: boolean) => {
-      dispatch(setHasCompletedOnboardingAction(status));
+  const fetchUserData = useCallback(
+    (userName: string, userEmail: string, image: string) => {
+      dispatch(fetchUserDataAction({ userName, userEmail, image }));
     },
     [dispatch]
   );
 
   const setUserData = useCallback(
-    (data: User) => {
-      dispatch(setUserDataAction(data));
+    (userEmail: string, updatedData: UserUpdate) => {
+      dispatch(updateUserDataAction({ userEmail, updatedData }));
     },
     [dispatch]
   );
@@ -88,12 +45,7 @@ export const useUserData = () => {
     coffees,
     subscriptionStatus,
     hasCompletedOnboarding,
-    setEmail,
-    setName,
-    setLevel,
-    setCoffees,
-    setSubscriptionStatus,
-    setHasCompletedOnboarding,
+    fetchUserData,
     setUserData,
   };
 };

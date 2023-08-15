@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
-import { RootState } from "..";
+import { AppState } from "..";
 
-export const selectUserState = (state: RootState) => state.user;
+export const selectUserState = (state: AppState) => state.user.userData;
 
 export const selectEmail = createSelector(
   selectUserState,
