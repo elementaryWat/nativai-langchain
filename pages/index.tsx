@@ -10,7 +10,6 @@ import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SignOut } from "../components/AuthComponent/SignOut";
-import { addUserIfNotExists } from "../utils/firebaseFunctions";
 import { useUserData } from "../store/user/useUserData";
 
 const OnboardingPage: React.FC = () => {
@@ -27,14 +26,22 @@ const OnboardingPage: React.FC = () => {
   //     }
   // },[session])
 
-  const { getInitialMessage, setUsername, topicConversation } = useChat();
+  const { getInitialMessage, topicConversation } = useChat();
 
-  const { userData: userLocalData, level, fetchUserData } = useUserData();
+  const {
+    level,
+    username,
+    hasCompletedOnboarding,
+    fetchUserData,
+    setUserData,
+  } = useUserData();
 
   const lastStepOnboardingHandler = async () => {
-    await getInitialMessage();
+    setUserData({ hasCompletedOnboarding: true });
+    await getInitialMessage(username);
     router.push("/chat");
   };
+
   const nextHandlers = [null, null, lastStepOnboardingHandler];
 
   const stepComponents = [

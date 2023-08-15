@@ -4,6 +4,7 @@ import styled from "styled-components";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useChat } from "../store/chatbot/useChat";
 import { useRouter } from "next/router";
+import { useUserData } from "../store/user/useUserData";
 
 const StyledButton = styled(Button)`
   padding: 1rem;
@@ -14,10 +15,11 @@ const TopicPage: React.FC = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { topicConversation, getInitialMessage } = useChat();
+  const { username } = useUserData();
 
   const goToChat = async () => {
     setLoading(true);
-    await getInitialMessage();
+    await getInitialMessage(username);
     setLoading(false);
     router.push("/chat");
   };

@@ -25,7 +25,7 @@ const StyledTypographH4 = styled(Typography)`
 `;
 
 const LevelSelect: React.FC = () => {
-  const { level: levelConversation, setLevel } = useUserData();
+  const { level: levelConversation, setUserData } = useUserData();
 
   return (
     <PageContainer flexDirection="column" borderRadius="50px">
@@ -41,7 +41,7 @@ const LevelSelect: React.FC = () => {
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton
             key={level}
-            onClick={() => setLevel(level)}
+            onClick={() => setUserData({ level })}
             selected={levelConversation === level}
           >
             <Box width="100%">

@@ -69,19 +69,16 @@ export const fetchUserDataAction = createAsyncThunk<
 
 export const updateUserDataAction = createAsyncThunk<
   User,
-  { userEmail: string; updatedData: UserUpdate },
+  { updatedData: UserUpdate },
   { rejectValue: any; state: AppState }
->(
-  "user/updateUser",
-  async ({ userEmail, updatedData }, { rejectWithValue, getState }) => {
-    const db = getFirestore();
-    let userData = getState().user.userData;
-    const userRef = doc(db, USERS_COLLECTION, userEmail);
-    try {
-      await updateDoc(userRef, { ...userData, ...updatedData });
-      return { ...userData, ...updatedData }; // returning the updated data
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+>("user/updateUser", async ({ updatedData }, { rejectWithValue, getState }) => {
+  const db = getFirestore();
+  let userData = getState().user.userData;
+  const userRef = doc(db, USERS_COLLECTION, userData.email);
+  try {
+    await updateDoc(userRef, { ...userData, ...updatedData });
+    return { ...userData, ...updatedData }; // returning the updated data
+  } catch (error) {
+    return rejectWithValue(error);
   }
-);
+});

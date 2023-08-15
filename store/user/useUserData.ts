@@ -31,8 +31,8 @@ export const useUserData = () => {
   );
 
   const setUserData = useCallback(
-    (userEmail: string, updatedData: UserUpdate) => {
-      dispatch(updateUserDataAction({ userEmail, updatedData }));
+    (updatedData: UserUpdate) => {
+      dispatch(updateUserDataAction({ updatedData }));
     },
     [dispatch]
   );

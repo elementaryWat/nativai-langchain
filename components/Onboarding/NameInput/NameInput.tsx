@@ -1,17 +1,17 @@
 import React from "react";
 import { PageContainer, StyledTextField } from "../styled";
-import { useChat } from "../../../store/chatbot/useChat";
+import { useUserData } from "../../../store/user/useUserData";
 
 const NameInput: React.FC = () => {
-  const { username, setUsername } = useChat();
+  const { username, setUserData } = useUserData();
 
   return (
-    <PageContainer flexDirection="column"  borderRadius='50px' >
+    <PageContainer flexDirection="column" borderRadius="50px">
       <StyledTextField
         id="name"
         label="Your name"
         value={username}
-        onChange={(event) => setUsername(event.target.value)}
+        onChange={(event) => setUserData({ name: event.target.value })}
       />
     </PageContainer>
   );

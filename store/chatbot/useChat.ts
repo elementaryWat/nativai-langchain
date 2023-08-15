@@ -16,7 +16,6 @@ import {
   addFeedBackToLastMessage,
   setLastUserMessageIndex,
   setTopic,
-  setUsernameAction,
   setMessagesAction,
   setErrorFeedBackToLastMessage,
   setAudioPlayingAction,
@@ -30,52 +29,35 @@ import { INTRODUCTIONS, TOPICS } from "../../constants";
 export const useChat = () => {
   const dispatch = useDispatch();
   const chatId = useSelector(selectChatId);
-  const username = useSelector(selectUsername);
   const topicConversation = useSelector(selectTopic);
   const messages = useSelector(selectMessages);
   const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const loading = useSelector(selectLoading);
 
-  const getInitialMessage = useCallback(async () => {
-    setMessages([]);
+  const getInitialMessage = useCallback(
+    async (username: string) => {
+      setMessages([]);
 
-    const AI_INTRODUCTION = await promptIntroduction.format({
-      username,
-      topic: TOPICS[topicConversation],
-      intro: INTRODUCTIONS[topicConversation],
-    });
-    dispatch(
-      addMessageAction({
-        role: "assistant",
-        content: AI_INTRODUCTION,
-        feedback: null,
-        loadingFeedback: false,
-      })
-    );
-  }, [dispatch, username, topicConversation]);
-
-  // useEffect(() => {
-  //   if (
-  //     messages.length > 0 &&
-  //     username !== "" &&
-  //     levelConversation !== "" &&
-  //     topicConversation !== ""
-  //   ) {
-  //     setMessages([]);
-  //     getInitialMessage();
-  //   }
-  // }, [messages, username, levelConversation, topicConversation]);
+      const AI_INTRODUCTION = await promptIntroduction.format({
+        username,
+        topic: TOPICS[topicConversation],
+        intro: INTRODUCTIONS[topicConversation],
+      });
+      dispatch(
+        addMessageAction({
+          role: "assistant",
+          content: AI_INTRODUCTION,
+          feedback: null,
+          loadingFeedback: false,
+        })
+      );
+    },
+    [dispatch, topicConversation]
+  );
 
   const setChatId = useCallback(
     (chatId: string) => {
       dispatch(setChatIdAction(chatId));
-    },
-    [dispatch]
-  );
-
-  const setUsername = useCallback(
-    (username: string) => {
-      dispatch(setUsernameAction(username));
     },
     [dispatch]
   );
@@ -142,14 +124,12 @@ export const useChat = () => {
 
   return {
     chatId,
-    username,
     messages,
     isAudioPlaying,
     loading,
     topicConversation,
     setChatId,
     getInitialMessage,
-    setUsername,
     addMessage,
     editLastUserMessage,
     removeLastAIResponse,

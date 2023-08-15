@@ -52,19 +52,18 @@ export default function FeedbackUser() {
 
   const {
     chatId,
-    username,
     messages,
     topicConversation,
     setChatId,
     setTopicConversation,
   } = useChat();
 
-  const { email, level, coffees, setCoffees } = useUserData();
+  const { username, level, coffees, setUserData } = useUserData();
 
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
-      decrementCoffee(email, coffees, setCoffees);
+      setUserData({ coffees: coffees - 1 });
     }
   }, []);
 

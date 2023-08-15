@@ -23,7 +23,6 @@ import { useUserData } from "../store/user/useUserData";
 const Chat: React.FC = () => {
   const {
     chatId,
-    username,
     messages,
     // isAudioPlaying,
     loading,
@@ -35,7 +34,7 @@ const Chat: React.FC = () => {
     // setAudioPlaying,
   } = useChat();
 
-  const { level } = useUserData();
+  const { username, level } = useUserData();
   const router = useRouter();
   const { data: session } = useSession();
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
