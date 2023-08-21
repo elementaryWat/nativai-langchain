@@ -1,33 +1,19 @@
-import React, { useEffect } from 'react'
-// import SigninButton from '../components/AuthComponent/SigninButton'
-// import { useSession } from 'next-auth/react';
-// import { useRouter } from 'next/router';
-
-///////////////////////////////////////////////////////////
-//Hacer componente y que se muestro si no se a logueado////
-///////////////////////////////////////////////////////////
-
+import React, { useEffect } from "react";
+import SignInComponent from "../components/AuthComponent/SigninButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Login: React.FC = () => {
-  
-    // const { data: session } = useSession();
-    // const router = useRouter();
-  
-    // useEffect(()=>{
-    //     if (session) {
-    //         router.push('/');
-    //       }else{
-    //         router.push('/login')
-    //       }
-        
-    // },[session])
+  const { data: session, status: sessionStatus } = useSession();
+  const router = useRouter();
 
-    
-  return (
-    // <SigninButton/>
-    <></>
-  )
-}
+  useEffect(() => {
+    if (sessionStatus === "authenticated") {
+      router.push("/");
+    }
+  }, [session]);
 
+  return <SignInComponent />;
+};
 
-export default Login
+export default Login;

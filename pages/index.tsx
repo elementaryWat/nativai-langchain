@@ -9,7 +9,7 @@ import { useChat } from "../store/chatbot/useChat";
 import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { SignOut } from "../components/AuthComponent/SignOut";
+import { SignOutButton } from "../components/AuthComponent/SignOut";
 import { useUserData } from "../store/user/useUserData";
 
 const OnboardingPage: React.FC = () => {
@@ -17,14 +17,12 @@ const OnboardingPage: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   // const { saveChatConfig } = useChat();
   const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
-  const { data: session } = useSession();
-  // useEffect(()=>{
-  //   if (!session) {
-  //       router.push('/login');
-  //     }else{
-  //       router.push('/')
-  //     }
-  // },[session])
+  const { data: session, status: sessionStatus } = useSession();
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") {
+      router.replace("/login");
+    }
+  }, [session]);
 
   const { getInitialMessage, topicConversation } = useChat();
 
@@ -67,7 +65,7 @@ const OnboardingPage: React.FC = () => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <SignOut />
+      <SignOutButton />
       <Stepperx
         steps={steps}
         activeStep={activeStep}
