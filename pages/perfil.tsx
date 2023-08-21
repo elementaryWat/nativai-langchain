@@ -21,6 +21,7 @@ import LeaderboardSharpIcon from '@mui/icons-material/LeaderboardSharp';
 import StarsSharpIcon from '@mui/icons-material/StarsSharp';
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
+import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 
 const Perfil: React.FC = () => {
     const { data: session } = useSession();
@@ -33,6 +34,7 @@ const Perfil: React.FC = () => {
 
     return (
         <PerfilContainer>
+            <WelcomeModal/>
             {/* <FondoPerfil /> */}
             <BoxHeader>
                 <ArrowBackIosSharpIcon onClick={()=>{router.push('/')}} style={{color:'#fff'}}/>
@@ -54,10 +56,10 @@ const Perfil: React.FC = () => {
                             <p>{coffees}</p>
                             <LocalCafeTwoToneIcon style={{color:'#fff'}}/>
                         </BoxStatistics>
-                        <BoxStatistics>
+                        {/* <BoxStatistics>
                             <p>{level}</p>
                             <LeaderboardSharpIcon style={{color:'#fff'}}/>
-                        </BoxStatistics>
+                        </BoxStatistics> */}
                         {/* <BoxStatistics>
                             <p>32</p>
                             <StarsSharpIcon style={{color:'#fff'}}/>
@@ -66,7 +68,6 @@ const Perfil: React.FC = () => {
                 </SectionImagen>
             <BoxPerfil>
                 <BoxHeader>
-
                 </BoxHeader>
                 <SectionDato>
                     <h2>{user}</h2>
@@ -74,7 +75,6 @@ const Perfil: React.FC = () => {
                 </SectionDato>
                 <SectionPago>
                     <RowDatoPago>
-                        {/* <h3>Servicio:</h3> */}
                         <StarHalfSharpIcon/>
                         {subscriptionStatus == 'authorized'? (<p>Preemiun</p>):(<p>Freemiun</p>)}
                         <StarHalfSharpIcon/>
