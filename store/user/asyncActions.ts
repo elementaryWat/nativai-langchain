@@ -59,7 +59,10 @@ export const updateUserInitialDataAction = createAsyncThunk<
         userDataModified = {
           ...userDataDB,
           hasCompletedOnboarding,
-          coffees: userSnapshot.data().coffees || 3,
+          coffees:
+            userSnapshot.data().coffees !== undefined
+              ? userSnapshot.data().coffees
+              : 3,
         };
       }
       await updateDoc(userRef, { ...userDataModified });

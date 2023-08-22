@@ -25,10 +25,7 @@ import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { ProModal } from "../ProModal/ProModal";
 import { useUserData } from "../../store/user/useUserData";
-import {
-  addFeedbackIfNotExists,
-  decrementCoffee,
-} from "../../utils/firebaseFunctions";
+import { addFeedbackIfNotExists } from "../../utils/firebaseFunctions";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -354,7 +351,7 @@ export default function FeedbackUser() {
             }}
             variant="h6"
           >
-            Cafés diarios restantes: {coffees} <CoffeeIcon />
+            Cafés diarios restantes: {coffees >= 0 ? coffees : 0} <CoffeeIcon />
           </Typography>
         )}
         <FeedbackButton
