@@ -24,11 +24,15 @@ const OnboardingPage: React.FC = () => {
     if (sessionStatus === "unauthenticated") {
       router.replace("/login");
     }
+    if (session && session.user) {
+      fetchUserData(session.user.name, session.user.email, session.user.image);
+    }
   }, [session]);
 
   const { getInitialMessage, topicConversation } = useChat();
 
   const {
+    loadingStatus,
     level,
     username,
     hasCompletedOnboarding,
@@ -42,20 +46,13 @@ const OnboardingPage: React.FC = () => {
     router.push("/chat");
   };
 
-  const nextHandlers = [null, null, lastStepOnboardingHandler];
+  const nextHandlers = [null, lastStepOnboardingHandler];
 
   const stepComponents = [
     <GettingStarted />,
     // <NameInput />,
     <LevelSelect />,
-    <TopicSelect />,
   ];
-
-  useEffect(() => {
-    if (session && session.user) {
-      fetchUserData(session.user.name, session.user.email, session.user.image);
-    }
-  }, [session]);
 
   const isNextDisabled = () =>
     // (activeStep === 1 && username === "") ||
@@ -68,7 +65,7 @@ const OnboardingPage: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <SignOutButton />
-      {hasCompletedOnboarding ? (
+      {hasCompletedOnboarding || loadingStatus === "loading" ? (
         <TopicPage />
       ) : (
         <Stepperx

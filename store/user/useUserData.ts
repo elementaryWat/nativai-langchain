@@ -8,13 +8,19 @@ import {
   selectSubscriptionStatus,
   selectUserState,
   selectHasCompletedOnboarding,
+  selectStatus,
 } from "./selectors";
-import { fetchUserDataAction, updateUserDataAction } from "./asyncActions";
+import {
+  fetchUserDataAction,
+  updateUserDataAction,
+  updateUserInitialDataAction,
+} from "./asyncActions";
 import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
 
 export const useUserData = () => {
   const dispatch = useAppDispatch();
+  const loadingStatus = useSelector(selectStatus);
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
   const username = useSelector(selectUsername);
@@ -26,6 +32,7 @@ export const useUserData = () => {
   const fetchUserData = useCallback(
     (userName: string, userEmail: string, image: string) => {
       dispatch(fetchUserDataAction({ userName, userEmail, image }));
+      dispatch(updateUserInitialDataAction({ userName, userEmail, image }));
     },
     [dispatch]
   );
@@ -38,6 +45,7 @@ export const useUserData = () => {
   );
 
   return {
+    loadingStatus,
     userData,
     email,
     username,

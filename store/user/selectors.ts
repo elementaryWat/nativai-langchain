@@ -3,6 +3,8 @@ import { AppState } from "..";
 
 export const selectUserState = (state: AppState) => state.user.userData;
 
+export const selectStatus = (state: AppState) => state.user.status;
+
 export const selectEmail = createSelector(
   selectUserState,
   (user) => user.email

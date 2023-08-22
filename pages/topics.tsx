@@ -28,7 +28,7 @@ const TopicPage: React.FC = () => {
     <Grid
       container
       py={4}
-      height="calc(var(--vh, 1vh) * 95)"
+      height="100%"
       flexDirection="column"
       justifyContent="space-evenly"
       alignItems="center"

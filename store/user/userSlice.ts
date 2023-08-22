@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../types/User";
-import { fetchUserDataAction, updateUserDataAction } from "./asyncActions";
+import {
+  fetchUserDataAction,
+  updateUserDataAction,
+  updateUserInitialDataAction,
+} from "./asyncActions";
 
-const initialState: { userData: User; status: string; error: string } = {
+export type LoadingStatus = "loading" | "succeeded" | "failed";
+
+const initialState: { userData: User; status: LoadingStatus; error: string } = {
   userData: {
     email: "",
     name: "",
@@ -12,7 +18,7 @@ const initialState: { userData: User; status: string; error: string } = {
     subscriptionId: "",
     hasCompletedOnboarding: false,
   },
-  status: "",
+  status: "loading",
   error: "",
 };
 
@@ -30,6 +36,17 @@ export const userConfigSlice = createSlice({
         state.userData = action.payload;
       })
       .addCase(fetchUserDataAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(updateUserInitialDataAction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserInitialDataAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userData = action.payload;
+      })
+      .addCase(updateUserInitialDataAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
