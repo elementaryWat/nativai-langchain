@@ -8,6 +8,7 @@ import "../globals.css";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@mui/material/styles";
+import Layout from "../components/Layout";
 import "../style/global.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -32,7 +33,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
           <Analytics />
         </Provider>
       </ThemeProvider>

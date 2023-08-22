@@ -11,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SignOutButton } from "../components/AuthComponent/SignOut";
 import { useUserData } from "../store/user/useUserData";
+import AppBottomBar from "@/components/AppBottomBar";
+import TopicPage from "./topics";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
@@ -66,14 +68,18 @@ const OnboardingPage: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <SignOutButton />
-      <Stepperx
-        steps={steps}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        stepComponents={stepComponents}
-        nextHandlers={nextHandlers}
-        isNextDisabled={isNextDisabled}
-      />
+      {hasCompletedOnboarding ? (
+        <TopicPage />
+      ) : (
+        <Stepperx
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          stepComponents={stepComponents}
+          nextHandlers={nextHandlers}
+          isNextDisabled={isNextDisabled}
+        />
+      )}
     </PageContainer>
   );
 };
