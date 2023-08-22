@@ -9,6 +9,7 @@ import {
   selectUserState,
   selectHasCompletedOnboarding,
   selectStatus,
+  selectChats,
 } from "./selectors";
 import {
   fetchUserDataAction,
@@ -23,6 +24,7 @@ export const useUserData = () => {
   const loadingStatus = useSelector(selectStatus);
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
+  const chats = useSelector(selectChats);
   const username = useSelector(selectUsername);
   const level = useSelector(selectLevel);
   const coffees = useSelector(selectCoffees);
@@ -47,6 +49,7 @@ export const useUserData = () => {
   return {
     loadingStatus,
     userData,
+    chats,
     email,
     username,
     level,

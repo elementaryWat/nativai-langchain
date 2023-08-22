@@ -17,6 +17,7 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
     subscriptionStatus: "pending",
     subscriptionId: "",
     hasCompletedOnboarding: false,
+    chats: [],
   },
   status: "loading",
   error: "",

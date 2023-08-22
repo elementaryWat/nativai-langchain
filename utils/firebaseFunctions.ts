@@ -47,8 +47,7 @@ export const addFeedbackIfNotExists = async (
   chatId: string,
   username: string,
   level: string,
-  topicConversation: string,
-  messages: Message[]
+  topicConversation: string
 ) => {
   const db = getFirestore();
   const chatFeedBackRef = doc(db, "feedbacks", chatId);
@@ -59,7 +58,6 @@ export const addFeedbackIfNotExists = async (
       username,
       level,
       topicConversation,
-      messages,
     });
   }
   return chatFeedBackRef;

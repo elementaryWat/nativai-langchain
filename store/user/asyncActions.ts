@@ -72,6 +72,7 @@ export const updateUserInitialDataAction = createAsyncThunk<
           accountCreated: serverTimestamp(),
           hasCompletedOnboarding: false,
           lastLogin: serverTimestamp(),
+          chats: [],
           coffees: 3,
         };
         await setDoc(userRef, { ...userDataModified });

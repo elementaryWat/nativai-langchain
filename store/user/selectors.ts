@@ -5,6 +5,11 @@ export const selectUserState = (state: AppState) => state.user.userData;
 
 export const selectStatus = (state: AppState) => state.user.status;
 
+export const selectChats = createSelector(
+  selectUserState,
+  (user) => user.chats
+);
+
 export const selectEmail = createSelector(
   selectUserState,
   (user) => user.email
