@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import styled from "styled-components";
-import TopicSelect from "../components/Onboarding/TopicSelect/TopicSelect";
 
 const StyledButton = styled(Button)`
   padding: 1rem;
