@@ -47,7 +47,8 @@
     "styled-components": "^5.3.11",
     "tmp": "^0.2.1",
     "tmp-promise": "^3.0.3",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "react-confetti": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
