@@ -19,17 +19,13 @@ import ChatIcon from "@mui/icons-material/Chat";
 import SendIcon from "@mui/icons-material/Send";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
-import { INTERACTIONS_LIMIT } from "../../constants";
 import { updateDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { ProModal } from "../ProModal/ProModal";
 import { useUserData } from "../../store/user/useUserData";
-import {
-  addFeedbackIfNotExists,
-  decrementCoffee,
-} from "../../utils/firebaseFunctions";
+import { addFeedbackIfNotExists } from "../../utils/firebaseFunctions";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -58,27 +54,42 @@ export default function FeedbackUser() {
     setTopicConversation,
   } = useChat();
 
-  const { username, level, coffees, setUserData } = useUserData();
+  const { username, level, coffees, chats, setUserData, subscriptionStatus } =
+    useUserData();
 
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
-      setUserData({ coffees: coffees - 1 });
+      setUserData({
+        coffees: coffees - 1,
+        chats: chats
+          ? [
+              ...chats,
+              {
+                id: chatId,
+                messages,
+              },
+            ]
+          : [
+              {
+                id: chatId,
+                messages,
+              },
+            ],
+      });
+      trackStartEndChat(chatId, username, level, topicConversation, false);
     }
   }, []);
 
-  useEffect(() => {
-    if (messages.length === INTERACTIONS_LIMIT) {
-      trackStartEndChat(chatId, username, level, topicConversation, false);
+  const handleStartNewConversation = () => {
+    if (coffees > 0 || subscriptionStatus === "authorized") {
+      setTopicConversation("");
+      setRating(-1);
+      setChatId(`chat-${new Date().toISOString()}`);
+      router.replace("/");
+    } else {
+      setShowProModal(true);
     }
-  }, [messages]);
-
-  const redirectToTopicSelection = () => {
-    setTopicConversation("");
-    setRating(-1);
-    setChatId(`chat-${new Date().toISOString()}`);
-    router.replace("/topics");
-    // console.log("redirectToTopicSelection");
   };
 
   const generateFinalFeedback = () => {
@@ -126,8 +137,7 @@ export default function FeedbackUser() {
         chatId,
         username,
         level,
-        topicConversation,
-        messages
+        topicConversation
       );
       await updateDoc(docRef, {
         rating: index > 1 ? 5 : (index = 1 ? 3 : 1), //Change of scale for rating
@@ -144,8 +154,7 @@ export default function FeedbackUser() {
         chatId,
         username,
         level,
-        topicConversation,
-        messages
+        topicConversation
       );
       await updateDoc(docRef, {
         comment,
@@ -329,25 +338,27 @@ export default function FeedbackUser() {
         </TellMoreWrapper>
       </FeedbackSectionCommet>
       <FeedbackSection>
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            fontSize: { xs: "0.75", md: "1.5rem" },
-            textAlign: "center",
-            padding: "0 0 ",
-            "@media (max-width: 940px)": {
-              fontSize: "1.1rem",
-            },
-          }}
-          variant="h6"
-        >
-          Cafés diarios restantes: {coffees} <CoffeeIcon />
-        </Typography>
+        {subscriptionStatus !== "authorized" && (
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: { xs: "0.75", md: "1.5rem" },
+              textAlign: "center",
+              padding: "0 0 ",
+              "@media (max-width: 940px)": {
+                fontSize: "1.1rem",
+              },
+            }}
+            variant="h6"
+          >
+            Cafés diarios restantes: {coffees >= 0 ? coffees : 0} <CoffeeIcon />
+          </Typography>
+        )}
         <FeedbackButton
           variant="contained"
           color="secondary"
           // onClick={redirectToTopicSelection}
-          onClick={() => setShowProModal(true)}
+          onClick={handleStartNewConversation}
         >
           Iniciar otra conversación
         </FeedbackButton>

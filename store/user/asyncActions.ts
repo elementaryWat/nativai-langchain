@@ -15,12 +15,28 @@ const USERS_COLLECTION = "users";
 export const fetchUserDataAction = createAsyncThunk<
   User,
   { userName: string; userEmail: string; image: string }
+>("user/fetchUserData", async ({ userEmail }, { rejectWithValue }) => {
+  const db = getFirestore();
+  const userRef = doc(db, USERS_COLLECTION, userEmail);
+  const userSnapshot = await getDoc(userRef);
+
+  if (userSnapshot.exists()) {
+    return userSnapshot.data() as User;
+  } else {
+    return null;
+  }
+});
+
+export const updateUserInitialDataAction = createAsyncThunk<
+  User,
+  { userName: string; userEmail: string; image: string }
 >(
-  "user/fetchUser",
+  "user/updateInitialData",
   async ({ userName, userEmail, image }, { rejectWithValue }) => {
     const db = getFirestore();
     const userRef = doc(db, USERS_COLLECTION, userEmail);
     const userSnapshot = await getDoc(userRef);
+
     let userDataModified;
 
     if (userSnapshot.exists()) {
@@ -43,7 +59,10 @@ export const fetchUserDataAction = createAsyncThunk<
         userDataModified = {
           ...userDataDB,
           hasCompletedOnboarding,
-          coffees: userSnapshot.data().coffees || 3,
+          coffees:
+            userSnapshot.data().coffees !== undefined
+              ? userSnapshot.data().coffees
+              : 3,
         };
       }
       await updateDoc(userRef, { ...userDataModified });
@@ -56,6 +75,7 @@ export const fetchUserDataAction = createAsyncThunk<
           accountCreated: serverTimestamp(),
           hasCompletedOnboarding: false,
           lastLogin: serverTimestamp(),
+          chats: [],
           coffees: 3,
         };
         await setDoc(userRef, { ...userDataModified });

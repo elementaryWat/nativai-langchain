@@ -54,7 +54,6 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (interactionsRemaining === 0) {
-      // router.replace("/feedback");
       setReachedFeedbackLimit(true);
     }
   }, [messages]);

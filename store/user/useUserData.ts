@@ -8,15 +8,23 @@ import {
   selectSubscriptionStatus,
   selectUserState,
   selectHasCompletedOnboarding,
+  selectStatus,
+  selectChats,
 } from "./selectors";
-import { fetchUserDataAction, updateUserDataAction } from "./asyncActions";
+import {
+  fetchUserDataAction,
+  updateUserDataAction,
+  updateUserInitialDataAction,
+} from "./asyncActions";
 import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
 
 export const useUserData = () => {
   const dispatch = useAppDispatch();
+  const loadingStatus = useSelector(selectStatus);
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
+  const chats = useSelector(selectChats);
   const username = useSelector(selectUsername);
   const level = useSelector(selectLevel);
   const coffees = useSelector(selectCoffees);
@@ -26,6 +34,7 @@ export const useUserData = () => {
   const fetchUserData = useCallback(
     (userName: string, userEmail: string, image: string) => {
       dispatch(fetchUserDataAction({ userName, userEmail, image }));
+      dispatch(updateUserInitialDataAction({ userName, userEmail, image }));
     },
     [dispatch]
   );
@@ -38,7 +47,9 @@ export const useUserData = () => {
   );
 
   return {
+    loadingStatus,
     userData,
+    chats,
     email,
     username,
     level,

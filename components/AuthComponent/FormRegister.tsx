@@ -1,5 +1,5 @@
 import React from "react";
-import SigninButton from "./SigninButton";
+import SignInComponent from "./SigninButton";
 
 export const FormRegister = () => {
   return (
@@ -15,7 +15,7 @@ export const FormRegister = () => {
       <br />
       <input type="password" id="password" name="password" />
       <button type="submit">Register</button>
-      <SigninButton />
+      <SignInComponent />
     </form>
   );
 };

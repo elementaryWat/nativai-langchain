@@ -1,8 +1,9 @@
-import React from "react";
-import { Grid, Typography, Box } from "@mui/material";
-import { PageContainer, StyledRadioButtonTopic } from "../styled";
-import { useChat } from "../../../store/chatbot/useChat";
-import { TOPICS } from "../../../constants";
+import React, { useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import styled from "styled-components";
+import { useChat } from "../store/chatbot/useChat";
+import { useRouter } from "next/router";
+import { useUserData } from "../store/user/useUserData";
 import FamilyIcon from "@mui/icons-material/FamilyRestroom";
 import WorkIcon from "@mui/icons-material/Work";
 import TravelIcon from "@mui/icons-material/Flight";
@@ -11,7 +12,16 @@ import HobbiesIcon from "@mui/icons-material/SportsEsports";
 import HealthIcon from "@mui/icons-material/LocalHospital";
 import TechIcon from "@mui/icons-material/Devices";
 import EnvironmentIcon from "@mui/icons-material/Nature";
-import styled from "styled-components";
+import {
+  PageContainer,
+  StyledRadioButtonTopic,
+} from "@/components/Onboarding/styled";
+import { TOPICS } from "@/constants";
+
+const StyledButton = styled(Button)`
+  padding: 1rem;
+  border-radius: 30px;
+`;
 
 const StyledTypographH4 = styled(Typography)`
   color: #000;
@@ -36,8 +46,20 @@ const StyledGrid = styled(Grid)`
   // background-color: #9d37a7;
 `;
 
-const TopicSelect: React.FC = () => {
-  const { topicConversation, setTopicConversation } = useChat();
+const TopicSelection: React.FC = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const { topicConversation, setTopicConversation, getInitialMessage } =
+    useChat();
+  const { username } = useUserData();
+
+  const goToChat = async () => {
+    setLoading(true);
+    await getInitialMessage(username);
+    setLoading(false);
+    router.push("/chat");
+  };
+
   const TOPIC_ICONS = {
     "family-and-friends": <FamilyIcon />,
     "work-and-studies": <WorkIcon />,
@@ -68,8 +90,18 @@ const TopicSelect: React.FC = () => {
           </StyledRadioButtonTopic>
         ))}
       </StyledGrid>
+      <Grid item>
+        <StyledButton
+          disabled={topicConversation === ""}
+          onClick={goToChat}
+          color="primary"
+          variant="contained"
+        >
+          Iniciar conversación
+        </StyledButton>
+      </Grid>
     </PageContainer>
   );
 };
 
-export default TopicSelect;
+export default TopicSelection;
