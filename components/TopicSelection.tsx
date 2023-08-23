@@ -17,6 +17,7 @@ import {
   StyledRadioButtonTopic,
 } from "@/components/Onboarding/styled";
 import { TOPICS } from "@/constants";
+import { ProModal } from "./ProModal/ProModal";
 
 const StyledTypographH4 = styled(Typography)`
   color: #000;
@@ -46,13 +47,18 @@ const TopicSelection: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { topicConversation, setTopicConversation, getInitialMessage } =
     useChat();
-  const { username } = useUserData();
+  const { username, coffees, subscriptionStatus, email } = useUserData();
+  const [showProModal, setShowProModal] = useState(false);
 
   const goToChat = async () => {
-    setLoading(true);
-    await getInitialMessage(username);
-    setLoading(false);
-    router.push("/chat");
+    if (coffees > 0 || subscriptionStatus == "authorized") {
+      setLoading(true);
+      await getInitialMessage(username);
+      setLoading(false);
+      router.push("/chat");
+    } else {
+      setShowProModal(true);
+    }
   };
 
   const TOPIC_ICONS = {
@@ -106,6 +112,11 @@ const TopicSelection: React.FC = () => {
           Iniciar conversación
         </Button>
       </Grid>
+      <ProModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+        userEmail={email}
+      />
     </Grid>
   );
 };

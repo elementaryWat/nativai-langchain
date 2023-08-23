@@ -60,22 +60,26 @@ export default function FeedbackUser() {
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
+      let updatedChats =
+        subscriptionStatus === "authorized"
+          ? chats
+            ? [
+                ...chats,
+                {
+                  id: chatId,
+                  messages,
+                },
+              ]
+            : [
+                {
+                  id: chatId,
+                  messages,
+                },
+              ]
+          : [];
       setUserData({
         coffees: coffees - 1,
-        chats: chats
-          ? [
-              ...chats,
-              {
-                id: chatId,
-                messages,
-              },
-            ]
-          : [
-              {
-                id: chatId,
-                messages,
-              },
-            ],
+        chats: updatedChats,
       });
       trackStartEndChat(chatId, username, level, topicConversation, false);
     }
