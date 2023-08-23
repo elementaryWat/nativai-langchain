@@ -9,14 +9,24 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-import { ENGLISH_LEVELS, UserLevel } from "@/types/User";
+import {
+  ENGLISH_LEVELS,
+  OBJECTIVES,
+  UserLevel,
+  UserObjective,
+} from "@/types/User";
 
 interface UpdateDialogProps {
   open: boolean;
   onClose: () => void;
-  onUpdate: (username: string, level: UserLevel | "") => void;
+  onUpdate: (
+    username: string,
+    level: UserLevel,
+    objective: UserObjective
+  ) => void;
   defaultUsername: string;
   defaultLevel: UserLevel | "";
+  defaultObjective: UserObjective | "";
 }
 
 const UpdateDialog: React.FC<UpdateDialogProps> = ({
@@ -25,12 +35,18 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
   onUpdate,
   defaultUsername,
   defaultLevel,
+  defaultObjective,
 }) => {
   const [updatedUsername, setUpdatedUsername] = useState(defaultUsername);
   const [updatedLevel, setUpdatedLevel] = useState(defaultLevel);
+  const [updatedObjective, setUpdatedObjective] = useState(defaultObjective);
 
   const handleUpdate = () => {
-    onUpdate(updatedUsername || defaultUsername, updatedLevel || defaultLevel);
+    onUpdate(
+      updatedUsername || defaultUsername,
+      updatedLevel || defaultLevel,
+      updatedObjective || defaultObjective
+    );
   };
 
   return (
@@ -52,6 +68,17 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
           {Object.keys(ENGLISH_LEVELS).map((key) => (
             <MenuItem key={key} value={ENGLISH_LEVELS[key]}>
               {ENGLISH_LEVELS[key]}
+            </MenuItem>
+          ))}
+        </Select>
+        <Select
+          fullWidth
+          value={updatedObjective || defaultObjective}
+          onChange={(e) => setUpdatedObjective(e.target.value as UserObjective)}
+        >
+          {Object.keys(OBJECTIVES).map((key) => (
+            <MenuItem key={key} value={key}>
+              {OBJECTIVES[key]}
             </MenuItem>
           ))}
         </Select>

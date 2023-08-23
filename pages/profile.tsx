@@ -17,13 +17,14 @@ import { useSession } from "next-auth/react";
 import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import LeaderboardSharpIcon from "@mui/icons-material/LeaderboardSharp";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import StarsSharpIcon from "@mui/icons-material/StarsSharp";
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
 import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 import { Button } from "@mui/material";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
-import { UserLevel } from "@/types/User";
+import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -34,16 +35,25 @@ const ProfilePage: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { coffees, username, email, level, subscriptionStatus, setUserData } =
-    useUserData();
+  const {
+    coffees,
+    username,
+    objective,
+    email,
+    level,
+    subscriptionStatus,
+    setUserData,
+  } = useUserData();
 
   const handleUpdate = async (
     updatedUsername: string,
-    updatedLevel: UserLevel
+    updatedLevel: UserLevel,
+    updatedObjective: UserObjective
   ) => {
     await setUserData({
       name: updatedUsername,
       level: updatedLevel,
+      objective: updatedObjective,
     });
     handleClose();
   };
@@ -73,7 +83,11 @@ const ProfilePage: React.FC = () => {
         <RowDatoEstadistica>
           {/* <h3>Cafe:</h3> */}
           <BoxStatistics>
-            <p>{coffees}</p>
+            {subscriptionStatus == "authorized" ? (
+              <AllInclusiveIcon color="info" />
+            ) : (
+              <p>{coffees}</p>
+            )}
             <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
           </BoxStatistics>
           {/* <BoxStatistics>
@@ -92,6 +106,7 @@ const ProfilePage: React.FC = () => {
           <h2>{username}</h2>
           <p>{email}</p>
           <p>{level}</p>
+          <p>{OBJECTIVES[objective]}</p>
           <Button size="small" onClick={handleOpen}>
             Update
           </Button>
@@ -119,6 +134,7 @@ const ProfilePage: React.FC = () => {
         onUpdate={handleUpdate}
         defaultUsername={username}
         defaultLevel={level}
+        defaultObjective={objective}
       />
     </PerfilContainer>
   );

@@ -88,7 +88,7 @@ export const updateUserInitialDataAction = createAsyncThunk<
 );
 
 export const updateUserDataAction = createAsyncThunk<
-  User,
+  UserUpdate,
   { updatedData: UserUpdate },
   { rejectValue: any; state: AppState }
 >("user/updateUser", async ({ updatedData }, { rejectWithValue, getState }) => {

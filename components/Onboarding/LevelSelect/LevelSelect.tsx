@@ -3,7 +3,7 @@ import { Grid, Typography, Box } from "@mui/material";
 import { PageContainer, StyledRadioButton } from "../styled";
 import styled from "styled-components";
 import { useUserData } from "../../../store/user/useUserData";
-import { ENGLISH_LEVELS } from "@/types/User";
+import { ENGLISH_LEVELS, UserLevel } from "@/types/User";
 
 const levelDescriptions = {
   [ENGLISH_LEVELS.B1]: "Soy capaz de tener una conversación simple",
@@ -41,7 +41,7 @@ const LevelSelect: React.FC = () => {
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton
             key={level}
-            onClick={() => setUserData({ level })}
+            onClick={() => setUserData({ level: level as UserLevel })}
             selected={levelConversation === level}
           >
             <Box width="100%">
