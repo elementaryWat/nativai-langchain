@@ -18,11 +18,6 @@ import {
 } from "@/components/Onboarding/styled";
 import { TOPICS } from "@/constants";
 
-const StyledButton = styled(Button)`
-  padding: 1rem;
-  border-radius: 30px;
-`;
-
 const StyledTypographH4 = styled(Typography)`
   color: #000;
   margin-bottom: 1rem;
@@ -72,7 +67,14 @@ const TopicSelection: React.FC = () => {
   };
 
   return (
-    <PageContainer flexDirection="column" borderRadius="50px">
+    <Grid
+      flexDirection="column"
+      borderRadius="50px"
+      justifyContent="center"
+      alignItems="center"
+      height={"100%"}
+      pt="1rem"
+    >
       <StyledTypographH4>Elige un tema</StyledTypographH4>
       <StyledGrid container>
         {Object.keys(TOPICS).map((topicKey) => (
@@ -90,17 +92,21 @@ const TopicSelection: React.FC = () => {
           </StyledRadioButtonTopic>
         ))}
       </StyledGrid>
-      <Grid item>
-        <StyledButton
+      <Grid justifyContent={"center"} container>
+        <Button
+          style={{
+            padding: "1rem",
+            borderRadius: "30px",
+          }}
           disabled={topicConversation === ""}
           onClick={goToChat}
           color="primary"
           variant="contained"
         >
           Iniciar conversación
-        </StyledButton>
+        </Button>
       </Grid>
-    </PageContainer>
+    </Grid>
   );
 };
 
