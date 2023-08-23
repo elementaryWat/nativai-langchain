@@ -23,27 +23,29 @@ import { useUserData } from "@/store/user/useUserData";
 import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 import { Button } from "@mui/material";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
+import { UserLevel } from "@/types/User";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
   const fotoPerfil = session?.user?.image;
-  const user = session?.user?.name;
-  const email = session?.user?.email;
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleUpdate = (updatedUsername: string, updatedLevel: string) => {
-    // Logic to update the username and level, possibly dispatching Redux actions or calling an API
+  const { coffees, username, email, level, subscriptionStatus, setUserData } =
+    useUserData();
+
+  const handleUpdate = async (
+    updatedUsername: string,
+    updatedLevel: UserLevel
+  ) => {
+    await setUserData({
+      name: updatedUsername,
+      level: updatedLevel,
+    });
     handleClose();
-  };
-
-  const { coffees, username, level, subscriptionStatus } = useUserData();
-
-  const handleUpdateClick = () => {
-    // Implement your update logic here
   };
 
   return (
@@ -87,7 +89,7 @@ const ProfilePage: React.FC = () => {
       <BoxPerfil>
         <BoxHeader></BoxHeader>
         <SectionDato>
-          <h2>{user}</h2>
+          <h2>{username}</h2>
           <p>{email}</p>
           <p>{level}</p>
           <Button size="small" onClick={handleOpen}>
@@ -98,7 +100,7 @@ const ProfilePage: React.FC = () => {
           <RowDatoPago>
             <StarHalfSharpIcon />
             {subscriptionStatus == "authorized" ? (
-              <p>Preemiun</p>
+              <p>Premium</p>
             ) : (
               <p>Freemium</p>
             )}
@@ -115,8 +117,8 @@ const ProfilePage: React.FC = () => {
         open={open}
         onClose={handleClose}
         onUpdate={handleUpdate}
-        defaultUsername={username || ""}
-        defaultLevel={level || ""}
+        defaultUsername={username}
+        defaultLevel={level}
       />
     </PerfilContainer>
   );
