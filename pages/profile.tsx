@@ -1,27 +1,124 @@
-import React from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import styled from "styled-components";
-
-const StyledButton = styled(Button)`
-  padding: 1rem;
-  border-radius: 30px;
-`;
+import React, { useState } from "react";
+import {
+  PerfilContainer,
+  BoxPerfil,
+  SectionImagen,
+  SectionDato,
+  SectionPago,
+  RowDatoPago,
+  ButtonPago,
+  BoxHeader,
+  RowDatoEstadistica,
+  BoxStatistics,
+} from "../components/PerfilComponent/style";
+import FondoPerfil from "../components/PerfilComponent/FondoPerfil/FondoPerfil";
+import LocalCafeTwoToneIcon from "@mui/icons-material/LocalCafeTwoTone";
+import { useSession } from "next-auth/react";
+import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
+import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
+import LeaderboardSharpIcon from "@mui/icons-material/LeaderboardSharp";
+import StarsSharpIcon from "@mui/icons-material/StarsSharp";
+import { useRouter } from "next/router";
+import { useUserData } from "@/store/user/useUserData";
+import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
+import { Button } from "@mui/material";
+import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 
 const ProfilePage: React.FC = () => {
+  const { data: session } = useSession();
+  const fotoPerfil = session?.user?.image;
+  const user = session?.user?.name;
+  const email = session?.user?.email;
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdate = (updatedUsername: string, updatedLevel: string) => {
+    // Logic to update the username and level, possibly dispatching Redux actions or calling an API
+    handleClose();
+  };
+
+  const { coffees, username, level, subscriptionStatus } = useUserData();
+
+  const handleUpdateClick = () => {
+    // Implement your update logic here
+  };
+
   return (
-    <Grid
-      container
-      py={4}
-      height="calc(var(--vh, 1vh) * 95)"
-      flexDirection="column"
-      justifyContent="space-evenly"
-      alignItems="center"
-      flexWrap="nowrap"
-    >
-      <Grid item>
-        <Typography>This is the profile page</Typography>
-      </Grid>
-    </Grid>
+    <PerfilContainer>
+      {/* <WelcomeModal /> */}
+      {/* <FondoPerfil /> */}
+      <BoxHeader>
+        <ArrowBackIosSharpIcon
+          onClick={() => {
+            router.push("/");
+          }}
+          style={{ color: "#fff" }}
+        />
+      </BoxHeader>
+      <SectionImagen>
+        <img
+          src={fotoPerfil}
+          alt="Imagen"
+          style={{
+            borderRadius: "50%",
+            objectFit: "cover",
+            transform: "scale(1.5)",
+          }}
+        />
+        <RowDatoEstadistica>
+          {/* <h3>Cafe:</h3> */}
+          <BoxStatistics>
+            <p>{coffees}</p>
+            <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
+          </BoxStatistics>
+          {/* <BoxStatistics>
+                            <p>{level}</p>
+                            <LeaderboardSharpIcon style={{color:'#fff'}}/>
+                        </BoxStatistics> */}
+          {/* <BoxStatistics>
+                            <p>32</p>
+                            <StarsSharpIcon style={{color:'#fff'}}/>
+                        </BoxStatistics> */}
+        </RowDatoEstadistica>
+      </SectionImagen>
+      <BoxPerfil>
+        <BoxHeader></BoxHeader>
+        <SectionDato>
+          <h2>{user}</h2>
+          <p>{email}</p>
+          <p>{level}</p>
+          <Button size="small" onClick={handleOpen}>
+            Update
+          </Button>
+        </SectionDato>
+        <SectionPago>
+          <RowDatoPago>
+            <StarHalfSharpIcon />
+            {subscriptionStatus == "authorized" ? (
+              <p>Preemiun</p>
+            ) : (
+              <p>Freemium</p>
+            )}
+            <StarHalfSharpIcon />
+          </RowDatoPago>
+          <RowDatoPago>
+            {/* <ButtonPago>
+                            Cambiar Level
+                        </ButtonPago> */}
+          </RowDatoPago>
+        </SectionPago>
+      </BoxPerfil>
+      <UpdateDialog
+        open={open}
+        onClose={handleClose}
+        onUpdate={handleUpdate}
+        defaultUsername={username || ""}
+        defaultLevel={level || ""}
+      />
+    </PerfilContainer>
   );
 };
 

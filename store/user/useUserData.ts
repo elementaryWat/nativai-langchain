@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
   selectEmail,
   selectUsername,
@@ -18,6 +18,8 @@ import {
 } from "./asyncActions";
 import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const useUserData = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +32,17 @@ export const useUserData = () => {
   const coffees = useSelector(selectCoffees);
   const subscriptionStatus = useSelector(selectSubscriptionStatus);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
+  const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
+
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") {
+      router.replace("/login");
+    }
+    if (session && session.user) {
+      fetchUserData(session.user.name, session.user.email, session.user.image);
+    }
+  }, [session]);
 
   const fetchUserData = useCallback(
     (userName: string, userEmail: string, image: string) => {

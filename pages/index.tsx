@@ -9,18 +9,8 @@ import TopicSelection from "../components/TopicSelection";
 
 const HomePage: React.FC = () => {
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
-  useEffect(() => {
-    if (sessionStatus === "unauthenticated") {
-      router.replace("/login");
-    }
-    if (session && session.user) {
-      fetchUserData(session.user.name, session.user.email, session.user.image);
-    }
-  }, [session]);
 
-  const { hasCompletedOnboarding, loadingStatus, fetchUserData } =
-    useUserData();
+  const { hasCompletedOnboarding, loadingStatus } = useUserData();
 
   useEffect(() => {
     if (loadingStatus !== "loading") {
