@@ -1,17 +1,17 @@
 import React from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { PageContainer, StyledRadioButton } from "../styled";
-import { useChat } from "../../../store/chatbot/useChat";
 import styled from "styled-components";
 import { useUserData } from "../../../store/user/useUserData";
+import { ENGLISH_LEVELS, UserLevel } from "@/types/User";
 
 const levelDescriptions = {
-  "B1 - Intermediate": "Soy capaz de tener una conversación simple",
-  "B2 - Upper intermediate":
+  [ENGLISH_LEVELS.B1]: "Soy capaz de tener una conversación simple",
+  [ENGLISH_LEVELS.B2]:
     "Puedo mantener una conversación de temas variados con confianza",
-  "C1 - Advanced":
+  [ENGLISH_LEVELS.C1]:
     "Puedo expresar ideas y argumentos complejos con claridad y coherencia",
-  "C2 - Proficient": "Manejo el idioma casi a la perfección",
+  [ENGLISH_LEVELS.C2]: "Manejo el idioma casi a la perfección",
 };
 
 const StyledTypographH4 = styled(Typography)`
@@ -41,7 +41,7 @@ const LevelSelect: React.FC = () => {
         {Object.keys(levelDescriptions).map((level) => (
           <StyledRadioButton
             key={level}
-            onClick={() => setUserData({ level })}
+            onClick={() => setUserData({ level: level as UserLevel })}
             selected={levelConversation === level}
           >
             <Box width="100%">

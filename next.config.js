@@ -2,10 +2,13 @@ module.exports = {
   future: {
     webpack5: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
   webpack(config) {
     config.resolve.fallback = {
       ...config.resolve.fallback,
-      fs: false, // the solution
+      fs: false,
     };
     config.experiments = {
       ...config.experiments,

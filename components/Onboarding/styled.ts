@@ -11,6 +11,7 @@ export const PageContainer = styled(Grid)<{ background?: string }>`
   color: white;
   background-color: #ffffff;
   padding: 0 1rem;
+  flex: 1;
   // border-radius: 20px;
   // background: ${({ background }) => background || "transparent"};
 `;

@@ -1,4 +1,35 @@
 import { Chat } from "./Message";
+
+export type UserLevel =
+  | ""
+  | "B1 - Intermediate"
+  | "B2 - Upper intermediate"
+  | "C1 - Advanced"
+  | "C2 - Proficient";
+
+export const ENGLISH_LEVELS = {
+  B1: "B1 - Intermediate",
+  B2: "B2 - Upper intermediate",
+  C1: "C1 - Advanced",
+  C2: "C2 - Proficient",
+};
+
+export type UserObjective =
+  | ""
+  | "TRAVEL"
+  | "CAREER"
+  | "CONVERSE"
+  | "PERSONAL_GROWTH"
+  | "OTHER";
+
+export const OBJECTIVES = {
+  TRAVEL: "Viajar o vivir en el extranjero",
+  CAREER: "Acelerar mi carrera profesional",
+  CONVERSE: "Hablar con extranjeros",
+  PERSONAL_GROWTH: "Superacion Personal",
+  OTHER: "Otro",
+};
+
 export type SubscriptionState =
   | "pending"
   | "authorized"
@@ -8,7 +39,8 @@ export interface User {
   email: string;
   name: string;
   image?: string;
-  level?: string;
+  level?: UserLevel;
+  objective?: UserObjective;
   coffees?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
@@ -22,7 +54,8 @@ export interface UserUpdate {
   email?: string;
   name?: string;
   image?: string;
-  level?: string;
+  level?: UserLevel;
+  objective?: UserObjective;
   coffees?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;

@@ -74,7 +74,7 @@ const Stepperx: React.FC<StepperxProps> = ({
     <Container
       maxWidth="xl"
       sx={{
-        height: "calc(var(--vh, 1vh) * 85)",
+        height: "calc(var(--vh, 1vh) * 95)",
         // height: "95vh",
         display: "flex",
         flexDirection: "column",

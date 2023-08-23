@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import Stepperx from "../components/Stepperx/Stepper";
 import LevelSelect from "../components/Onboarding/LevelSelect/LevelSelect";
 import GettingStarted from "../components/Onboarding/GettingStarted/GettingStarted";
-import { PageContainer } from "../components/Onboarding/styled";
 import { useRouter } from "next/router";
-import { useChat } from "../store/chatbot/useChat";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useUserData } from "../store/user/useUserData";
+import ObjectiveSelect from "@/components/Onboarding/ObjectivesEnglish/ObjectivesEnglishSelect";
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   // const { saveChatConfig } = useChat();
-  const steps = ["Getting Started", "Name", "Level Select", "Topic Select"];
+  const steps = ["Getting Started", "Level Select", "ObjetiveSelect"];
   const { data: session, status: sessionStatus } = useSession();
   useEffect(() => {
     if (sessionStatus === "unauthenticated") {
@@ -21,34 +20,34 @@ const OnboardingPage: React.FC = () => {
     }
   }, [session]);
 
-  const { topicConversation } = useChat();
-
-  const { level, setUserData } = useUserData();
+  const { level, objective, setUserData } = useUserData();
 
   const lastStepOnboardingHandler = async () => {
     setUserData({ hasCompletedOnboarding: true });
     router.push("/");
   };
 
-  const nextHandlers = [null, lastStepOnboardingHandler];
+  const nextHandlers = [null, null, lastStepOnboardingHandler];
 
-  const stepComponents = [<GettingStarted />, <LevelSelect />];
+  const stepComponents = [
+    <GettingStarted />,
+    <LevelSelect />,
+    <ObjectiveSelect />,
+  ];
 
   const isNextDisabled = () =>
     (activeStep === 1 && level === "") ||
-    (activeStep === 2 && topicConversation === "");
+    (activeStep === 2 && objective === "");
 
   return (
-    <PageContainer background="linear-gradient(180deg, #6e45ff, black)">
-      <Stepperx
-        steps={steps}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        stepComponents={stepComponents}
-        nextHandlers={nextHandlers}
-        isNextDisabled={isNextDisabled}
-      />
-    </PageContainer>
+    <Stepperx
+      steps={steps}
+      activeStep={activeStep}
+      setActiveStep={setActiveStep}
+      stepComponents={stepComponents}
+      nextHandlers={nextHandlers}
+      isNextDisabled={isNextDisabled}
+    />
   );
 };
 

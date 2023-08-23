@@ -12,7 +12,8 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
   userData: {
     email: "",
     name: "",
-    level: "",
+    level: "B1 - Intermediate",
+    objective: "CAREER",
     coffees: 0,
     subscriptionStatus: "pending",
     subscriptionId: "",

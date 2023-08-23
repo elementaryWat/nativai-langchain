@@ -25,6 +25,11 @@ export const selectLevel = createSelector(
   (user) => user.level
 );
 
+export const selectObjective = createSelector(
+  selectUserState,
+  (user) => user.objective
+);
+
 export const selectCoffees = createSelector(
   selectUserState,
   (user) => user.coffees

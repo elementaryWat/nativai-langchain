@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -9,13 +9,24 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
+import {
+  ENGLISH_LEVELS,
+  OBJECTIVES,
+  UserLevel,
+  UserObjective,
+} from "@/types/User";
 
 interface UpdateDialogProps {
   open: boolean;
   onClose: () => void;
-  onUpdate: (username: string, level: string) => void;
+  onUpdate: (
+    username: string,
+    level: UserLevel,
+    objective: UserObjective
+  ) => void;
   defaultUsername: string;
-  defaultLevel: string;
+  defaultLevel: UserLevel | "";
+  defaultObjective: UserObjective | "";
 }
 
 const UpdateDialog: React.FC<UpdateDialogProps> = ({
@@ -24,12 +35,18 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
   onUpdate,
   defaultUsername,
   defaultLevel,
+  defaultObjective,
 }) => {
-  const [updatedUsername, setUpdatedUsername] = React.useState(defaultUsername);
-  const [updatedLevel, setUpdatedLevel] = React.useState(defaultLevel);
+  const [updatedUsername, setUpdatedUsername] = useState(defaultUsername);
+  const [updatedLevel, setUpdatedLevel] = useState(defaultLevel);
+  const [updatedObjective, setUpdatedObjective] = useState(defaultObjective);
 
   const handleUpdate = () => {
-    onUpdate(updatedUsername, updatedLevel);
+    onUpdate(
+      updatedUsername || defaultUsername,
+      updatedLevel || defaultLevel,
+      updatedObjective || defaultObjective
+    );
   };
 
   return (
@@ -40,17 +57,30 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
           fullWidth
           margin="normal"
           label="Username"
-          value={updatedUsername}
+          value={updatedUsername || defaultUsername}
           onChange={(e) => setUpdatedUsername(e.target.value)}
         />
         <Select
           fullWidth
-          value={updatedLevel}
-          onChange={(e) => setUpdatedLevel(e.target.value)}
+          value={updatedLevel || defaultLevel}
+          onChange={(e) => setUpdatedLevel(e.target.value as UserLevel)}
         >
-          <MenuItem value={"Beginner"}>Beginner</MenuItem>
-          <MenuItem value={"Intermediate"}>Intermediate</MenuItem>
-          <MenuItem value={"Expert"}>Expert</MenuItem>
+          {Object.keys(ENGLISH_LEVELS).map((key) => (
+            <MenuItem key={key} value={ENGLISH_LEVELS[key]}>
+              {ENGLISH_LEVELS[key]}
+            </MenuItem>
+          ))}
+        </Select>
+        <Select
+          fullWidth
+          value={updatedObjective || defaultObjective}
+          onChange={(e) => setUpdatedObjective(e.target.value as UserObjective)}
+        >
+          {Object.keys(OBJECTIVES).map((key) => (
+            <MenuItem key={key} value={key}>
+              {OBJECTIVES[key]}
+            </MenuItem>
+          ))}
         </Select>
       </DialogContent>
       <DialogActions>
