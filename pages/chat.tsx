@@ -34,7 +34,7 @@ const Chat: React.FC = () => {
     // setAudioPlaying,
   } = useChat();
 
-  const { username, level } = useUserData();
+  const { email, username, level, coffees, setUserData } = useUserData();
   const router = useRouter();
   const { data: session } = useSession();
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
@@ -47,10 +47,17 @@ const Chat: React.FC = () => {
     }
     if (messages.length === 1) {
       // synthesizeSpeech(messages[0].content);
-      trackStartEndChat(chatId, username, level, topicConversation);
+      trackStartEndChat(chatId, email, level, topicConversation);
       addNewChatUsage(session.user.email);
+      setUserData({
+        coffees: coffees - 1,
+      });
     }
   }, []);
+
+  const handleStopChat = () => {
+    router.replace("/feedback");
+  };
 
   useEffect(() => {
     if (interactionsRemaining === 0) {
@@ -120,7 +127,10 @@ const Chat: React.FC = () => {
 
   return (
     <>
-      <ChatMenuBar interactionsRemaining={interactionsRemaining} />
+      <ChatMenuBar
+        interactionsRemaining={interactionsRemaining}
+        handleStopChat={handleStopChat}
+      />
       <ChatContainer>
         {/* <Typography variant="h4" align="center">
         Interviewer Chatbot
@@ -130,7 +140,7 @@ const Chat: React.FC = () => {
           {reachedFeedbackLimit ? (
             <Grid container justifyContent="center" spacing={1}>
               <StyledFab
-                onClick={() => router.replace("/feedback")}
+                onClick={handleStopChat}
                 aria-label="feedback"
                 color="primary"
               >

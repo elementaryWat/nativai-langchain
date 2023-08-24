@@ -55,6 +55,7 @@ export default function FeedbackUser() {
   } = useChat();
 
   const {
+    email,
     username,
     level,
     coffees,
@@ -84,10 +85,9 @@ export default function FeedbackUser() {
             ]
         : [];
       setUserData({
-        coffees: coffees - 1,
         chats: updatedChats,
       });
-      trackStartEndChat(chatId, username, level, topicConversation, false);
+      trackStartEndChat(chatId, email, level, topicConversation, false);
     }
   }, []);
 
@@ -145,7 +145,7 @@ export default function FeedbackUser() {
     if (index !== -1) {
       let docRef = await addFeedbackIfNotExists(
         chatId,
-        username,
+        email,
         level,
         topicConversation
       );
@@ -153,7 +153,7 @@ export default function FeedbackUser() {
         rating: index > 1 ? 5 : (index = 1 ? 3 : 1), //Change of scale for rating
         recommendationScore: index + 1,
       });
-      trackFeedback(chatId, username, messages.length, index, comment);
+      trackFeedback(chatId, email, messages.length, index, comment);
     }
   };
 
@@ -162,7 +162,7 @@ export default function FeedbackUser() {
       setSendingComment(true);
       let docRef = await addFeedbackIfNotExists(
         chatId,
-        username,
+        email,
         level,
         topicConversation
       );
