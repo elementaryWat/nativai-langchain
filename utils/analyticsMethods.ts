@@ -34,7 +34,7 @@ export const trackEvent = (eventName: string, eventParams?: EventParams) => {
 
 export const trackStartEndChat = (
   chatId: string,
-  username: string,
+  email: string,
   levelConversation: string,
   topicConversation: string,
   start: boolean = true
@@ -47,7 +47,7 @@ export const trackStartEndChat = (
         : ANALYTICS_EVENTS.END_CONVERSATION,
       {
         chatId,
-        username,
+        email,
         levelConversation,
         topicConversation,
       }
@@ -75,7 +75,7 @@ export const trackChatMessage = (
 
 export const trackFeedback = (
   chatId: string,
-  username: string,
+  email: string,
   lengthConversation: number,
   rating: number,
   comment: string
@@ -83,7 +83,7 @@ export const trackFeedback = (
   try {
     logEvent(analytics, ANALYTICS_EVENTS.FEEDBACK, {
       chatId,
-      username,
+      email,
       lengthConversation,
       rating,
       comment,

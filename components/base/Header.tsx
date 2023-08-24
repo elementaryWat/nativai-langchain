@@ -11,9 +11,13 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 interface ChatMenuBarProps {
   interactionsRemaining: number;
+  handleStopChat: () => void;
 }
 
-const ChatMenuBar: React.FC<ChatMenuBarProps> = ({ interactionsRemaining }) => {
+const ChatMenuBar: React.FC<ChatMenuBarProps> = ({
+  interactionsRemaining,
+  handleStopChat,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,6 +25,10 @@ const ChatMenuBar: React.FC<ChatMenuBarProps> = ({ interactionsRemaining }) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClickStopChat = () => {
+    handleStopChat();
+    handleClose();
   };
 
   return (
@@ -60,7 +68,9 @@ const ChatMenuBar: React.FC<ChatMenuBarProps> = ({ interactionsRemaining }) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Detener conversacion</MenuItem>
+              <MenuItem onClick={handleClickStopChat}>
+                Detener conversacion
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>

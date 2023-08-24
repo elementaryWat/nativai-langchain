@@ -45,7 +45,7 @@ export const addSubscriptionIfNotExists = async (
 
 export const addFeedbackIfNotExists = async (
   chatId: string,
-  username: string,
+  email: string,
   level: string,
   topicConversation: string
 ) => {
@@ -55,7 +55,7 @@ export const addFeedbackIfNotExists = async (
   if (!chatFeedbackSnapshot.exists()) {
     await setDoc(chatFeedBackRef, {
       chatId,
-      username,
+      email,
       level,
       topicConversation,
     });
