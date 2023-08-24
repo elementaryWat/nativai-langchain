@@ -5,12 +5,13 @@ import {
   selectUsername,
   selectLevel,
   selectCoffees,
-  selectSubscriptionStatus,
   selectUserState,
   selectHasCompletedOnboarding,
   selectStatus,
   selectChats,
   selectObjective,
+  selectIsProMember,
+  selectHasCoffeesRemaining,
 } from "./selectors";
 import {
   fetchUserDataAction,
@@ -32,7 +33,8 @@ export const useUserData = () => {
   const level = useSelector(selectLevel);
   const objective = useSelector(selectObjective);
   const coffees = useSelector(selectCoffees);
-  const subscriptionStatus = useSelector(selectSubscriptionStatus);
+  const isProMember = useSelector(selectIsProMember);
+  const hasCoffeesRemaining = useSelector(selectHasCoffeesRemaining);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
@@ -70,7 +72,8 @@ export const useUserData = () => {
     level,
     objective,
     coffees,
-    subscriptionStatus,
+    isProMember,
+    hasCoffeesRemaining,
     hasCompletedOnboarding,
     fetchUserData,
     setUserData,

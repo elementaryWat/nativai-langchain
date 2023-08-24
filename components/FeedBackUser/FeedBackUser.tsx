@@ -54,29 +54,35 @@ export default function FeedbackUser() {
     setTopicConversation,
   } = useChat();
 
-  const { username, level, coffees, chats, setUserData, subscriptionStatus } =
-    useUserData();
+  const {
+    username,
+    level,
+    coffees,
+    chats,
+    setUserData,
+    isProMember,
+    hasCoffeesRemaining,
+  } = useUserData();
 
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
-      let updatedChats =
-        subscriptionStatus === "authorized"
-          ? chats
-            ? [
-                ...chats,
-                {
-                  id: chatId,
-                  messages,
-                },
-              ]
-            : [
-                {
-                  id: chatId,
-                  messages,
-                },
-              ]
-          : [];
+      let updatedChats = isProMember
+        ? chats
+          ? [
+              ...chats,
+              {
+                id: chatId,
+                messages,
+              },
+            ]
+          : [
+              {
+                id: chatId,
+                messages,
+              },
+            ]
+        : [];
       setUserData({
         coffees: coffees - 1,
         chats: updatedChats,
@@ -86,7 +92,7 @@ export default function FeedbackUser() {
   }, []);
 
   const handleStartNewConversation = () => {
-    if (coffees > 0 || subscriptionStatus === "authorized") {
+    if (hasCoffeesRemaining) {
       setTopicConversation("");
       setRating(-1);
       setChatId(`chat-${new Date().toISOString()}`);
@@ -342,7 +348,7 @@ export default function FeedbackUser() {
         </TellMoreWrapper>
       </FeedbackSectionCommet>
       <FeedbackSection>
-        {subscriptionStatus !== "authorized" && (
+        {!isProMember && (
           <Typography
             sx={{
               fontWeight: "bold",

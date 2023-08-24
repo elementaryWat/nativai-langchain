@@ -23,8 +23,8 @@ import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
 import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 import { Button } from "@mui/material";
-import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
+import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -41,7 +41,7 @@ const ProfilePage: React.FC = () => {
     objective,
     email,
     level,
-    subscriptionStatus,
+    isProMember,
     setUserData,
   } = useUserData();
 
@@ -83,11 +83,7 @@ const ProfilePage: React.FC = () => {
         <RowDatoEstadistica>
           {/* <h3>Cafe:</h3> */}
           <BoxStatistics>
-            {subscriptionStatus == "authorized" ? (
-              <AllInclusiveIcon color="info" />
-            ) : (
-              <p>{coffees}</p>
-            )}
+            {isProMember ? <AllInclusiveIcon color="info" /> : <p>{coffees}</p>}
             <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
           </BoxStatistics>
           {/* <BoxStatistics>
@@ -114,11 +110,7 @@ const ProfilePage: React.FC = () => {
         <SectionPago>
           <RowDatoPago>
             <StarHalfSharpIcon />
-            {subscriptionStatus == "authorized" ? (
-              <p>Premium</p>
-            ) : (
-              <p>Freemium</p>
-            )}
+            {isProMember ? <p>Premium</p> : <p>Freemium</p>}
             <StarHalfSharpIcon />
           </RowDatoPago>
           <RowDatoPago>
