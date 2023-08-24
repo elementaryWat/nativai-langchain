@@ -29,6 +29,8 @@ export const ProModal: React.FC<ProModalProps> = ({
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
   const TEST_USER = "test_user_1060745452@testuser.com";
+  const originalPrice = 5000;
+  const discountPrice = originalPrice * 0.2 - 0.01;
   const onSubscribe = async () => {
     try {
       setLoading(true);
@@ -134,6 +136,46 @@ export const ProModal: React.FC<ProModalProps> = ({
             </Card>
           ))}
         </Typography>
+        <Card
+          style={{
+            marginTop: "1rem",
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Oferta de lanzamiento
+          </Typography>
+          <Typography
+            variant="h5"
+            style={{
+              textDecoration: "line-through",
+              color: "#888",
+            }}
+          >
+            ${originalPrice}/Mes
+          </Typography>
+          <Typography
+            variant="h4"
+            style={{
+              color: "green",
+              marginTop: "0.5rem",
+            }}
+          >
+            ${discountPrice}/Mes
+          </Typography>
+          <Typography
+            variant="body2"
+            style={{
+              color: "red",
+              marginTop: "0.5rem",
+            }}
+          >
+            Limited time 80% off!
+          </Typography>
+        </Card>
       </DialogContent>
       <DialogActions>
         <Button
