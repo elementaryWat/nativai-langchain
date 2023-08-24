@@ -68,28 +68,31 @@ export default function FeedbackUser() {
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
-      let updatedChats = isProMember
-        ? chats
-          ? [
-              ...chats,
-              {
-                id: chatId,
-                messages,
-              },
-            ]
-          : [
-              {
-                id: chatId,
-                messages,
-              },
-            ]
-        : [];
-      setUserData({
-        chats: updatedChats,
-      });
       trackStartEndChat(chatId, email, level, topicConversation, false);
     }
   }, []);
+
+  useEffect(() => {
+    if (messages.length > 0 && session && isProMember) {
+      let updatedChats = chats
+        ? [
+            ...chats,
+            {
+              id: chatId,
+              messages,
+            },
+          ]
+        : [
+            {
+              id: chatId,
+              messages,
+            },
+          ];
+      setUserData({
+        chats: updatedChats,
+      });
+    }
+  }, [messages, isProMember]);
 
   const handleStartNewConversation = () => {
     if (hasCoffeesRemaining) {
