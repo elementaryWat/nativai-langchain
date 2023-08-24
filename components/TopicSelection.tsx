@@ -47,11 +47,11 @@ const TopicSelection: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { topicConversation, setTopicConversation, getInitialMessage } =
     useChat();
-  const { username, coffees, subscriptionStatus, email } = useUserData();
+  const { username, hasCoffeesRemaining, email } = useUserData();
   const [showProModal, setShowProModal] = useState(false);
 
   const goToChat = async () => {
-    if (coffees > 0 || subscriptionStatus == "authorized") {
+    if (hasCoffeesRemaining) {
       setLoading(true);
       await getInitialMessage(username);
       setLoading(false);

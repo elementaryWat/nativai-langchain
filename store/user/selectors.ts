@@ -40,6 +40,16 @@ export const selectSubscriptionStatus = createSelector(
   (user) => user.subscriptionStatus
 );
 
+export const selectIsProMember = createSelector(
+  selectSubscriptionStatus,
+  (subscriptionStatus) => subscriptionStatus === "authorized"
+);
+
+export const selectHasCoffeesRemaining = createSelector(
+  [selectIsProMember, selectCoffees],
+  (isProMember, amountCoffees) => isProMember || amountCoffees > 0
+);
+
 export const selectHasCompletedOnboarding = createSelector(
   selectUserState,
   (user) => user.hasCompletedOnboarding
