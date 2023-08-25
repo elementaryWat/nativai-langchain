@@ -1,4 +1,3 @@
-import { differenceInDays } from "date-fns";
 import {
   doc,
   getDoc,
@@ -7,10 +6,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { Message } from "../types/Message";
 import { Subscription } from "../types/Subscription";
 const SUBSCRIPTIONS_COLLECTION = "subscriptions";
-const USERS_COLLECTION = "users";
 
 export const addSubscriptionIfNotExists = async (
   subscriptionData: Subscription

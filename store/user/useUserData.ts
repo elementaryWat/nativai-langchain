@@ -22,6 +22,7 @@ import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+let hasFetchedUserData = false;
 
 export const useUserData = () => {
   const dispatch = useAppDispatch();
@@ -40,11 +41,18 @@ export const useUserData = () => {
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
-    if (sessionStatus === "unauthenticated") {
-      router.replace("/login");
-    }
-    if (session && session.user) {
-      fetchUserData(session.user.name, session.user.email, session.user.image);
+    if (!hasFetchedUserData) {
+      if (sessionStatus === "unauthenticated") {
+        router.replace("/login");
+      }
+      if (session && session.user) {
+        fetchUserData(
+          session.user.name,
+          session.user.email,
+          session.user.image
+        );
+        hasFetchedUserData = true;
+      }
     }
   }, [session]);
 
