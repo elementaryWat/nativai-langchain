@@ -68,6 +68,7 @@ const Message = ({
             <div>
               <TextField
                 value={editedMessage}
+                multiline
                 onChange={handleChange}
                 fullWidth
                 autoFocus

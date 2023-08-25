@@ -38,20 +38,62 @@ export const TOPICS = {
 };
 
 export const INTRODUCTIONS = {
-  "family-and-friends":
-    "I would like to ask, Do you have any close friends or family members that you enjoy spending time with?",
-  "work-and-studies": "what is your favorite subject to study and why?",
-  "travel-and-tourism":
-    "what is your favorite travel destination and why do you love it?",
-  "culture-and-entertainment": "what is your favorite type of music and why?",
-  "hobbies-and-interests":
-    "what is your favorite hobby and how did you discover it?",
-  "health-and-wellbeing":
-    "how do you prioritize self-care in your daily routine?",
-  "technology-and-science":
-    "what is your favorite scientific discovery in recent years?",
-  "environment-and-sustainability":
-    "what steps have you taken to reduce your carbon footprint recently?",
+  "family-and-friends": [
+    "Who in your family do you think you're most similar to?",
+    "Do you have a family tradition that you love the most?",
+    "What qualities do you value the most in your friends?",
+    "Do you prefer spending time with a small group of close friends or in larger gatherings?",
+    "How do you and your friends typically celebrate birthdays or other milestones?",
+  ],
+  "work-and-studies": [
+    "Have you ever had a teacher who greatly influenced your life? How so?",
+    "What would be your dream job and why?",
+    "Do you prefer group projects or working alone?",
+    "Which professional skill are you currently working on improving?",
+    "How do you manage stress or pressure at school or work?",
+  ],
+  "travel-and-tourism": [
+    "If you could live in any city in the world for a year, which would it be and why?",
+    "What's the most adventurous thing you've done while traveling?",
+    "Do you prefer beach vacations or exploring the mountains?",
+    "Which country's cuisine have you enjoyed the most during your travels?",
+    "What's one travel experience that changed your perspective on life?",
+  ],
+  "culture-and-entertainment": [
+    "Which movie or book has had the biggest impact on you?",
+    "Do you enjoy going to live performances, like plays or concerts?",
+    "Which cultural festival do you wish to attend at least once in your life?",
+    "Who's your favorite artist or band right now?",
+    "If you could spend a day with a historical figure, who would it be and why?",
+  ],
+  "hobbies-and-interests": [
+    "Have you recently picked up any new hobbies?",
+    "What's a hobby you wish you had more time or resources for?",
+    "Do you prefer hobbies that challenge your mind or your body?",
+    "Have any of your hobbies turned into a passion or even a career?",
+    "How do you find new interests or activities to try out?",
+  ],
+  "health-and-wellbeing": [
+    "Do you have a morning or evening routine that helps you feel refreshed?",
+    "How do you usually recharge after a long day?",
+    "Do you practice mindfulness or meditation?",
+    "What's your go-to healthy snack?",
+    "How do you stay motivated to keep up with fitness or wellness routines?",
+  ],
+  "technology-and-science": [
+    "Do you think we rely too much on technology these days?",
+    "Which piece of tech can you not live without?",
+    "What are your thoughts on artificial intelligence and its impact on our future?",
+    "Are there any scientific theories or concepts that particularly fascinate you?",
+    "How do you keep up with the rapid advancements in science and technology?",
+  ],
+  "environment-and-sustainability": [
+    "Do you have any eco-friendly habits that you're proud of?",
+    "What are your views on renewable energy?",
+    "How do you reduce waste in your daily life?",
+    "Do you think individual actions can make a significant difference in environmental conservation?",
+    "Which sustainable practice do you think should be adopted globally?",
+  ],
 };
 
 export const tools = [
