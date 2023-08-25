@@ -7,7 +7,7 @@ export const PerfilContainer = styled("div")`
   align-items: center;
   justify-content: space-between;
   // background-color: #9d37a7;
-  background: linear-gradient(to bottom, #9d37a7, #ffffff);
+  background: linear-gradient(to bottom, #cf59c9, #ffffff);
   width: 100vw;
   height: 100vh;
 
@@ -24,7 +24,7 @@ export const BoxPerfil = styled("div")`
   height: 55%;
   z-index: 100;
   padding: 3rem 0 0 0;
-  margin: 0 0 3rem 0;
+  margin: 0 0 4rem 0;
   // background-color: #e2e2e2;
   // border-radius: 100px 100px 0 0;
   @media (max-width: 768px) {
@@ -41,10 +41,20 @@ export const BoxHeader = styled("div")`
   height: 3rem;
   padding: 0.5rem 1rem;
 
+
+
   @media (max-width: 768px) {
     width: 100%;
     height: 3rem;
     padding: 1rem 2rem;
+
+    h2{
+      color:#fff;
+    }
+
+    p{
+      color:#fff;
+    }
   }
 `;
 
@@ -52,7 +62,7 @@ export const SectionImagen = styled("div")`
   width: 40%;
   height: 30%;
   border-radius:30px;
-  box-shadow: 0 0 10px 4px #9d37a7;
+  box-shadow: 0 0 10px 4px #df6ada;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,7 +160,6 @@ export const BoxStatistics = styled("div")`
   justify-content: center;
   width: 30%;
   height: 100%;
-  margin: 2rem 0 0 0;
 
   h3 {
     color: #6d6d6d;

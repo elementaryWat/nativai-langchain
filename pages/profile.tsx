@@ -69,6 +69,11 @@ const ProfilePage: React.FC = () => {
           style={{ color: "#fff" }}
         />
       </BoxHeader>
+      <BoxHeader>
+        <p>Bienvenido</p> <h2>{username}</h2>
+      </BoxHeader>
+      <BoxHeader>
+      </BoxHeader>
       <SectionImagen>
         <img
           src={fotoPerfil}
@@ -80,24 +85,30 @@ const ProfilePage: React.FC = () => {
           }}
         />
         <SectionDato>
-          <h2>{username}</h2>
           <p>{email}</p>
           <p>{level}</p>
           <p>{OBJECTIVES[objective]}</p>
         </SectionDato>
       </SectionImagen>
       <RowDatoEstadistica>
-          <BoxStatistics>
+          {/* <BoxStatistics>
             {isProMember ? <AllInclusiveIcon color="info" /> : <p>{coffees}</p>}
             <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
-          </BoxStatistics>
-        </RowDatoEstadistica>
+          </BoxStatistics> */}
+      </RowDatoEstadistica>
       <BoxPerfil>
-        <BoxHeader>
+      <SectionPago>
+        <BoxStatistics>
+            {isProMember ? <AllInclusiveIcon color="info" /> : <p style={{color:'#9d37a7'}}>{coffees}</p>}
+            <LocalCafeTwoToneIcon style={{ color: "#9d37a7" }} />
+          </BoxStatistics>
+      </SectionPago>
+
+      <SectionPago>
         <Button size="small" onClick={handleOpen}>
-            Update
+            Update Profile
           </Button>
-        </BoxHeader>
+        </SectionPago>
         <SectionPago>
           <RowDatoPago>
             <StarHalfSharpIcon style={{color:'#9d37a7'}} />
