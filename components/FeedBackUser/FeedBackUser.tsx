@@ -69,6 +69,8 @@ export default function FeedbackUser() {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
       trackStartEndChat(chatId, email, level, topicConversation, false);
+    } else {
+      router.replace("/");
     }
   }, []);
 
@@ -94,12 +96,23 @@ export default function FeedbackUser() {
     }
   }, [messages, isProMember]);
 
-  const handleStartNewConversation = () => {
+  const startNewConversationHandler = () => {
     if (hasCoffeesRemaining) {
       setTopicConversation("");
       setRating(-1);
       setChatId(`chat-${new Date().toISOString()}`);
       router.replace("/");
+    } else {
+      setShowProModal(true);
+    }
+  };
+
+  const continueConversationHandler = () => {
+    if (hasCoffeesRemaining) {
+      setUserData({
+        coffees: coffees - 1,
+      });
+      router.replace("/chat");
     } else {
       setShowProModal(true);
     }
@@ -371,7 +384,15 @@ export default function FeedbackUser() {
           variant="contained"
           color="secondary"
           // onClick={redirectToTopicSelection}
-          onClick={handleStartNewConversation}
+          onClick={continueConversationHandler}
+        >
+          Continuar conversación
+        </FeedbackButton>
+        <FeedbackButton
+          variant="contained"
+          color="secondary"
+          // onClick={redirectToTopicSelection}
+          onClick={startNewConversationHandler}
         >
           Iniciar otra conversación
         </FeedbackButton>
