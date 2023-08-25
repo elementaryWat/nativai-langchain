@@ -34,15 +34,27 @@ export const useChat = () => {
   const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const loading = useSelector(selectLoading);
 
+  function getRandomIntroductionForTopic(topic: string) {
+    const introductions = INTRODUCTIONS[topic];
+    if (!introductions || introductions.length === 0) return "";
+
+    const randomIndex = Math.floor(Math.random() * introductions.length);
+    return introductions[randomIndex];
+  }
+
   const getInitialMessage = useCallback(
     async (username: string) => {
       setMessages([]);
 
+      const randomIntroduction =
+        getRandomIntroductionForTopic(topicConversation);
+
       const AI_INTRODUCTION = await promptIntroduction.format({
         username,
         topic: TOPICS[topicConversation],
-        intro: INTRODUCTIONS[topicConversation],
+        intro: randomIntroduction,
       });
+
       dispatch(
         addMessageAction({
           role: "assistant",
