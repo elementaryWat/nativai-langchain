@@ -49,6 +49,7 @@ export const FeedbackSectionCommet = styled(Box)`
 
 export const FeedbackButton = styled(Button)`
   padding: 1rem;
+  margin-top: 1rem;
   border-radius: 30px;
 `;
 
