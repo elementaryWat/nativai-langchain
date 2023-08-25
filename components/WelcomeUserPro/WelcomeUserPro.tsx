@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  WelcomeContainer,
-  WelcomeImgClose,
-  WelcomeImgOpen,
-  WelcomeTitle,
-} from "./styled";
-import close from "../../asset/img/cerraada-removebg-preview.png";
-import open from "../../asset/img/abierta-removebg-preview.png";
+import { WelcomeContainer } from "./styled";
 import Image from "next/image";
-import { ProtobufNullValue } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
 import { Container, Typography, Paper, Link as NextLink } from "@mui/material";
 import Confetti from "react-confetti";
 import bonete from "../../asset/img/bonete.png";
-import confetiBg from "@/asset/img/confeti-bg.jpg";
 
-function WelcomeModal({ name }) {
+function WelcomeUserPro({ name }) {
   const [cambio, setCambio] = useState(true);
   const [text, setText] = useState(true);
 
@@ -51,13 +42,10 @@ function WelcomeModal({ name }) {
             <Image src={bonete} alt="bonete" style={{ padding: "0px" }} />
           </Typography>
           <Typography variant="h4" gutterBottom>
-            Welcome on Board
-          </Typography>
-          <Typography variant="h5" gutterBottom>
-            {name}!
+            Great to have you here {name}!
           </Typography>
           <NextLink
-            href="/chat"
+            href="/"
             style={{
               padding: "10px",
               background: "linear-gradient(180deg, #9d37a7 45%, #a555b9 90%)", // Corrección en la propiedad background
@@ -69,7 +57,7 @@ function WelcomeModal({ name }) {
               cursor: "pointer", // Agregado para mostrar un cursor de puntero al pasar el ratón
             }}
           >
-            Let's go!
+            Let's get started!
           </NextLink>
         </Paper>
       </Container>
@@ -89,4 +77,4 @@ function WelcomeModal({ name }) {
   );
 }
 
-export default WelcomeModal;
+export default WelcomeUserPro;

@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
   }, [hasCompletedOnboarding, loadingStatus]);
 
   return (
-    <Grid container>
+    <Grid container width="100%">
       <SignOutButton />
       <TopicSelection />
     </Grid>

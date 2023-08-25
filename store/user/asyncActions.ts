@@ -7,7 +7,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, addMonths } from "date-fns";
 import { User, UserUpdate } from "../../types/User";
 import { AppState } from "..";
 const USERS_COLLECTION = "users";
@@ -42,8 +42,11 @@ export const updateUserInitialDataAction = createAsyncThunk<
     if (userSnapshot.exists()) {
       const userDataDB = userSnapshot.data();
       const hasCompletedOnboarding = userDataDB.hasCompletedOnboarding || false;
-      const userLastLoginDate = userDataDB.lastLogin?.toDate();
+      const userLastLoginDate = new Date(userDataDB.lastLogin.seconds * 1000);
+      // const oneMonthAgo = new Date("2023-07-20T16:29:18.075-04:00");
       const currentDate = new Date();
+      // console.log(addMonths(oneMonthAgo, 1));
+      // console.log(differenceInDays(currentDate, userLastLoginDate));
 
       if (
         !userLastLoginDate ||

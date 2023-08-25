@@ -21,7 +21,6 @@ import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import StarsSharpIcon from "@mui/icons-material/StarsSharp";
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
-import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 import { Button } from "@mui/material";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
@@ -60,7 +59,6 @@ const ProfilePage: React.FC = () => {
 
   return (
     <PerfilContainer>
-      {/* <WelcomeModal /> */}
       {/* <FondoPerfil /> */}
       <BoxHeader>
         <ArrowBackIosSharpIcon

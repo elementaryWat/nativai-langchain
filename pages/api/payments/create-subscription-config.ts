@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         currency_id: "ARS",
       },
       external_reference: "Premium",
-      reason: "Premium plan",
+      reason: "NativAI Premium plan",
       payer_email,
       back_url: process.env.MERCADOPAGO_BACK_URL,
       notification_url: process.env.MERCADOPAGO_NOTIFICATION_URL,
