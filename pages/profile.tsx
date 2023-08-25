@@ -25,6 +25,7 @@ import WelcomeModal from "@/components/WelcomeModal/WelcomeModal";
 import { Button } from "@mui/material";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
+import { Subscription } from '../types/Subscription';
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -60,8 +61,6 @@ const ProfilePage: React.FC = () => {
 
   return (
     <PerfilContainer>
-      {/* <WelcomeModal /> */}
-      {/* <FondoPerfil /> */}
       <BoxHeader>
         <ArrowBackIosSharpIcon
           onClick={() => {
@@ -80,45 +79,37 @@ const ProfilePage: React.FC = () => {
             transform: "scale(1.5)",
           }}
         />
-        <RowDatoEstadistica>
-          {/* <h3>Cafe:</h3> */}
-          <BoxStatistics>
-            {isProMember ? <AllInclusiveIcon color="info" /> : <p>{coffees}</p>}
-            <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
-          </BoxStatistics>
-          {/* <BoxStatistics>
-                            <p>{level}</p>
-                            <LeaderboardSharpIcon style={{color:'#fff'}}/>
-                        </BoxStatistics> */}
-          {/* <BoxStatistics>
-                            <p>32</p>
-                            <StarsSharpIcon style={{color:'#fff'}}/>
-                        </BoxStatistics> */}
-        </RowDatoEstadistica>
-      </SectionImagen>
-      <BoxPerfil>
-        <BoxHeader></BoxHeader>
         <SectionDato>
           <h2>{username}</h2>
           <p>{email}</p>
           <p>{level}</p>
           <p>{OBJECTIVES[objective]}</p>
-          <Button size="small" onClick={handleOpen}>
+        </SectionDato>
+      </SectionImagen>
+      <RowDatoEstadistica>
+          <BoxStatistics>
+            {isProMember ? <AllInclusiveIcon color="info" /> : <p>{coffees}</p>}
+            <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
+          </BoxStatistics>
+        </RowDatoEstadistica>
+      <BoxPerfil>
+        <BoxHeader>
+        <Button size="small" onClick={handleOpen}>
             Update
           </Button>
-        </SectionDato>
+        </BoxHeader>
         <SectionPago>
           <RowDatoPago>
-            <StarHalfSharpIcon />
+            <StarHalfSharpIcon style={{color:'#9d37a7'}} />
             {isProMember ? <p>Premium</p> : <p>Freemium</p>}
-            <StarHalfSharpIcon />
-          </RowDatoPago>
-          <RowDatoPago>
-            {/* <ButtonPago>
-                            Cambiar Level
-                        </ButtonPago> */}
+            <StarHalfSharpIcon style={{color:'#9d37a7'}} />
           </RowDatoPago>
         </SectionPago>
+        <RowDatoPago>
+            <ButtonPago>
+              Cancelar Subscription
+            </ButtonPago>
+          </RowDatoPago>
       </BoxPerfil>
       <UpdateDialog
         open={open}

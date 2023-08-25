@@ -6,7 +6,8 @@ export const PerfilContainer = styled("div")`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #9d37a7;
+  // background-color: #9d37a7;
+  background: linear-gradient(to bottom, #9d37a7, #ffffff);
   width: 100vw;
   height: 100vh;
 
@@ -18,15 +19,14 @@ export const BoxPerfil = styled("div")`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #e2e2e2;
+  justify-content: space-evenly;
   width: 100%;
   height: 55%;
-  border-radius: 100px 100px 0 0;
   z-index: 100;
   padding: 3rem 0 0 0;
-  box-shadow: 0 0 5px 1px #fff;
-
+  margin: 0 0 3rem 0;
+  // background-color: #e2e2e2;
+  // border-radius: 100px 100px 0 0;
   @media (max-width: 768px) {
     width: 100%;
     heigth: 50%;
@@ -49,28 +49,34 @@ export const BoxHeader = styled("div")`
 `;
 
 export const SectionImagen = styled("div")`
-  width: 90%;
-  height: 20%;
+  width: 40%;
+  height: 30%;
+  border-radius:30px;
+  box-shadow: 0 0 10px 4px #9d37a7;
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: space-between;
-  justify-content: center;
-  border-radius: 50%;
+  justify-content: space-evenly;  
   object-fit: cover;
   z-index: 100;
-  margin: 1rem;
+  background-color:#fff;
 
   img {
-    box-shadow: 0 0 5px 1px #fff;
+    box-shadow: 0 0 5px 1px #e1e1e1;
     margin: 0 0 1rem 0;
   }
 
   @media (max-width: 768px) {
-    width: 100%;
-    height: 2rem;
+    width: 90%;
     padding: 1rem 2rem;
     flex-direction: column;
+    
+    img {
+      // box-shadow: 0 0 5px 1px #fff;
+      margin: 0 0 1rem 0;
+      width:20%;
+    }
   }
 `;
 
@@ -81,11 +87,11 @@ export const SectionDato = styled("div")`
   flex-direction: column;
   width: 100%;
   height: 33%;
-  background-color: #d2d2d2;
-  box-shadow: 0 0 5px 1px #999;
+  // background-color: #d2d2d2;
+  // box-shadow: 0 0 5px 1px #999;
 
   h2 {
-    font-size: 24px;
+    font-size: 16px;
     color: #6d6d6d;
   }
 `;
@@ -95,9 +101,10 @@ export const SectionPago = styled("div")`
   align-items: center;
   justify-content: space-evenly;
   flex-wrap: nowrap;
-  width: 90%;
-  height: 50%;
+  width: 100%;
+  height: 2rem%;
   padding: 1rem 0;
+  background-color: #ffffff;
 `;
 
 export const RowDatoPago = styled("div")`
@@ -106,9 +113,10 @@ export const RowDatoPago = styled("div")`
   justify-content: center;
   width: 100%;
   height: 2rem%;
+  
 
   h3 {
-    color: #6d6d6d;
+    color: #9d37a7;
     margin: 0 1rem 0 0;
   }
 
@@ -116,7 +124,7 @@ export const RowDatoPago = styled("div")`
     font-weight: bold;
     margin: 0 1rem;
     font-size: 1.5rem;
-    color: #6d6d6d;
+    color: #9d37a7;
   }
 `;
 
@@ -124,9 +132,7 @@ export const RowDatoEstadistica = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40%;
-  height: 2rem;
-  margin: 1rem 0;
+  width: 100%;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -134,7 +140,6 @@ export const RowDatoEstadistica = styled("div")`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
   }
 `;
 
