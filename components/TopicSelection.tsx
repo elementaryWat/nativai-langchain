@@ -79,6 +79,7 @@ const TopicSelection: React.FC = () => {
       justifyContent="center"
       alignItems="center"
       height={"100%"}
+      width="100%"
       pt="1rem"
     >
       <StyledTypographH4>Elige un tema</StyledTypographH4>

@@ -28,7 +28,7 @@ export const ProModal: React.FC<ProModalProps> = ({
 }) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-  const TEST_USER = "test_user_1060745452@testuser.com";
+  const TEST_USER = "test_user_784417862@testuser.com";
   const originalPrice = 5000;
   const discountPrice = originalPrice * 0.2 - 0.01;
   const onSubscribe = async () => {
