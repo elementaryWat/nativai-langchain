@@ -72,6 +72,7 @@ export default function FeedbackUser() {
     coffees,
     chats,
     setUserData,
+    decrementCoffees,
     isProMember,
     hasCoffeesRemaining,
   } = useUserData();
@@ -120,9 +121,7 @@ export default function FeedbackUser() {
 
   const continueConversationHandler = () => {
     if (hasCoffeesRemaining) {
-      setUserData({
-        coffees: coffees - 1,
-      });
+      decrementCoffees();
       router.replace("/chat");
     } else {
       setShowProModal(true);

@@ -12,6 +12,7 @@ import {
   selectObjective,
   selectIsProMember,
   selectHasCoffeesRemaining,
+  selectLongestStreak,
 } from "./selectors";
 import {
   fetchUserDataAction,
@@ -22,6 +23,7 @@ import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { setOnboardingStatusAction } from "./userSlice";
 let hasFetchedUserData = false;
 
 export const useUserData = () => {
@@ -34,6 +36,7 @@ export const useUserData = () => {
   const level = useSelector(selectLevel);
   const objective = useSelector(selectObjective);
   const coffees = useSelector(selectCoffees);
+  const longestStreak = useSelector(selectLongestStreak);
   const isProMember = useSelector(selectIsProMember);
   const hasCoffeesRemaining = useSelector(selectHasCoffeesRemaining);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
@@ -71,6 +74,19 @@ export const useUserData = () => {
     [dispatch]
   );
 
+  const setLocalHasCompletedOnboardingFlag = useCallback(
+    (hasCompletedOnboarding: boolean) => {
+      dispatch(setOnboardingStatusAction(hasCompletedOnboarding));
+    },
+    [dispatch]
+  );
+
+  const decrementCoffees = () => {
+    setUserData({
+      coffees: coffees > 0 ? coffees - 1 : 0,
+    });
+  };
+
   return {
     loadingStatus,
     userData,
@@ -80,10 +96,13 @@ export const useUserData = () => {
     level,
     objective,
     coffees,
+    longestStreak,
     isProMember,
     hasCoffeesRemaining,
     hasCompletedOnboarding,
     fetchUserData,
     setUserData,
+    setLocalHasCompletedOnboardingFlag,
+    decrementCoffees,
   };
 };

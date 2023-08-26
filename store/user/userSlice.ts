@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../types/User";
 import {
   fetchUserDataAction,
@@ -14,7 +14,9 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
     name: "",
     level: "B1 - Intermediate",
     objective: "CAREER",
-    coffees: 0,
+    coffees: 3,
+    streak: 0,
+    longestStreak: 0,
     subscriptionStatus: "pending",
     subscriptionId: "",
     hasCompletedOnboarding: false,
@@ -27,7 +29,11 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
 export const userConfigSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setOnboardingStatusAction: (state, action: PayloadAction<boolean>) => {
+      state.userData.hasCompletedOnboarding = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserDataAction.pending, (state) => {
@@ -67,8 +73,6 @@ export const userConfigSlice = createSlice({
   },
 });
 
-// export const {
-
-// } = userConfigSlice.actions;
+export const { setOnboardingStatusAction } = userConfigSlice.actions;
 
 export default userConfigSlice;

@@ -41,6 +41,8 @@ export interface User {
   image?: string;
   level?: UserLevel;
   objective?: UserObjective;
+  streak?: number;
+  longestStreak?: number;
   coffees?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
@@ -57,6 +59,8 @@ export interface UserUpdate {
   level?: UserLevel;
   objective?: UserObjective;
   coffees?: number;
+  streak?: number;
+  longestStreak?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
   subscriptionStatus?: SubscriptionState;

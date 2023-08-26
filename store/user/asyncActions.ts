@@ -29,15 +29,17 @@ export const fetchUserDataAction = createAsyncThunk<
 
 export const updateUserInitialDataAction = createAsyncThunk<
   User,
-  { userName: string; userEmail: string; image: string }
+  { userName: string; userEmail: string; image: string },
+  { rejectValue: any; state: AppState }
 >(
   "user/updateInitialData",
-  async ({ userName, userEmail, image }, { rejectWithValue }) => {
+  async ({ userName, userEmail, image }, { rejectWithValue, getState }) => {
     const db = getFirestore();
     const userRef = doc(db, USERS_COLLECTION, userEmail);
     const userSnapshot = await getDoc(userRef);
 
     let userDataModified;
+    let userData = getState().user.userData;
 
     if (userSnapshot.exists()) {
       const userDataDB = userSnapshot.data();
@@ -45,33 +47,52 @@ export const updateUserInitialDataAction = createAsyncThunk<
       const userLastLoginDate = new Date(userDataDB.lastLogin.seconds * 1000);
       // const oneMonthAgo = new Date("2023-07-20T16:29:18.075-04:00");
       const currentDate = new Date();
-      // console.log(addMonths(oneMonthAgo, 1));
-      // console.log(differenceInDays(currentDate, userLastLoginDate));
+      let dayDifference = differenceInDays(currentDate, userLastLoginDate);
+      let coffees =
+        userSnapshot.data().coffees !== undefined
+          ? userSnapshot.data().coffees
+          : 3;
+      let streak = userDataDB.streak || 0;
+      let longestStreak = userDataDB.longestStreak || 0;
 
-      if (
-        !userLastLoginDate ||
-        differenceInDays(currentDate, userLastLoginDate) !== 0
-      ) {
+      // Si el último inicio de sesión fue ayer, incrementa la racha.
+      if (dayDifference === 1) {
+        streak += 1;
+      } else if (dayDifference > 1) {
+        // Si la diferencia es más de un día, reinicia la racha.
+        streak = 0;
+      }
+
+      // Actualizar la racha más larga si la racha actual es más grande.
+      if (streak > longestStreak) {
+        longestStreak = streak;
+      }
+
+      if (!userLastLoginDate || dayDifference !== 0) {
         userDataModified = {
+          ...userData,
           ...userDataDB,
           hasCompletedOnboarding,
           lastLogin: serverTimestamp(),
           coffees: 3,
+          streak,
+          longestStreak,
         };
       } else {
         userDataModified = {
+          ...userData,
           ...userDataDB,
           hasCompletedOnboarding,
-          coffees:
-            userSnapshot.data().coffees !== undefined
-              ? userSnapshot.data().coffees
-              : 3,
+          streak,
+          longestStreak,
+          coffees,
         };
       }
       await updateDoc(userRef, { ...userDataModified });
     } else {
       try {
         userDataModified = {
+          ...userData,
           name: userName, // Use email prefix as default name
           email: userEmail,
           image,
