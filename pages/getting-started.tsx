@@ -20,11 +20,24 @@ const OnboardingPage: React.FC = () => {
     }
   }, [session]);
 
-  const { level, objective, setUserData } = useUserData();
+  const {
+    level,
+    objective,
+    setUserData,
+    hasCompletedOnboarding,
+    setLocalHasCompletedOnboardingFlag,
+  } = useUserData();
+
+  useEffect(() => {
+    if (sessionStatus === "authenticated" && hasCompletedOnboarding) {
+      router.replace("/");
+    }
+  }, [hasCompletedOnboarding]);
 
   const lastStepOnboardingHandler = async () => {
+    //Optimistic update
+    setLocalHasCompletedOnboardingFlag(true);
     setUserData({ hasCompletedOnboarding: true });
-    router.push("/");
   };
 
   const nextHandlers = [null, null, lastStepOnboardingHandler];

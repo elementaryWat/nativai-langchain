@@ -18,7 +18,7 @@ import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import LeaderboardSharpIcon from "@mui/icons-material/LeaderboardSharp";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import StarsSharpIcon from "@mui/icons-material/StarsSharp";
+import StreakIcon from "@mui/icons-material/LocalFireDepartment";
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
 import { Button } from "@mui/material";
@@ -40,6 +40,7 @@ const ProfilePage: React.FC = () => {
     objective,
     email,
     level,
+    longestStreak,
     isProMember,
     setUserData,
   } = useUserData();
@@ -81,17 +82,21 @@ const ProfilePage: React.FC = () => {
         <RowDatoEstadistica>
           {/* <h3>Cafe:</h3> */}
           <BoxStatistics>
-            {isProMember ? <AllInclusiveIcon color="info" /> : <p>{coffees}</p>}
+            {isProMember ? (
+              <AllInclusiveIcon style={{ color: "#fff" }} />
+            ) : (
+              <p>{coffees}</p>
+            )}
             <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
           </BoxStatistics>
           {/* <BoxStatistics>
                             <p>{level}</p>
                             <LeaderboardSharpIcon style={{color:'#fff'}}/>
                         </BoxStatistics> */}
-          {/* <BoxStatistics>
-                            <p>32</p>
-                            <StarsSharpIcon style={{color:'#fff'}}/>
-                        </BoxStatistics> */}
+          <BoxStatistics>
+            <p>{longestStreak}</p>
+            <StreakIcon style={{ color: "#fff" }} />
+          </BoxStatistics>
         </RowDatoEstadistica>
       </SectionImagen>
       <BoxPerfil>

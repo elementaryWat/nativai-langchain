@@ -35,6 +35,16 @@ export const selectCoffees = createSelector(
   (user) => user.coffees
 );
 
+export const selectStreak = createSelector(
+  selectUserState,
+  (user) => user.streak
+);
+
+export const selectLongestStreak = createSelector(
+  selectUserState,
+  (user) => user.longestStreak
+);
+
 export const selectSubscriptionStatus = createSelector(
   selectUserState,
   (user) => user.subscriptionStatus

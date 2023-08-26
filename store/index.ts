@@ -20,6 +20,15 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   devTools: process.env.NODE_ENV !== "production",
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ["payload.lastLogin"],
+        // Ignore these paths in the state
+        ignoredPaths: ["user.userData.lastLogin"],
+      },
+    }),
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

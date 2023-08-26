@@ -34,7 +34,7 @@ const Chat: React.FC = () => {
     // setAudioPlaying,
   } = useChat();
 
-  const { email, username, level, coffees, setUserData } = useUserData();
+  const { email, username, level, decrementCoffees } = useUserData();
   const router = useRouter();
   const { data: session } = useSession();
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
@@ -49,9 +49,7 @@ const Chat: React.FC = () => {
       // synthesizeSpeech(messages[0].content);
       trackStartEndChat(chatId, email, level, topicConversation);
       addNewChatUsage(session.user.email);
-      setUserData({
-        coffees: coffees - 1,
-      });
+      decrementCoffees();
     }
   }, []);
 
