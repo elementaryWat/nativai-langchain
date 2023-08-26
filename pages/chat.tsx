@@ -8,7 +8,7 @@ import {
 } from "../components/styles";
 import { playAudio, synthesizeSpeech } from "../utils/synthesizeSpeech";
 import { useChat } from "../store/chatbot/useChat";
-import { postChat, postFeedback } from "../utils/endpoints";
+import { postChat, requestLocalFeedback } from "../utils/endpoints";
 // import FeedbackUser from "../components/FeedBackUser/FeedBackUser";
 import { trackError, trackStartEndChat } from "../utils/analyticsMethods";
 import { useRouter } from "next/router";
@@ -97,7 +97,7 @@ const Chat: React.FC = () => {
       });
       setLoadingStatus(false);
 
-      const { feedback } = await postFeedback(
+      const { feedback } = await requestLocalFeedback(
         edit
           ? messages[messages.length - 3].content
           : messages[messages.length - 1].content,

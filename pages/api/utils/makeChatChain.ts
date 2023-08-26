@@ -47,7 +47,7 @@ export const makeChatChain = async (
     memoryKey: "history",
     chatHistory: new UpstashRedisChatMessageHistory({
       sessionId: chatId, // Or some other unique identifier for the conversation
-      sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
+      sessionTTL: 3000, // 5 minutes, omit this parameter to make sessions never expire
       config: {
         url: process.env.NEXT_PUBLIC_UPSTASH_URL,
         token: process.env.NEXT_PUBLIC_UPSTASH_TOKEN,

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Button, Chip } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Button,
+  Chip,
+  CircularProgress,
+} from "@mui/material";
 import { useChat } from "../../store/chatbot/useChat";
 import { trackFeedback, trackStartEndChat } from "../../utils/analyticsMethods";
 import {
@@ -13,6 +19,8 @@ import {
   StyledTextField,
   TellMoreWrapper,
   FeedbackSectionCommet,
+  StyledList,
+  StyledListItem,
 } from "./styled";
 import ScoreIcon from "@mui/icons-material/Score";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -26,6 +34,7 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import { ProModal } from "../ProModal/ProModal";
 import { useUserData } from "../../store/user/useUserData";
 import { addFeedbackIfNotExists } from "../../utils/firebaseFunctions";
+import { requestFinalFeedback } from "@/utils/endpoints";
 // import { BsPencilFill } from "react-icons/bs";
 
 const labels = [
@@ -37,6 +46,8 @@ const labels = [
 export default function FeedbackUser() {
   const [showCommentField, setShowCommentField] = useState(false);
   const [sendingComment, setSendingComment] = useState(false);
+  const [loadingFeedback, setLoadingFeedback] = useState(false);
+  const [topicsToReview, setTopicsToReview] = useState([]);
   const [commentSent, setCommentSent] = useState(false);
   const [rating, setRating] = useState(-1);
   const [comment, setComment] = useState("");
@@ -118,6 +129,25 @@ export default function FeedbackUser() {
     }
   };
 
+  const requestFinalFeedbackTips = async () => {
+    setLoadingFeedback(true);
+    const userMessages = messages.filter((message) => message.role === "user");
+    const grammarFeedbacks = userMessages
+      .map((message) => message.feedback?.grammar_feedback)
+      .filter(Boolean);
+    const vocabularyFeedbacks = userMessages
+      .map((message) => message.feedback?.vocabulary_feedback)
+      .filter(Boolean);
+
+    const data = await requestFinalFeedback(
+      grammarFeedbacks,
+      vocabularyFeedbacks
+    );
+
+    setTopicsToReview(data.feedback.action_items);
+    setLoadingFeedback(false);
+  };
+
   const generateFinalFeedback = () => {
     let totalScore = 0;
     let totalUserMessages = 0;
@@ -149,6 +179,7 @@ export default function FeedbackUser() {
 
     setWordCount(wordsUsed.size);
     setAverageScore(finalScore);
+    requestFinalFeedbackTips();
     updateUsageStatistics(
       session.user.email,
       wordsUsed.size,
@@ -272,6 +303,32 @@ export default function FeedbackUser() {
           </Grid>
         </Grid>
       </FeedbackSection>
+      <FeedbackSection>
+        {loadingFeedback ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        ) : (
+          <>
+            <Typography variant="h6" mb={2}>
+              Temas para revisar:
+            </Typography>
+            <StyledList>
+              {topicsToReview.map((topic, index) => (
+                <StyledListItem key={index}>{topic}</StyledListItem>
+              ))}
+            </StyledList>
+          </>
+        )}
+      </FeedbackSection>
+
       <FeedbackSectionCommet>
         <Typography
           sx={{
