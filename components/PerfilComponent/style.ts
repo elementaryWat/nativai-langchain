@@ -7,11 +7,12 @@ export const PerfilContainer = styled("div")`
   align-items: center;
   justify-content: space-between;
   // background-color: #9d37a7;
-  background: linear-gradient(to bottom, #cf59c9, #ffffff);
+  background: linear-gradient(to bottom, #673AB7, #ffffff);
   width: 100vw;
   height: 100vh;
+  // padding:0 30rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 500px) {
   }
 `;
 
@@ -23,11 +24,10 @@ export const BoxPerfil = styled("div")`
   width: 100%;
   height: 55%;
   z-index: 100;
-  padding: 3rem 0 0 0;
   margin: 0 0 4rem 0;
   // background-color: #e2e2e2;
   // border-radius: 100px 100px 0 0;
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     width: 100%;
     heigth: 50%;
   }
@@ -42,14 +42,25 @@ export const BoxHeader = styled("div")`
   padding: 0.5rem 1rem;
 
 
+  h2{
+    color:#fff;
+    font-size:24px;
+    margin:0 0 0 1rem;
+  }
 
-  @media (max-width: 768px) {
+  p{
+    color:#fff;
+  }
+
+  @media (max-width: 500px) {
     width: 100%;
     height: 3rem;
     padding: 1rem 2rem;
 
     h2{
       color:#fff;
+      font-size:16px;
+      margin:0 0 0 1rem;
     }
 
     p{
@@ -59,10 +70,10 @@ export const BoxHeader = styled("div")`
 `;
 
 export const SectionImagen = styled("div")`
-  width: 40%;
+  width: 20%;
   height: 30%;
   border-radius:30px;
-  box-shadow: 0 0 10px 4px #df6ada;
+  box-shadow: 0 0 10px .5px #673AB7;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,13 +82,15 @@ export const SectionImagen = styled("div")`
   object-fit: cover;
   z-index: 100;
   background-color:#fff;
+  padding: 1rem 2rem;
 
   img {
     box-shadow: 0 0 5px 1px #e1e1e1;
     margin: 0 0 1rem 0;
+    width:20%;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     width: 90%;
     padding: 1rem 2rem;
     flex-direction: column;
@@ -100,12 +113,13 @@ export const SectionDato = styled("div")`
   // background-color: #d2d2d2;
   // box-shadow: 0 0 5px 1px #999;
 
-  h2 {
+  p {
     font-size: 16px;
-    color: #6d6d6d;
+    color: #212121;
+    font-weight:bold;
   }
 `;
-export const SectionPago = styled("div")`
+export const SectionCaffe = styled("div")`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,27 +129,59 @@ export const SectionPago = styled("div")`
   height: 2rem%;
   padding: 1rem 0;
   background-color: #ffffff;
+  margin-top: 1rem;
 `;
 
-export const RowDatoPago = styled("div")`
+
+export const SectionBoxEtiqueta = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  flex-wrap: nowrap;
+  width: 40%;
   height: 2rem%;
-  
+  padding: 1rem 0;
+  background-color: #ffffff;
+  border-radius:8px;
+  box-shadow:0 0 5px .5px #673AB7;
 
-  h3 {
-    color: #9d37a7;
-    margin: 0 1rem 0 0;
+  p{
+    color:#673AB7;
+    font-size:20px;
+    font-weight:bold;
+  }
+`;
+
+export const SectionBoxBtn = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 40%;
+  height: 2rem%;
+  padding: 1rem 0;
+  background-color: #ffffff;
+  border-radius:8px;
+  box-shadow:0 0 5px .5px #673AB7;
+
+  p{
+    color:#673AB7;
+    font-size:20px;
+    font-weight:bold;
   }
 
-  p {
-    font-weight: bold;
-    margin: 0 1rem;
-    font-size: 1.5rem;
-    color: #9d37a7;
+  &:hover{
+    background-color: #673AB7;
   }
+`;
+
+
+export const RowBox = styled("div")`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  padding:1rem 0;
 `;
 
 export const RowDatoEstadistica = styled("div")`
@@ -144,7 +190,7 @@ export const RowDatoEstadistica = styled("div")`
   justify-content: center;
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 500px) {
     width: 100%;
     height: 2rem;
     display: flex;
