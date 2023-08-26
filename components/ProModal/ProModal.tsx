@@ -7,9 +7,9 @@ import {
   DialogContent,
   DialogActions,
   Typography,
-  Button,
   Card,
   CardContent,
+  Button,
 } from "@mui/material";
 import { useProModal } from "../../hooks/use-pro-modal";
 import { tools } from "../../constants";
@@ -67,7 +67,42 @@ export const ProModal: React.FC<ProModalProps> = ({
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <DialogContent>
+      <DialogContent
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "30px",
+            backgroundColor: "#2a1d4c",
+            width: "120px",
+            display: "flex",
+            textAlign: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100px",
+            margin: "5px",
+            marginTop: "-90px",
+            position: "fixed",
+            borderRadius: "100%",
+            padding: "70px",
+            color: "#fff",
+          }}
+        >
+          NATIV
+          <span
+            style={{
+              color: "#6e45ff",
+            }}
+          >
+            AI
+          </span>
+        </div>
         <div
           style={{
             display: "flex",
@@ -76,17 +111,28 @@ export const ProModal: React.FC<ProModalProps> = ({
             flexDirection: "column",
             gap: "1rem",
             paddingBottom: "1rem",
+            marginTop: "60px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div
+            style={{
+              font: "inherit",
+              fontWeight: "600",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
             <Typography variant="h5">Actualizar a </Typography>
             <span
               style={{
-                backgroundColor: "gold",
+                backgroundColor: "#2a1d4c",
                 padding: "0.5rem",
                 borderRadius: "0.25rem",
                 textTransform: "uppercase",
                 fontSize: "0.8rem",
+                color: "white",
+                fontWeight: "bold",
               }}
             >
               Pro
@@ -131,7 +177,13 @@ export const ProModal: React.FC<ProModalProps> = ({
                 </div>
               </CardContent>
               <Check
-                style={{ color: "primary", width: "20px", height: "20px" }}
+                style={{
+                  color: "green",
+                  width: "25px",
+                  height: "20px",
+                  fontWeight: "800",
+                  fontSize: "55px",
+                }}
               />
             </Card>
           ))}
@@ -143,9 +195,19 @@ export const ProModal: React.FC<ProModalProps> = ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            textAlign: "center",
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography
+            variant="h6"
+            gutterBottom
+            style={{
+              font: "inherit",
+              fontSize: "25px",
+              fontWeight: "500",
+              textTransform: "uppercase",
+            }}
+          >
             Oferta de lanzamiento
           </Typography>
           <Typography
@@ -173,18 +235,19 @@ export const ProModal: React.FC<ProModalProps> = ({
               marginTop: "0.5rem",
             }}
           >
-            Limited time 80% off!
+            Oferta limitada 80% off!
           </Typography>
         </Card>
       </DialogContent>
-      <DialogActions>
-        <Button
-          disabled={loading}
-          onClick={onSubscribe}
-          variant="contained"
-          color="primary"
-          fullWidth
-        >
+      <DialogActions
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <Button variant="contained" disabled={loading} onClick={onSubscribe}>
           Actualizar plan
           <Zap
             style={{

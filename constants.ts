@@ -109,13 +109,13 @@ export const INTRODUCTIONS = {
 
 export const tools = [
   {
-    label: "Sesiones de Práctica Diarias Ilimitadas",
+    label: "Sesiones de Práctica Diarias ilimitadas",
     href: "/conversation",
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
   },
   {
-    label: "Acceso anticipado a nuevas features",
+    label: "Acceso anticipado a las nuevas versiones",
     color: "text-green-700",
     bgColor: "bg-green-700/10",
     href: "/code",
