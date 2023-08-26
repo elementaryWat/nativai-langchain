@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       auto_recurring: {
         frequency: 1,
         frequency_type: "months",
-        transaction_amount: 999,
+        transaction_amount: 999.99,
         currency_id: "ARS",
       },
       external_reference: "Premium",

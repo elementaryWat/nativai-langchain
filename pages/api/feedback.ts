@@ -5,21 +5,51 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { message, response } = req.body;
+  const { feedbackType } = req.body;
 
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
-  if (!message) {
-    return res.status(400).json({ message: "No message in the request" });
+  if (!feedbackType) {
+    return res
+      .status(400)
+      .json({ message: "No feedback type provided in the request" });
+  }
+
+  let requestData;
+
+  if (feedbackType === "local") {
+    const { message, response } = req.body;
+
+    if (!message || !response) {
+      return res.status(400).json({
+        message:
+          "For 'local' feedback, both message and response are required.",
+      });
+    }
+
+    requestData = { message, response };
+  } else if (feedbackType === "final") {
+    const { grammarFeedbacks, vocabularyFeedbacks } = req.body;
+
+    if (!grammarFeedbacks || !vocabularyFeedbacks) {
+      return res.status(400).json({
+        message:
+          "For 'final' feedback, both grammarFeedbacks and vocabularyFeedbacks are required.",
+      });
+    }
+
+    requestData = { grammarFeedbacks, vocabularyFeedbacks };
+  } else {
+    return res.status(400).json({ message: "Invalid feedback type provided." });
   }
 
   try {
     //create chain
-    const feedbackChain = makeFeedbackChain();
-    const feedback = await feedbackChain.call({ message, response });
+    const feedbackChain = makeFeedbackChain(feedbackType);
+    const feedback = await feedbackChain.call(requestData);
     console.log(feedback);
     res.status(200).json({
       feedback: JSON.parse(feedback.text),

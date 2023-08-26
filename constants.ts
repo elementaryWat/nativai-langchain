@@ -13,14 +13,25 @@ export const AI_INTRODUCTION_PROMPT =
 //     Your feedback should be in Spanish, but maintaining original English terms when referencing specific vocabulary or grammar points.
 //     Provide the output in a JSON object with the following keys: grammar_feedback,grammar_score, vocabulary_score, vocabulary_feedback, general_score.
 //     `;
-export const AI_FEEDBACK_PROMPT = `
+export const AI_LOCAL_FEEDBACK_PROMPT = `
 Como hablante fluido de inglés, tu tarea es realizar las siguientes acciones:
 1 - Ofrecer una retroalimentación integral y lo más específica posible sobre aspectos a mejorar en la gramática y el vocabulario a un mensaje de usuario delimitado por <<>> y sugerir mejoras también teniendo en cuenta el contexto de la conversación también delimitado por <<>>.
 2 - Asignar una puntuación de competencia de 0-5 tanto para gramática como para vocabulario.
-3 - Asegúrate de brindar la retroalimentación en español pero mantener los términos originales en inglés cuando se haga referencia a puntos específicos de vocabulario o gramática.
-4 - Tu respuesta debe ser un objeto json que contenga:  grammar_feedback,grammar_score, vocabulary_score, vocabulary_feedback, general_score. 
+3 - Tener en cuenta la coherencia de la respuesta y la relevancia con el contexto de la conversación. Si no esta relacionado con el tema tratado la relevancia es baja.
+4 - Asegúrate de brindar la retroalimentación en español pero mantener los términos originales en inglés cuando se haga referencia a puntos específicos de vocabulario o gramática.
+5 - Tu respuesta debe ser un objeto json que contenga:  grammar_feedback,grammar_score, vocabulary_score, vocabulary_feedback, relevancy_score, relevancy_feedback, general_score. 
     Contexto:<< {message} >>.
     Message:<< {response} >>.
+`;
+
+export const AI_FINAL_FEEDBACK_PROMPT = `
+Como hablante fluido de inglés, tu tarea es realizar las siguientes acciones:
+1 - Resumir la lista de feedbacks de gramática y vocabulario una conversacion en ingles delimitados por <<>>.
+2 - Brindar 3 action items generales importantes (no especificos) a trabajar en gramática y vocabulario.
+3 - Aconsejar 3 temas teóricos de gramática a reforzar a partir de los action items.
+4 - Tu respuesta debe ser un objeto json que contenga:  action_items,  topics_to_review.
+    Feedbacks gramatica:<< {grammarFeedbacks} >>.
+    Feedbacks vocabulario:<< {vocabularyFeedbacks} >>.
 `;
 
 export const RESPONSE_BACK_TO_ENGLISH =

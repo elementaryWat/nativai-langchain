@@ -2,6 +2,23 @@ import styled from "styled-components";
 import { Button, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
+export const StyledList = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+`;
+
+export const StyledListItem = styled.li`
+  padding: 10px 20px;
+  margin: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #e3f2fd;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: #bbdefb;
+  }
+`;
+
 export const FeedbackContainer = styled(Grid)`
   display:flex;
   flex-direction: column;

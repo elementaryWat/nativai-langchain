@@ -6,6 +6,8 @@ export interface FeedBack {
   general_score: number;
 }
 
+export type FeedbackType = "local" | "final";
+
 export interface Message {
   role: "system" | "user" | "assistant";
   content: string;
