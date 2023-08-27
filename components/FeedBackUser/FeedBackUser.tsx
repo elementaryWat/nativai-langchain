@@ -52,6 +52,7 @@ export default function FeedbackUser() {
   const [rating, setRating] = useState(-1);
   const [comment, setComment] = useState("");
   const [wordCount, setWordCount] = useState(0);
+  const [sentenceCount, setSentenceCount] = useState(0);
   const [averageScore, setAverageScore] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
@@ -71,10 +72,12 @@ export default function FeedbackUser() {
     level,
     coffees,
     chats,
-    setUserData,
-    decrementCoffees,
     isProMember,
     hasCoffeesRemaining,
+    wordsUsedTotalCount,
+    sentencesUsedTotalCount,
+    setUserData,
+    decrementCoffees,
   } = useUserData();
 
   useEffect(() => {
@@ -86,33 +89,41 @@ export default function FeedbackUser() {
     }
   }, []);
 
-  useEffect(() => {
-    if (messages.length > 0 && session && isProMember) {
-      let updatedChats = chats
-        ? [
-            ...chats,
-            {
-              id: chatId,
-              messages,
-            },
-          ]
-        : [
-            {
-              id: chatId,
-              messages,
-            },
-          ];
-      setUserData({
-        chats: updatedChats,
-      });
-    }
-  }, [messages, isProMember]);
+  // useEffect(() => {
+  //   if (messages.length > 0 && session && isProMember) {
+  //     let updatedChats;
+
+  //     // Check if chats array exists and if a chat with current id already exists
+  //     const existingChatIndex = chats
+  //       ? chats.findIndex((chat) => chat.id === chatId)
+  //       : -1;
+
+  //     if (existingChatIndex > -1) {
+  //       // If the chat exists, replace its messages
+  //       updatedChats = [...chats];
+  //       updatedChats[existingChatIndex].messages = messages;
+  //     } else {
+  //       // If the chat doesn't exist, add it to the chats array
+  //       updatedChats = chats
+  //         ? [...chats, { id: chatId, messages }]
+  //         : [{ id: chatId, messages }];
+  //     }
+  //     setUserData({
+  //       chats: updatedChats,
+  //     });
+  //   }
+  // }, [messages, isProMember]);
 
   const startNewConversationHandler = () => {
     if (hasCoffeesRemaining) {
       setTopicConversation("");
       setRating(-1);
       setChatId(`chat-${new Date().toISOString()}`);
+      setUserData({
+        totalWords: (wordsUsedTotalCount || 0) + wordCount,
+        totalSentences: (sentencesUsedTotalCount || 0) + sentenceCount,
+      });
+      updateUsageStatistics(session.user.email, wordCount, topicConversation);
       router.replace("/");
     } else {
       setShowProModal(true);
@@ -151,6 +162,7 @@ export default function FeedbackUser() {
     let totalScore = 0;
     let totalUserMessages = 0;
     let wordsUsed: Set<string> = new Set();
+    let sentencesCount = 0;
 
     messages.forEach((message) => {
       if (message.role === "user") {
@@ -159,10 +171,11 @@ export default function FeedbackUser() {
           totalUserMessages += 1;
         }
 
-        // Add words to the dictionary
         message.content.split(" ").forEach((word) => {
           wordsUsed.add(word);
         });
+
+        sentencesCount += message.content.split(/[.!?]/).length - 1;
       }
     });
 
@@ -177,13 +190,9 @@ export default function FeedbackUser() {
     }
 
     setWordCount(wordsUsed.size);
+    setSentenceCount(sentencesCount);
     setAverageScore(finalScore);
     requestFinalFeedbackTips();
-    updateUsageStatistics(
-      session.user.email,
-      wordsUsed.size,
-      topicConversation
-    );
   };
 
   const handleSubmitRecommendation = async (index: number) => {
