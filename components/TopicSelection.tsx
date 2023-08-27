@@ -81,6 +81,7 @@ const TopicSelection: React.FC = () => {
       height={"100%"}
       width="100%"
       pt="1rem"
+      margin={"0 0 5rem 0"}
     >
       <StyledTypographH4>Elige un tema</StyledTypographH4>
       <StyledGrid container>

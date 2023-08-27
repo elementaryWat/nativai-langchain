@@ -89,6 +89,7 @@ const Stepperx: React.FC<StepperxProps> = ({
           justifyContent: "center",
           borderRadius: "20px",
           alignContent: "space-evenly",
+          margin:'0 0 4rem 0 '
         }}
       >
         {getStepContent(activeStep)}
