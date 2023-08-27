@@ -7,7 +7,12 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useChat } from "../../store/chatbot/useChat";
-import { trackFeedback, trackStartEndChat } from "../../utils/analyticsMethods";
+import {
+  trackEvent,
+  trackFeedback,
+  trackStartEndChat,
+  ANALYTICS_EVENTS,
+} from "../../utils/analyticsMethods";
 import {
   EmojiButton,
   EmojiDescription,
@@ -133,6 +138,7 @@ export default function FeedbackUser() {
   const continueConversationHandler = () => {
     if (hasCoffeesRemaining) {
       decrementCoffees();
+      trackEvent(ANALYTICS_EVENTS.CONTINUE_CONVERSATION);
       router.replace("/chat");
     } else {
       setShowProModal(true);
@@ -325,12 +331,26 @@ export default function FeedbackUser() {
           </div>
         ) : (
           <>
-            <Typography style={{color:'#777',fontWeight:'bold'}} variant="h6" mb={2}>
+            <Typography
+              style={{ color: "#777", fontWeight: "bold" }}
+              variant="h6"
+              mb={2}
+            >
               Temas para revisar:
             </Typography>
             <StyledList>
               {topicsToReview.map((topic, index) => (
-                <StyledListItem style={{color:'#777',fontWeight:'bold',backgroundColor:'#e3f2fd',textAlign:'center'}} key={index}>{topic}</StyledListItem>
+                <StyledListItem
+                  style={{
+                    color: "#777",
+                    fontWeight: "bold",
+                    backgroundColor: "#e3f2fd",
+                    textAlign: "center",
+                  }}
+                  key={index}
+                >
+                  {topic}
+                </StyledListItem>
               ))}
             </StyledList>
           </>
@@ -344,7 +364,7 @@ export default function FeedbackUser() {
             fontSize: { xs: "0.75", md: "1.5rem" },
             textAlign: "center",
             padding: "0 0 ",
-            color:'#777',
+            color: "#777",
             "@media (max-width: 940px)": {
               fontSize: "1.1rem",
             },
@@ -437,10 +457,10 @@ export default function FeedbackUser() {
               fontSize: { xs: "0.75", md: "1.5rem" },
               textAlign: "center",
               padding: "0 0 ",
-              color:'#777',
-              display:'flex',
-              justifyContent:'space-between',
-              alignItems:'center',
+              color: "#777",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               "@media (max-width: 940px)": {
                 fontSize: "1.1rem",
               },

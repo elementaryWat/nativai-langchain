@@ -9,6 +9,7 @@ import Menu from "@mui/material/Menu";
 import { IconButton } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
 interface ChatMenuBarProps {
   interactionsRemaining: number;
   handleStopChat: () => void;
@@ -29,6 +30,7 @@ const ChatMenuBar: React.FC<ChatMenuBarProps> = ({
   const handleClickStopChat = () => {
     handleStopChat();
     handleClose();
+    trackEvent(ANALYTICS_EVENTS.END_CONVERSATION_BTN);
   };
 
   return (

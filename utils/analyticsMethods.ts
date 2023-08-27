@@ -1,15 +1,19 @@
 import { logEvent } from "firebase/analytics";
 import { analytics } from "./firebaseClient";
 
-const ANALYTICS_EVENTS = {
+export const ANALYTICS_EVENTS = {
   PAGE_VIEW: "page_view",
   START_CONVERSATION: "start_conversation",
+  CONTINUE_CONVERSATION: "continue_conversation",
+  END_CONVERSATION_BTN: "end_conversation_btn",
   CHAT_MESSAGE: "chat_message",
   ERROR_OCURRED: "error_ocurred",
   FEEDBACK_RESPONSE: "feedback_response",
   FEEDBACK: "feedback",
   CLOSE_FEEDBACK: "close_feedback",
   END_CONVERSATION: "end_conversation",
+  CLICK_SUBSCRIPTION_BTN: "click_subscription_btn",
+  CANCEL_SUBSCRIPTION: "cancel_subscription",
 };
 
 interface EventParams {
