@@ -18,6 +18,8 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
     coffees: 3,
     streak: 0,
     longestStreak: 0,
+    totalWords: 0,
+    totalSentences: 0,
     subscriptionStatus: "pending",
     subscriptionId: "",
     hasCompletedOnboarding: false,
