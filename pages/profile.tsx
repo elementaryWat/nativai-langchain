@@ -10,18 +10,16 @@ import {
   BoxHeader,
   RowDatoEstadistica,
   BoxStatistics,
-} from "../components/PerfilComponent/style";
-import FondoPerfil from "../components/PerfilComponent/FondoPerfil/FondoPerfil";
+  SectionBasicData,
+} from "../components/ProfileComponent/styled";
 import LocalCafeTwoToneIcon from "@mui/icons-material/LocalCafeTwoTone";
 import { useSession } from "next-auth/react";
 import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
-import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
-import LeaderboardSharpIcon from "@mui/icons-material/LeaderboardSharp";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import StreakIcon from "@mui/icons-material/LocalFireDepartment";
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 
@@ -62,12 +60,12 @@ const ProfilePage: React.FC = () => {
     <PerfilContainer>
       {/* <FondoPerfil /> */}
       <BoxHeader>
-        <ArrowBackIosSharpIcon
+        {/* <ArrowBackIosSharpIcon
           onClick={() => {
             router.push("/");
           }}
           style={{ color: "#fff" }}
-        />
+        /> */}
       </BoxHeader>
       <SectionImagen>
         <img
@@ -80,7 +78,6 @@ const ProfilePage: React.FC = () => {
           }}
         />
         <RowDatoEstadistica>
-          {/* <h3>Cafe:</h3> */}
           <BoxStatistics>
             {isProMember ? (
               <AllInclusiveIcon style={{ color: "#fff" }} />
@@ -89,10 +86,6 @@ const ProfilePage: React.FC = () => {
             )}
             <LocalCafeTwoToneIcon style={{ color: "#fff" }} />
           </BoxStatistics>
-          {/* <BoxStatistics>
-                            <p>{level}</p>
-                            <LeaderboardSharpIcon style={{color:'#fff'}}/>
-                        </BoxStatistics> */}
           <BoxStatistics>
             <p>{longestStreak}</p>
             <StreakIcon style={{ color: "#fff" }} />
@@ -100,21 +93,20 @@ const ProfilePage: React.FC = () => {
         </RowDatoEstadistica>
       </SectionImagen>
       <BoxPerfil>
-        <BoxHeader></BoxHeader>
-        <SectionDato>
-          <h2>{username}</h2>
-          <p>{email}</p>
-          <p>{level}</p>
-          <p>{OBJECTIVES[objective]}</p>
-          <Button size="small" onClick={handleOpen}>
-            Update
-          </Button>
-        </SectionDato>
         <SectionPago>
+          <Typography variant="h5" mb={2}>
+            {username}
+          </Typography>
           <RowDatoPago>
-            <StarHalfSharpIcon />
-            {isProMember ? <p>Premium</p> : <p>Freemium</p>}
-            <StarHalfSharpIcon />
+            {isProMember ? (
+              <>
+                <StarHalfSharpIcon color="primary" />
+                <Typography color="secondary">Premium plan</Typography>
+                <StarHalfSharpIcon color="primary" />
+              </>
+            ) : (
+              <p>Free plan</p>
+            )}
           </RowDatoPago>
           <RowDatoPago>
             {/* <ButtonPago>
@@ -122,6 +114,23 @@ const ProfilePage: React.FC = () => {
                         </ButtonPago> */}
           </RowDatoPago>
         </SectionPago>
+        <SectionBasicData>
+          <SectionDato>
+            <Typography variant="h6">Email: {email}</Typography>
+          </SectionDato>
+          <SectionDato>
+            <Typography variant="h6">Nivel: {level}</Typography>
+          </SectionDato>
+          <SectionDato>
+            <Typography variant="h6">
+              {" "}
+              Objetivo: {OBJECTIVES[objective]}
+            </Typography>
+          </SectionDato>
+          <Button size="large" onClick={handleOpen}>
+            Actualizar datos
+          </Button>
+        </SectionBasicData>
       </BoxPerfil>
       <UpdateDialog
         open={open}

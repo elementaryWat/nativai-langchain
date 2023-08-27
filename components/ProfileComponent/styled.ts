@@ -3,10 +3,11 @@ import Fab from "@mui/material/Fab";
 
 export const PerfilContainer = styled("div")`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #9d37a7;
+  background: linear-gradient(to bottom, #673ab7, #ffffff);
   width: 100vw;
   height: 100vh;
 
@@ -16,13 +17,14 @@ export const PerfilContainer = styled("div")`
 
 export const BoxPerfil = styled("div")`
   display: flex;
+  flex: 4;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #e2e2e2;
   width: 100%;
-  height: 55%;
-  border-radius: 100px 100px 0 0;
+  height: 70%;
+  border-radius: 3rem 3rem 0 0;
   z-index: 100;
   padding: 3rem 0 0 0;
   box-shadow: 0 0 5px 1px #fff;
@@ -50,7 +52,7 @@ export const BoxHeader = styled("div")`
 
 export const SectionImagen = styled("div")`
   width: 90%;
-  height: 20%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,11 +78,12 @@ export const SectionImagen = styled("div")`
 
 export const SectionDato = styled("div")`
   display: flex;
+  margin-top: 1rem;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  height: 33%;
   background-color: #d2d2d2;
   box-shadow: 0 0 5px 1px #999;
 
@@ -89,14 +92,26 @@ export const SectionDato = styled("div")`
     color: #6d6d6d;
   }
 `;
-export const SectionPago = styled("div")`
+
+export const SectionBasicData = styled("div")`
   display: flex;
+  flex: 10;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: start;
   flex-wrap: nowrap;
   width: 90%;
-  height: 50%;
+  padding: 1rem 0;
+`;
+
+export const SectionPago = styled("div")`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 90%;
   padding: 1rem 0;
 `;
 
@@ -105,7 +120,6 @@ export const RowDatoPago = styled("div")`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 2rem%;
 
   h3 {
     color: #6d6d6d;

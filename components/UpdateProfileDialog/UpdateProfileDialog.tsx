@@ -51,7 +51,7 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Update Details</DialogTitle>
+      <DialogTitle>Actualizar datos</DialogTitle>
       <DialogContent>
         <TextField
           fullWidth
@@ -73,6 +73,7 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
         </Select>
         <Select
           fullWidth
+          style={{ marginTop: 10 }}
           value={updatedObjective || defaultObjective}
           onChange={(e) => setUpdatedObjective(e.target.value as UserObjective)}
         >
