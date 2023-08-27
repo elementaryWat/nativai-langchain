@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { makeFeedbackChain } from "./utils/makeFeedBackChain";
+import { makeFeedbackChain } from "../utils/makeFeedBackChain";
 
 export default async function handler(
   req: NextApiRequest,
