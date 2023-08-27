@@ -316,12 +316,12 @@ export default function FeedbackUser() {
           </div>
         ) : (
           <>
-            <Typography variant="h6" mb={2}>
+            <Typography style={{color:'#777',fontWeight:'bold'}} variant="h6" mb={2}>
               Temas para revisar:
             </Typography>
             <StyledList>
               {topicsToReview.map((topic, index) => (
-                <StyledListItem key={index}>{topic}</StyledListItem>
+                <StyledListItem style={{color:'#777',fontWeight:'bold',backgroundColor:'#e3f2fd',textAlign:'center'}} key={index}>{topic}</StyledListItem>
               ))}
             </StyledList>
           </>
