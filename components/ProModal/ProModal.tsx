@@ -14,6 +14,7 @@ import {
 import { useProModal } from "../../hooks/use-pro-modal";
 import { tools } from "../../constants";
 import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
+import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
 
 interface ProModalProps {
   isOpen: boolean;
@@ -53,6 +54,7 @@ export const ProModal: React.FC<ProModalProps> = ({
         };
 
         await addSubscriptionIfNotExists(subscriptionDetails);
+        trackEvent(ANALYTICS_EVENTS.CLICK_SUBSCRIPTION_BTN);
 
         window.location.href = data.init_point;
       } else {

@@ -14,23 +14,18 @@ export const PerfilContainer = styled("div")`
   }
 `;
 
-
-
-export const ColumnBox = styled('div')`
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-align-items:center;
+export const ColumnBox = styled("div")`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
-
-export const RowBox = styled('div')`
-display: flex;
-justify-content: space-evenly;
-align-items:center;
+export const RowBox = styled("div")`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `;
-
-
 
 export const BoxPerfil = styled("div")`
   display: flex;
@@ -156,7 +151,7 @@ export const RowDatoEstadistica = styled("div")`
   justify-content: center;
   width: 40%;
   height: 2rem;
-  margin: 1rem 0;
+  margin: 3rem 0;
 
   @media (max-width: 768px) {
     width: 100%;
