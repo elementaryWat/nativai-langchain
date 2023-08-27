@@ -6,31 +6,33 @@ import {
   SectionDato,
   SectionPago,
   RowDatoPago,
-  ButtonPago,
   BoxHeader,
   RowDatoEstadistica,
   BoxStatistics,
   SectionBasicData,
 } from "../components/ProfileComponent/styled";
 import LocalCafeTwoToneIcon from "@mui/icons-material/LocalCafeTwoTone";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useSession } from "next-auth/react";
 import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import StreakIcon from "@mui/icons-material/LocalFireDepartment";
 import { useRouter } from "next/router";
 import { useUserData } from "@/store/user/useUserData";
-import { Button, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
+import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
   const fotoPerfil = session?.user?.image;
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [dialogEditOpen, setDialogEditOpen] = useState(false);
+  const [dialogConfirmOpen, setDialogConfirmOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setDialogEditOpen(true);
+  const handleClose = () => setDialogEditOpen(false);
 
   const {
     coffees,
@@ -54,6 +56,19 @@ const ProfilePage: React.FC = () => {
       objective: updatedObjective,
     });
     handleClose();
+  };
+
+  const openConfirmationDialog = () => {
+    setDialogConfirmOpen(true);
+  };
+
+  const closeConfirmationDialog = () => {
+    setDialogConfirmOpen(false);
+  };
+
+  const handleCancelSubscription = () => {
+    // Lógica real para cancelar la suscripción aquí...
+    closeConfirmationDialog();
   };
 
   return (
@@ -103,6 +118,13 @@ const ProfilePage: React.FC = () => {
                 <StarHalfSharpIcon color="primary" />
                 <Typography color="secondary">Premium plan</Typography>
                 <StarHalfSharpIcon color="primary" />
+                <IconButton
+                  size="large"
+                  color="warning"
+                  onClick={openConfirmationDialog}
+                >
+                  <CancelIcon />
+                </IconButton>
               </>
             ) : (
               <p>Free plan</p>
@@ -132,8 +154,17 @@ const ProfilePage: React.FC = () => {
           </Button>
         </SectionBasicData>
       </BoxPerfil>
+      <ConfirmDialog
+        openDialog={dialogConfirmOpen}
+        onCloseConfirmationDialog={closeConfirmationDialog}
+        onConfirmText={
+          " ¿Estás seguro de que quieres cancelar tu suscripción Premium?"
+        }
+        onConfirmAction={handleCancelSubscription}
+        onConfirmTextAction={"Si, cancelar"}
+      />
       <UpdateDialog
-        open={open}
+        open={dialogEditOpen}
         onClose={handleClose}
         onUpdate={handleUpdate}
         defaultUsername={username}
