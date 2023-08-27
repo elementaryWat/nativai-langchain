@@ -136,9 +136,13 @@ const ProfilePage: React.FC = () => {
             ) : (
               <>
                 <Typography color="secondary">Free plan</Typography>
-                <IconButton size="large" color="success" onClick={openProModal}>
-                  <ProIcon />
-                </IconButton>
+                <Button
+                  startIcon={<ProIcon />}
+                  variant="contained"
+                  onClick={openProModal}
+                >
+                  Upgrade
+                </Button>
               </>
             )}
           </RowDatoPago>
