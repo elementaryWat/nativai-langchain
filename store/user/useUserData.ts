@@ -15,6 +15,7 @@ import {
   selectLongestStreak,
 } from "./selectors";
 import {
+  cancelSubscriptionAction,
   fetchUserDataAction,
   updateUserDataAction,
   updateUserInitialDataAction,
@@ -87,6 +88,10 @@ export const useUserData = () => {
     });
   };
 
+  const cancelUserSubscription = useCallback(() => {
+    dispatch(cancelSubscriptionAction());
+  }, [dispatch]);
+
   return {
     loadingStatus,
     userData,
@@ -104,5 +109,6 @@ export const useUserData = () => {
     setUserData,
     setLocalHasCompletedOnboardingFlag,
     decrementCoffees,
+    cancelUserSubscription,
   };
 };

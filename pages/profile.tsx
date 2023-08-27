@@ -14,7 +14,7 @@ import {
 import LocalCafeTwoToneIcon from "@mui/icons-material/LocalCafeTwoTone";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useSession } from "next-auth/react";
-import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
+import ProIcon from "@mui/icons-material/StarsSharp";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import StreakIcon from "@mui/icons-material/LocalFireDepartment";
 import { useRouter } from "next/router";
@@ -23,6 +23,7 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
+import { ProModal } from "@/components/ProModal/ProModal";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -30,6 +31,7 @@ const ProfilePage: React.FC = () => {
   const router = useRouter();
   const [dialogEditOpen, setDialogEditOpen] = useState(false);
   const [dialogConfirmOpen, setDialogConfirmOpen] = useState(false);
+  const [showProModal, setShowProModal] = useState(false);
 
   const handleOpen = () => setDialogEditOpen(true);
   const handleClose = () => setDialogEditOpen(false);
@@ -43,6 +45,7 @@ const ProfilePage: React.FC = () => {
     longestStreak,
     isProMember,
     setUserData,
+    cancelUserSubscription,
   } = useUserData();
 
   const handleUpdate = async (
@@ -58,6 +61,10 @@ const ProfilePage: React.FC = () => {
     handleClose();
   };
 
+  const openProModal = () => {
+    setShowProModal(true);
+  };
+
   const openConfirmationDialog = () => {
     setDialogConfirmOpen(true);
   };
@@ -67,7 +74,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleCancelSubscription = () => {
-    // Lógica real para cancelar la suscripción aquí...
+    cancelUserSubscription();
     closeConfirmationDialog();
   };
 
@@ -115,9 +122,9 @@ const ProfilePage: React.FC = () => {
           <RowDatoPago>
             {isProMember ? (
               <>
-                <StarHalfSharpIcon color="primary" />
+                <ProIcon color="primary" />
                 <Typography color="secondary">Premium plan</Typography>
-                <StarHalfSharpIcon color="primary" />
+                <ProIcon color="primary" />
                 <IconButton
                   size="large"
                   color="warning"
@@ -127,7 +134,12 @@ const ProfilePage: React.FC = () => {
                 </IconButton>
               </>
             ) : (
-              <p>Free plan</p>
+              <>
+                <Typography color="secondary">Free plan</Typography>
+                <IconButton size="large" color="success" onClick={openProModal}>
+                  <ProIcon />
+                </IconButton>
+              </>
             )}
           </RowDatoPago>
           <RowDatoPago>
@@ -170,6 +182,11 @@ const ProfilePage: React.FC = () => {
         defaultUsername={username}
         defaultLevel={level}
         defaultObjective={objective}
+      />
+      <ProModal
+        isOpen={showProModal}
+        onClose={() => setShowProModal(false)}
+        userEmail={email}
       />
     </PerfilContainer>
   );

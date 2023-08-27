@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({ onSubmit, loadingMessage }) => {
     formData.append("audio", audioFile, "audio.mp3");
     try {
       setTranscribing(true);
-      const response = await fetch("/api/transcribe", {
+      const response = await fetch("/api/chat/transcribe", {
         method: "POST",
         body: formData,
       });

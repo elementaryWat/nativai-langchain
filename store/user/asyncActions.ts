@@ -10,6 +10,7 @@ import {
 import { differenceInDays, addMonths } from "date-fns";
 import { User, UserUpdate } from "../../types/User";
 import { AppState } from "..";
+import { cancelUserSubscription } from "@/utils/endpoints";
 const USERS_COLLECTION = "users";
 
 export const fetchUserDataAction = createAsyncThunk<
@@ -124,5 +125,29 @@ export const updateUserDataAction = createAsyncThunk<
     return { ...userData, ...updatedData }; // returning the updated data
   } catch (error) {
     return rejectWithValue(error);
+  }
+});
+
+export const cancelSubscriptionAction = createAsyncThunk<
+  void, // Expected return type of the payload creator
+  void,
+  {
+    rejectValue: any;
+    state: AppState;
+  }
+>("user/cancelSubscription", async (_, { rejectWithValue, getState }) => {
+  try {
+    const subscriptionId = getState().user.userData.subscriptionId;
+    if (!subscriptionId) {
+      throw new Error("No subscriptionId found in the state");
+    }
+
+    const response = await cancelUserSubscription(subscriptionId);
+
+    if (response.status !== 200) {
+      throw new Error("Failed to cancel the subscription");
+    }
+  } catch (error) {
+    return rejectWithValue(error.toString());
   }
 });
