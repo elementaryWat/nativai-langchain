@@ -144,9 +144,7 @@ export const cancelSubscriptionAction = createAsyncThunk<
 
     const response = await cancelUserSubscription(subscriptionId);
 
-    if (response.status !== 200) {
-      throw new Error("Failed to cancel the subscription");
-    }
+    return response;
   } catch (error) {
     return rejectWithValue(error.toString());
   }
