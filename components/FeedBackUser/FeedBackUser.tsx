@@ -245,7 +245,7 @@ export default function FeedbackUser() {
           sx={{
             fontWeight: "bold",
             fontSize: { xs: "1.25rem", md: "2rem" },
-            color: "#000",
+            color: "#777",
             textAlign: "center",
             // border: "10px solid #531757",
             borderRadius: "30px",
@@ -335,6 +335,7 @@ export default function FeedbackUser() {
             fontSize: { xs: "0.75", md: "1.5rem" },
             textAlign: "center",
             padding: "0 0 ",
+            color:'#777',
             "@media (max-width: 940px)": {
               fontSize: "1.1rem",
             },
@@ -427,6 +428,10 @@ export default function FeedbackUser() {
               fontSize: { xs: "0.75", md: "1.5rem" },
               textAlign: "center",
               padding: "0 0 ",
+              color:'#777',
+              display:'flex',
+              justifyContent:'space-between',
+              alignItems:'center',
               "@media (max-width: 940px)": {
                 fontSize: "1.1rem",
               },
