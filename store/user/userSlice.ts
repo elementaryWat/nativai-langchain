@@ -21,6 +21,7 @@ const initialState: { userData: User; status: LoadingStatus; error: string } = {
     totalWords: 0,
     totalSentences: 0,
     subscriptionStatus: "pending",
+    expirationDateSubscription: null,
     subscriptionId: "",
     hasCompletedOnboarding: false,
     chats: [],
