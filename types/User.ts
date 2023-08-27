@@ -43,6 +43,8 @@ export interface User {
   objective?: UserObjective;
   streak?: number;
   longestStreak?: number;
+  totalWords?: number;
+  totalSentences?: number;
   coffees?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
@@ -61,6 +63,8 @@ export interface UserUpdate {
   coffees?: number;
   streak?: number;
   longestStreak?: number;
+  totalWords?: number;
+  totalSentences?: number;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
   subscriptionStatus?: SubscriptionState;

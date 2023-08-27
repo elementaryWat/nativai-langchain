@@ -13,6 +13,8 @@ import {
   selectIsProMember,
   selectHasCoffeesRemaining,
   selectLongestStreak,
+  selectWordsUsedTotalCount,
+  selectSentencesUsedTotalCount,
 } from "./selectors";
 import {
   cancelSubscriptionAction,
@@ -38,6 +40,8 @@ export const useUserData = () => {
   const objective = useSelector(selectObjective);
   const coffees = useSelector(selectCoffees);
   const longestStreak = useSelector(selectLongestStreak);
+  const wordsUsedTotalCount = useSelector(selectWordsUsedTotalCount);
+  const sentencesUsedTotalCount = useSelector(selectSentencesUsedTotalCount);
   const isProMember = useSelector(selectIsProMember);
   const hasCoffeesRemaining = useSelector(selectHasCoffeesRemaining);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
@@ -102,6 +106,8 @@ export const useUserData = () => {
     objective,
     coffees,
     longestStreak,
+    wordsUsedTotalCount,
+    sentencesUsedTotalCount,
     isProMember,
     hasCoffeesRemaining,
     hasCompletedOnboarding,

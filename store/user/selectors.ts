@@ -45,6 +45,16 @@ export const selectLongestStreak = createSelector(
   (user) => user.longestStreak
 );
 
+export const selectWordsUsedTotalCount = createSelector(
+  selectUserState,
+  (user) => user.totalWords
+);
+
+export const selectSentencesUsedTotalCount = createSelector(
+  selectUserState,
+  (user) => user.totalSentences
+);
+
 export const selectSubscriptionStatus = createSelector(
   selectUserState,
   (user) => user.subscriptionStatus
