@@ -10,6 +10,8 @@ import {
   RowDatoEstadistica,
   BoxStatistics,
   SectionBasicData,
+  ColumnBox,
+  RowBox,
 } from "../components/ProfileComponent/styled";
 import LocalCafeTwoToneIcon from "@mui/icons-material/LocalCafeTwoTone";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -24,6 +26,8 @@ import { OBJECTIVES, UserLevel, UserObjective } from "@/types/User";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 import { ProModal } from "@/components/ProModal/ProModal";
+import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
+
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -36,6 +40,10 @@ const ProfilePage: React.FC = () => {
   const handleOpen = () => setDialogEditOpen(true);
   const handleClose = () => setDialogEditOpen(false);
 
+///////////////////////
+  // const isProMember = false
+//////////////////////
+
   const {
     coffees,
     username,
@@ -47,6 +55,7 @@ const ProfilePage: React.FC = () => {
     setUserData,
     cancelUserSubscription,
   } = useUserData();
+
 
   const handleUpdate = async (
     updatedUsername: string,
@@ -116,56 +125,55 @@ const ProfilePage: React.FC = () => {
       </SectionImagen>
       <BoxPerfil>
         <SectionPago>
-          <Typography variant="h5" mb={2}>
+          <Typography style={{fontWeight:'bold', fontSize:'23px',color:'#888'}}>
             {username}
           </Typography>
           <RowDatoPago>
             {isProMember ? (
-              <>
-                <ProIcon color="primary" />
-                <Typography color="secondary">Premium plan</Typography>
-                <ProIcon color="primary" />
-                <IconButton
-                  size="large"
-                  color="warning"
+              <ColumnBox style={{padding:'.5rem', width:'100%'}}>
+                <RowBox style={{margin:'0 0 1rem 0'}}>
+                  <WorkspacePremiumTwoToneIcon style={{color:"#efb810 "}}/>
+                    <Typography style={{fontWeight:'bold', fontSize:'23px'}} color="secondary">Premium</Typography>
+                  <WorkspacePremiumTwoToneIcon style={{color:"#efb810 "}}/>
+                </RowBox>
+                <Button
+                  style={{margin:'.5rem 0'}}
+                  variant="contained"
                   onClick={openConfirmationDialog}
                 >
-                  <CancelIcon />
-                </IconButton>
-              </>
+                  Cancelar
+                </Button>
+              </ColumnBox>
             ) : (
-              <>
-                <Typography color="secondary">Free plan</Typography>
+              <ColumnBox style={{borderRadius:'10px',boxShadow:'0 0 5px 2px #777', padding:'.5rem', width:'100%',margin:'1rem 0 0 0'}}>
+                <WorkspacePremiumTwoToneIcon style={{color:"#efb810 "}}/>
+                <Typography style={{fontWeight:'bold', fontSize:'14px'}} color="secondary">Obtener NATI Premium</Typography>
                 <Button
+                  style={{margin:'.5rem 0'}}
                   startIcon={<ProIcon />}
                   variant="contained"
                   onClick={openProModal}
                 >
-                  Upgrade
+                  Actualizar a Pro
                 </Button>
-              </>
+              </ColumnBox>
             )}
-          </RowDatoPago>
-          <RowDatoPago>
-            {/* <ButtonPago>
-                            Cambiar Level
-                        </ButtonPago> */}
           </RowDatoPago>
         </SectionPago>
         <SectionBasicData>
           <SectionDato>
-            <Typography variant="h6">Email: {email}</Typography>
+            <Typography style={{color:'#777',fontWeight:'800', fontSize:'15px'}} variant="h6">Email: {email}</Typography>
           </SectionDato>
           <SectionDato>
-            <Typography variant="h6">Nivel: {level}</Typography>
+            <Typography style={{color:'#777',fontWeight:'800', fontSize:'15px'}} variant="h6">Nivel: {level}</Typography>
           </SectionDato>
           <SectionDato>
-            <Typography variant="h6">
+            <Typography style={{color:'#777',fontWeight:'800', fontSize:'15px'}} variant="h6">
               {" "}
               Objetivo: {OBJECTIVES[objective]}
             </Typography>
           </SectionDato>
-          <Button size="large" onClick={handleOpen}>
+          <Button size="large" onClick={handleOpen} variant="contained" style={{margin:'1rem 0 0 0'}}>
             Actualizar datos
           </Button>
         </SectionBasicData>
