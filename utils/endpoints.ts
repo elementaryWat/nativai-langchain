@@ -8,7 +8,7 @@ export const postChat = async (
   topicConversation: string
 ) => {
   try {
-    const dataResponse = await fetch("/api/chat", {
+    const dataResponse = await fetch("/api/chat/response", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const requestLocalFeedback = async (
   response: string
 ) => {
   try {
-    const dataResponse = await fetch("/api/feedback", {
+    const dataResponse = await fetch("/api/chat/feedback", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const requestFinalFeedback = async (
   vocabularyFeedbacks: string[]
 ) => {
   try {
-    const dataResponse = await fetch("/api/feedback", {
+    const dataResponse = await fetch("/api/chat/feedback", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,17 +77,14 @@ export const requestFinalFeedback = async (
   }
 };
 
-export const saveChatbotConfig = async (chatBotConfig: {
-  topic: string;
-  level: string;
-}) => {
+export const cancelUserSubscription = async (subscriptionId: string) => {
   try {
-    const dataResponse = await fetch("/api/saveConfigToFb", {
+    const dataResponse = await fetch("/api/payments/cancel-subscription", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(chatBotConfig),
+      body: JSON.stringify({ subscriptionId }),
     });
     return await dataResponse.json();
   } catch (error) {

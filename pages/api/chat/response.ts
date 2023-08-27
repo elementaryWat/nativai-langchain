@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { makeChatChain } from "./utils/makeChatChain";
+import { makeChatChain } from "../utils/makeChatChain";
 
 export default async function handler(
   req: NextApiRequest,

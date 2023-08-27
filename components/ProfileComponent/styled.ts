@@ -1,5 +1,4 @@
-import { styled, keyframes } from "@mui/system";
-import Fab from "@mui/material/Fab";
+import { styled } from "@mui/system";
 
 export const PerfilContainer = styled("div")`
   display: flex;

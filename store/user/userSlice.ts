@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../types/User";
 import {
+  cancelSubscriptionAction,
   fetchUserDataAction,
   updateUserDataAction,
   updateUserInitialDataAction,
@@ -67,6 +68,17 @@ export const userConfigSlice = createSlice({
         state.userData = { ...state.userData, ...action.payload };
       })
       .addCase(updateUserDataAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(cancelSubscriptionAction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(cancelSubscriptionAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userData.subscriptionStatus = "cancelled";
+      })
+      .addCase(cancelSubscriptionAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
