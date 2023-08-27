@@ -15,6 +15,8 @@ import {
   selectLongestStreak,
   selectWordsUsedTotalCount,
   selectSentencesUsedTotalCount,
+  selectSubscriptionStatus,
+  selectExpirationDateSubscription,
 } from "./selectors";
 import {
   cancelSubscriptionAction,
@@ -42,6 +44,10 @@ export const useUserData = () => {
   const longestStreak = useSelector(selectLongestStreak);
   const wordsUsedTotalCount = useSelector(selectWordsUsedTotalCount);
   const sentencesUsedTotalCount = useSelector(selectSentencesUsedTotalCount);
+  const subscriptionStatus = useSelector(selectSubscriptionStatus);
+  const expirationDateSubscription = useSelector(
+    selectExpirationDateSubscription
+  );
   const isProMember = useSelector(selectIsProMember);
   const hasCoffeesRemaining = useSelector(selectHasCoffeesRemaining);
   const hasCompletedOnboarding = useSelector(selectHasCompletedOnboarding);
@@ -108,6 +114,8 @@ export const useUserData = () => {
     longestStreak,
     wordsUsedTotalCount,
     sentencesUsedTotalCount,
+    subscriptionStatus,
+    expirationDateSubscription,
     isProMember,
     hasCoffeesRemaining,
     hasCompletedOnboarding,

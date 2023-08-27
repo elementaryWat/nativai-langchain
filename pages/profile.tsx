@@ -53,11 +53,19 @@ const ProfilePage: React.FC = () => {
     email,
     level,
     longestStreak,
+    subscriptionStatus,
+    expirationDateSubscription,
     isProMember,
     sentencesUsedTotalCount,
     setUserData,
     cancelUserSubscription,
   } = useUserData();
+
+  const currentDate = new Date();
+  const expDate = expirationDateSubscription
+    ? new Date(expirationDateSubscription)
+    : null;
+  const isExpired = expDate ? currentDate > expDate : true;
 
   const handleUpdate = async (
     updatedUsername: string,
@@ -89,6 +97,34 @@ const ProfilePage: React.FC = () => {
     trackEvent(ANALYTICS_EVENTS.CANCEL_SUBSCRIPTION);
     closeConfirmationDialog();
   };
+
+  const isAuthorized = subscriptionStatus === "authorized";
+  const icon = isProMember ? (
+    <WorkspacePremiumTwoToneIcon style={{ color: "#efb810 " }} />
+  ) : (
+    <FreePlan style={{ color: "#efb810 " }} />
+  );
+  const planText = isProMember ? "Premium" : "Plan gratuito";
+  const button = isAuthorized ? (
+    <Button
+      style={{ margin: ".5rem 0" }}
+      variant="contained"
+      onClick={openConfirmationDialog}
+      endIcon={<CancelIcon />}
+    >
+      Cancelar suscripción
+    </Button>
+  ) : (
+    <Button
+      style={{ margin: ".5rem 0" }}
+      startIcon={<ProIcon />}
+      variant="contained"
+      disabled={!isExpired}
+      onClick={openProModal}
+    >
+      Actualizar a Pro
+    </Button>
+  );
 
   return (
     <PerfilContainer>
@@ -147,54 +183,24 @@ const ProfilePage: React.FC = () => {
             {username}
           </Typography>
           <RowDatoPago>
-            {isProMember ? (
-              <ColumnBox style={{ padding: ".5rem", width: "100%" }}>
-                <RowBox style={{ margin: "0 0 1rem 0" }}>
-                  <WorkspacePremiumTwoToneIcon style={{ color: "#efb810 " }} />
-                  <Typography
-                    style={{ fontWeight: "bold", fontSize: "23px" }}
-                    color="secondary"
-                  >
-                    Premium
-                  </Typography>
-                  <WorkspacePremiumTwoToneIcon style={{ color: "#efb810 " }} />
-                </RowBox>
-                <Button
-                  style={{ margin: ".5rem 0" }}
-                  variant="contained"
-                  onClick={openConfirmationDialog}
-                  endIcon={<CancelIcon />}
-                >
-                  Cancelar suscripción
-                </Button>
-              </ColumnBox>
-            ) : (
-              <ColumnBox
-                style={{
-                  borderRadius: "10px",
-                  boxShadow: "0 0 5px 2px #777",
-                  padding: ".5rem",
-                  width: "100%",
-                  margin: "1rem 0 0 0",
-                }}
-              >
-                <FreePlan style={{ color: "#efb810 " }} />
+            <ColumnBox style={{ padding: ".5rem", width: "100%" }}>
+              <RowBox style={{ margin: "0 0 1rem 0" }}>
+                {icon}
                 <Typography
-                  style={{ fontWeight: "bold", fontSize: "14px" }}
+                  style={{ fontWeight: "bold", fontSize: "23px" }}
                   color="secondary"
                 >
-                  Plan gratuito
+                  {planText}
                 </Typography>
-                <Button
-                  style={{ margin: ".5rem 0" }}
-                  startIcon={<ProIcon />}
-                  variant="contained"
-                  onClick={openProModal}
-                >
-                  Actualizar a Pro
-                </Button>
-              </ColumnBox>
-            )}
+                {icon}
+              </RowBox>
+              {button}
+              {!isExpired && (
+                <Typography style={{ fontSize: ".8rem" }}>
+                  Fecha de vencimiento: {expDate?.toLocaleDateString()}
+                </Typography>
+              )}
+            </ColumnBox>
           </RowDatoPago>
         </SectionPago>
         <SectionBasicData>

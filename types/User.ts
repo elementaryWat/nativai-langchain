@@ -50,6 +50,7 @@ export interface User {
   hasCompletedOnboarding?: boolean;
   //https://www.mercadopago.com.ar/developers/es/reference/subscriptions/_preapproval_id/get
   subscriptionStatus?: SubscriptionState;
+  expirationDateSubscription?: Date;
   subscriptionId?: string;
   chats?: Chat[];
 }
@@ -68,6 +69,7 @@ export interface UserUpdate {
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
   subscriptionStatus?: SubscriptionState;
+  expirationDateSubscription?: Date;
   subscriptionId?: string;
   chats?: Chat[];
 }

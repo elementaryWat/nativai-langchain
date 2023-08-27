@@ -60,9 +60,18 @@ export const selectSubscriptionStatus = createSelector(
   (user) => user.subscriptionStatus
 );
 
+export const selectExpirationDateSubscription = createSelector(
+  selectUserState,
+  (user) => user.expirationDateSubscription
+);
+
 export const selectIsProMember = createSelector(
-  selectSubscriptionStatus,
-  (subscriptionStatus) => subscriptionStatus === "authorized"
+  [selectSubscriptionStatus, selectExpirationDateSubscription], // <-- Assuming you have a selector for the expiration date
+  (subscriptionStatus, expirationDateSubscription) => {
+    const currentDate = new Date();
+    const expirationDate = new Date(expirationDateSubscription);
+    return subscriptionStatus === "authorized" || currentDate < expirationDate;
+  }
 );
 
 export const selectHasCoffeesRemaining = createSelector(
