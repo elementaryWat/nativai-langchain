@@ -36,19 +36,20 @@
     "openai": "^3.2.1",
     "pdf-parse": "^1.1.1",
     "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
     "react-redux": "^8.0.7",
+    "react-timer-hook": "^3.0.7",
     "redis": "^4.6.6",
     "redux-persist": "^6.0.0",
     "reselect": "^4.1.8",
     "styled-components": "^5.3.11",
     "tmp": "^0.2.1",
     "tmp-promise": "^3.0.3",
-    "zustand": "^4.4.1",
-    "react-confetti": "^6.1.0"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",

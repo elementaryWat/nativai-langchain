@@ -5,6 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel="icon" href="favicon.ico" />
           <script
             dangerouslySetInnerHTML={{
               __html: `
