@@ -8,7 +8,10 @@ type Props = {
   title?: string;
 };
 
-const Layout = ({ children, title = "NativAI" }: Props) => {
+const Layout = ({
+  children,
+  title = "NativAI - Your Native Friend",
+}: Props) => {
   const router = useRouter();
 
   return (

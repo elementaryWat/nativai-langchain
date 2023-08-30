@@ -17,6 +17,7 @@ import {
   selectSentencesUsedTotalCount,
   selectSubscriptionStatus,
   selectExpirationDateSubscription,
+  selectTestEmail,
 } from "./selectors";
 import {
   cancelSubscriptionAction,
@@ -36,6 +37,7 @@ export const useUserData = () => {
   const loadingStatus = useSelector(selectStatus);
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
+  const testEmail = useSelector(selectTestEmail);
   const chats = useSelector(selectChats);
   const username = useSelector(selectUsername);
   const level = useSelector(selectLevel);
@@ -107,6 +109,7 @@ export const useUserData = () => {
     userData,
     chats,
     email,
+    testEmail,
     username,
     level,
     objective,

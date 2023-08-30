@@ -39,6 +39,7 @@ export interface User {
   email: string;
   name: string;
   image?: string;
+  testEmail?: string;
   level?: UserLevel;
   objective?: UserObjective;
   streak?: number;
@@ -59,6 +60,7 @@ export interface UserUpdate {
   email?: string;
   name?: string;
   image?: string;
+  testEmail?: string;
   level?: UserLevel;
   objective?: UserObjective;
   coffees?: number;

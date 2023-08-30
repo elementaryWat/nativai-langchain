@@ -1,6 +1,16 @@
 import mercadopage from "mercadopago";
 import { NextApiRequest, NextApiResponse } from "next";
 
+const fetchDollarRate = async () => {
+  try {
+    const response = await fetch("https://api.bluelytics.com.ar/v2/latest");
+    const data = await response.json();
+    return data.blue.value_sell;
+  } catch (error) {
+    return 750; //hardcoded value for dollar rate
+  }
+};
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     return res.status(405).end();
@@ -17,12 +27,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ message: "Payer Email parameter is missing" });
   }
 
+  const dollarRate = await fetchDollarRate();
+  const transactionAmountUSD = 0.99;
+  const transactionAmountARS = transactionAmountUSD * dollarRate;
+
   try {
     const result = await mercadopage.preapproval.create({
       auto_recurring: {
         frequency: 1,
         frequency_type: "months",
-        transaction_amount: 999.99,
+        transaction_amount: transactionAmountARS,
         currency_id: "ARS",
       },
       external_reference: "Premium",

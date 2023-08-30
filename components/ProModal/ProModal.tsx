@@ -11,10 +11,11 @@ import {
   CardContent,
   Button,
 } from "@mui/material";
-import { useProModal } from "../../hooks/use-pro-modal";
 import { tools } from "../../constants";
 import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
 import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
+import StopWatchTimer from "./StopwatchTimer";
+import { useUserData } from "@/store/user/useUserData";
 
 interface ProModalProps {
   isOpen: boolean;
@@ -29,9 +30,13 @@ export const ProModal: React.FC<ProModalProps> = ({
 }) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-  const TEST_USER = "test_user_784417862@testuser.com";
-  const originalPrice = 5000;
-  const discountPrice = originalPrice * 0.2 - 0.01;
+  const { testEmail } = useUserData();
+  const TEST_USER = testEmail || "test_user_784417862@testuser.com";
+  const originalPrice = 14.99;
+  const discountPrice = 0.99;
+  const expirationOffer = new Date();
+  expirationOffer.setDate(expirationOffer.getDate() + 1);
+
   const onSubscribe = async () => {
     try {
       setLoading(true);
@@ -198,6 +203,8 @@ export const ProModal: React.FC<ProModalProps> = ({
             flexDirection: "column",
             alignItems: "center",
             textAlign: "center",
+            borderRadius: "1rem",
+            background: "linear-gradient(to top, #673ab7, #ffffff)",
           }}
         >
           <Typography
@@ -207,10 +214,11 @@ export const ProModal: React.FC<ProModalProps> = ({
               font: "inherit",
               fontSize: "25px",
               fontWeight: "500",
+              color: "#673ab7",
               textTransform: "uppercase",
             }}
           >
-            Oferta de lanzamiento
+            Oferta de lanzamiento!!!
           </Typography>
           <Typography
             variant="h5"
@@ -219,7 +227,7 @@ export const ProModal: React.FC<ProModalProps> = ({
               color: "#888",
             }}
           >
-            ${originalPrice}/Mes
+            U$D{originalPrice}/Mes
           </Typography>
           <Typography
             variant="h4"
@@ -228,39 +236,37 @@ export const ProModal: React.FC<ProModalProps> = ({
               marginTop: "0.5rem",
             }}
           >
-            ${discountPrice}/Mes
+            U$D {discountPrice}/Mes
           </Typography>
           <Typography
             variant="body2"
             style={{
               color: "red",
-              marginTop: "0.5rem",
+              fontStyle: "bold",
+              fontSize: "1.2rem",
             }}
           >
-            Oferta limitada 80% off!
+            (Oferta x tiempo limitado -93.3% off!)
           </Typography>
+          <StopWatchTimer expiryTimestamp={expirationOffer} />
+          <Button
+            color="success"
+            variant="contained"
+            disabled={loading}
+            onClick={onSubscribe}
+          >
+            Actualizar plan
+            <Zap
+              style={{
+                width: "16px",
+                height: "16px",
+                marginLeft: "0.5rem",
+                fill: "#fff",
+              }}
+            />
+          </Button>
         </Card>
       </DialogContent>
-      <DialogActions
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        <Button variant="contained" disabled={loading} onClick={onSubscribe}>
-          Actualizar plan
-          <Zap
-            style={{
-              width: "16px",
-              height: "16px",
-              marginLeft: "0.5rem",
-              fill: "#fff",
-            }}
-          />
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };
