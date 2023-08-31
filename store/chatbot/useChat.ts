@@ -34,7 +34,14 @@ export const useChat = () => {
   const isAudioPlaying = useSelector(selectIsAudioPlaying);
   const loading = useSelector(selectLoading);
 
+  const OTHER_OPENING = "any topic of your choice";
+  const OTHER_INTRODUCTION = "tell me what's on your mind today?";
+
   function getRandomIntroductionForTopic(topic: string) {
+    if (topic === "other") {
+      return OTHER_INTRODUCTION;
+    }
+
     const introductions = INTRODUCTIONS[topic];
     if (!introductions || introductions.length === 0) return "";
 
@@ -51,7 +58,10 @@ export const useChat = () => {
 
       const AI_INTRODUCTION = await promptIntroduction.format({
         username,
-        topic: TOPICS[topicConversation],
+        topic:
+          topicConversation !== "other"
+            ? TOPICS[topicConversation]
+            : OTHER_OPENING,
         intro: randomIntroduction,
       });
 
