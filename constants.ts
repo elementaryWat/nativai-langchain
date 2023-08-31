@@ -45,7 +45,7 @@ export const TOPICS = {
   "hobbies-and-interests": "Hobbies and Interests",
   "health-and-wellbeing": "Health and Wellbeing",
   "technology-and-science": "Technology and Science",
-  "environment-and-sustainability": "Environment and Sustainability",
+  other: "Free Topic",
 };
 
 export const INTRODUCTIONS = {

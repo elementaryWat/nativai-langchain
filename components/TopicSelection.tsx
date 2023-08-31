@@ -11,7 +11,7 @@ import CultureIcon from "@mui/icons-material/TheaterComedy";
 import HobbiesIcon from "@mui/icons-material/SportsEsports";
 import HealthIcon from "@mui/icons-material/LocalHospital";
 import TechIcon from "@mui/icons-material/Devices";
-import EnvironmentIcon from "@mui/icons-material/Nature";
+import OtherIcon from "@mui/icons-material/EmojiObjects";
 import {
   PageContainer,
   StyledRadioButtonTopic,
@@ -47,7 +47,12 @@ const TopicSelection: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { topicConversation, setTopicConversation, getInitialMessage } =
     useChat();
-  const { username, hasCoffeesRemaining, email } = useUserData();
+  const {
+    username,
+    hasCoffeesRemaining,
+    email,
+    loadingStatus: loadingStatusUser,
+  } = useUserData();
   const [showProModal, setShowProModal] = useState(false);
 
   const goToChat = async () => {
@@ -69,7 +74,7 @@ const TopicSelection: React.FC = () => {
     "hobbies-and-interests": <HobbiesIcon />,
     "health-and-wellbeing": <HealthIcon />,
     "technology-and-science": <TechIcon />,
-    "environment-and-sustainability": <EnvironmentIcon />,
+    other: <OtherIcon />,
   };
 
   return (
@@ -106,7 +111,7 @@ const TopicSelection: React.FC = () => {
             padding: "1rem",
             borderRadius: "30px",
           }}
-          disabled={topicConversation === ""}
+          disabled={topicConversation === "" || loadingStatusUser === "loading"}
           onClick={goToChat}
           color="primary"
           variant="contained"
