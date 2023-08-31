@@ -72,7 +72,7 @@ export const ProModal: React.FC<ProModalProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog style={{height:'auto'}} open={isOpen} onClose={onClose}>
       <DialogContent
         style={{
           display: "flex",
@@ -80,6 +80,8 @@ export const ProModal: React.FC<ProModalProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           textAlign: "center",
+          height:'auto',
+          
         }}
       >
         <div
@@ -98,6 +100,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             borderRadius: "100%",
             padding: "70px",
             color: "#fff",
+            transform:'scale(.5)'
           }}
         >
           NATIV
@@ -117,7 +120,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             flexDirection: "column",
             gap: "1rem",
             paddingBottom: "1rem",
-            marginTop: "60px",
+            marginTop: "30px",
           }}
         >
           <div
@@ -196,7 +199,7 @@ export const ProModal: React.FC<ProModalProps> = ({
         </Typography>
         <Card
           style={{
-            marginTop: "1rem",
+            // marginTop: "1rem",
             padding: "1rem",
             display: "flex",
             flexDirection: "column",
@@ -215,6 +218,7 @@ export const ProModal: React.FC<ProModalProps> = ({
               fontWeight: "500",
               color: "#673ab7",
               textTransform: "uppercase",
+              transform:'scale(.7)'
             }}
           >
             Oferta de lanzamiento!!!
@@ -224,6 +228,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             style={{
               textDecoration: "line-through",
               color: "#888",
+              transform:'scale(.5)' 
             }}
           >
             U$D{originalPrice}/Mes
@@ -233,6 +238,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             style={{
               color: "green",
               marginTop: "0.5rem",
+              transform:'scale(.7)'
             }}
           >
             U$D {discountPrice}/Mes
@@ -243,6 +249,7 @@ export const ProModal: React.FC<ProModalProps> = ({
               color: "red",
               fontStyle: "bold",
               fontSize: "1.2rem",
+              transform:'scale(.7)'
             }}
           >
             (Oferta x tiempo limitado -93.3% off!)
