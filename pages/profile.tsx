@@ -30,6 +30,7 @@ import UpdateDialog from "@/components/UpdateProfileDialog/UpdateProfileDialog";
 import { ProModal } from "@/components/ProModal/ProModal";
 import WorkspacePremiumTwoToneIcon from "@mui/icons-material/WorkspacePremiumTwoTone";
 import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
+import { signOut } from "next-auth/react";
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -130,6 +131,26 @@ const ProfilePage: React.FC = () => {
     <PerfilContainer>
       {/* <FondoPerfil /> */}
       <BoxHeader>
+        <Button
+          sx={{
+            fontFamily: "Helvetica",
+            fontSize: "1rem",
+            fontWeight: "700",
+            borderRadius: "20px",
+            position: "absolute",
+            top: "15px",
+            right: "45px",
+            background: "#fff",
+            color: "#673ab7",
+            textTransform: "capitalize",
+            "&:hover": {
+              background: "#9862f5",
+            },
+          }}
+          onClick={() => signOut()}
+        >
+          SignOut
+        </Button>
         {/* <ArrowBackIosSharpIcon
           onClick={() => {
             router.push("/");
