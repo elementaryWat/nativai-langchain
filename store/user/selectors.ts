@@ -70,6 +70,7 @@ export const selectExpirationDateSubscription = createSelector(
   (user) => user.expirationDateSubscription
 );
 
+//TODO: Check SubscriptionIDxs
 export const selectIsProMember = createSelector(
   [selectSubscriptionStatus, selectExpirationDateSubscription], // <-- Assuming you have a selector for the expiration date
   (subscriptionStatus, expirationDateSubscription) => {

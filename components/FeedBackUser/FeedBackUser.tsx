@@ -83,12 +83,14 @@ export default function FeedbackUser() {
     sentencesUsedTotalCount,
     setUserData,
     decrementCoffees,
+    updateUserStreak,
   } = useUserData();
 
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();
       trackStartEndChat(chatId, email, level, topicConversation, false);
+      updateUserStreak();
     } else {
       router.replace("/");
     }
