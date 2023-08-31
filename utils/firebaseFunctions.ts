@@ -26,7 +26,7 @@ export const addSubscriptionIfNotExists = async (
   } else {
     const newSubscription = {
       userId: subscriptionData.userId,
-      userIdTest: subscriptionData.userIdTest,
+      // userIdTest: subscriptionData.userIdTest,
       status: subscriptionData.subscriptionStatus,
       createdAt: subscriptionData.dateCreated || serverTimestamp(),
     };

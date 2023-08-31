@@ -15,7 +15,7 @@ import { tools } from "../../constants";
 import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
 import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
 import StopWatchTimer from "./StopwatchTimer";
-import { useUserData } from "@/store/user/useUserData";
+// import { useUserData } from "@/store/user/useUserData";
 
 interface ProModalProps {
   isOpen: boolean;
@@ -30,8 +30,8 @@ export const ProModal: React.FC<ProModalProps> = ({
 }) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-  const { testEmail } = useUserData();
-  const TEST_USER = testEmail || "test_user_784417862@testuser.com";
+  // const { testEmail } = useUserData();
+  // const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
   const discountPrice = 0.99;
   const expirationOffer = new Date(Date.UTC(2023, 8, 4, 3, 0, 0));
@@ -42,7 +42,7 @@ export const ProModal: React.FC<ProModalProps> = ({
       const response = await axios.post(
         "/api/payments/create-subscription-config",
         {
-          payer_email: TEST_USER,
+          payer_email: userEmail,
         }
       );
 
@@ -51,7 +51,7 @@ export const ProModal: React.FC<ProModalProps> = ({
       if (data && data.id) {
         const subscriptionDetails = {
           userId: userEmail,
-          userIdTest: TEST_USER,
+          // userIdTest: TEST_USER,
           subscriptionStatus: data.status,
           subscriptionId: data.id,
           dateCreated: data.date_created,
