@@ -46,6 +46,13 @@ function StopWatchTimer({ expiryTimestamp }) {
   return (
     <div style={{ textAlign: "center" }}>
       <TimerContainer>
+        {days !== undefined ? <Digit value={days} title="DAYS" /> : null}
+        {days !== undefined ? (
+          <SepartorContainer>
+            <Separator />
+            <Separator />
+          </SepartorContainer>
+        ) : null}
         <Digit value={hours} title="HORAS" />
         <SepartorContainer>
           <Separator />
