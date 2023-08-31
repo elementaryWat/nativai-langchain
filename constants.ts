@@ -120,4 +120,10 @@ export const tools = [
     bgColor: "bg-green-700/10",
     href: "/code",
   },
+  {
+    label: "Soporte prioritario",
+    color: "text-green-700",
+    bgColor: "bg-green-700/10",
+    href: "/code",
+  },
 ];

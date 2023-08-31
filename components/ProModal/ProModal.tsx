@@ -34,8 +34,7 @@ export const ProModal: React.FC<ProModalProps> = ({
   const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
   const discountPrice = 0.99;
-  const expirationOffer = new Date();
-  expirationOffer.setDate(expirationOffer.getDate() + 1);
+  const expirationOffer = new Date(Date.UTC(2023, 8, 4, 3, 0, 0));
 
   const onSubscribe = async () => {
     try {
