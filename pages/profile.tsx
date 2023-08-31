@@ -55,6 +55,7 @@ const ProfilePage: React.FC = () => {
     level,
     longestStreak,
     subscriptionStatus,
+    loadingStatus,
     expirationDateSubscription,
     isProMember,
     sentencesUsedTotalCount,
@@ -120,7 +121,7 @@ const ProfilePage: React.FC = () => {
       style={{ margin: ".5rem 0" }}
       startIcon={<ProIcon />}
       variant="contained"
-      disabled={!isExpired}
+      disabled={!isExpired || loadingStatus === "loading"}
       onClick={openProModal}
     >
       Actualizar a Pro

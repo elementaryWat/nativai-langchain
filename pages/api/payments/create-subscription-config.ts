@@ -1,4 +1,4 @@
-import mercadopage from "mercadopago";
+import mercadopago from "mercadopago";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const fetchDollarRate = async () => {
@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end();
   }
 
-  mercadopage.configure({
+  mercadopago.configure({
     access_token: process.env.MERCADOPAGO_API_KEY,
   });
   const { payer_email } = req.body;
@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const transactionAmountARS = transactionAmountUSD * dollarRate;
 
   try {
-    const result = await mercadopage.preapproval.create({
+    const result = await mercadopago.preapproval.create({
       auto_recurring: {
         frequency: 1,
         frequency_type: "months",
