@@ -76,7 +76,10 @@ export const selectIsProMember = createSelector(
   (subscriptionStatus, expirationDateSubscription) => {
     const currentDate = new Date();
     const expirationDate = new Date(expirationDateSubscription);
-    return subscriptionStatus === "authorized" || currentDate < expirationDate;
+    return (
+      subscriptionStatus === "authorized" ||
+      (subscriptionStatus === "cancelled" && currentDate < expirationDate)
+    );
   }
 );
 

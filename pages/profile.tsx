@@ -217,7 +217,7 @@ const ProfilePage: React.FC = () => {
                 {icon}
               </RowBox>
               {button}
-              {!isExpired && (
+              {!isExpired && subscriptionStatus === "cancelled" && (
                 <Typography style={{ fontSize: ".8rem" }}>
                   Fecha de vencimiento: {expDate?.toLocaleDateString()}
                 </Typography>
