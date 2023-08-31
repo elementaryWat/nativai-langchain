@@ -47,6 +47,7 @@ export interface User {
   totalWords?: number;
   totalSentences?: number;
   coffees?: number;
+  lastUse?: Date;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
   //https://www.mercadopago.com.ar/developers/es/reference/subscriptions/_preapproval_id/get
@@ -68,6 +69,7 @@ export interface UserUpdate {
   longestStreak?: number;
   totalWords?: number;
   totalSentences?: number;
+  lastUse?: Date;
   lastLogin?: Date;
   hasCompletedOnboarding?: boolean;
   subscriptionStatus?: SubscriptionState;

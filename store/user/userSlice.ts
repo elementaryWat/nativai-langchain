@@ -5,6 +5,7 @@ import {
   fetchUserDataAction,
   updateUserDataAction,
   updateUserInitialDataAction,
+  updateUserStreakAction,
 } from "./asyncActions";
 
 export type LoadingStatus = "loading" | "succeeded" | "failed";
@@ -59,6 +60,18 @@ export const userConfigSlice = createSlice({
         state.userData = action.payload;
       })
       .addCase(updateUserInitialDataAction.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(updateUserStreakAction.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserStreakAction.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        // merge updated data with existing userData
+        state.userData = { ...state.userData, ...action.payload };
+      })
+      .addCase(updateUserStreakAction.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })

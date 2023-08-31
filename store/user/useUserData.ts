@@ -24,6 +24,7 @@ import {
   fetchUserDataAction,
   updateUserDataAction,
   updateUserInitialDataAction,
+  updateUserStreakAction,
 } from "./asyncActions";
 import { useAppDispatch } from "..";
 import { UserUpdate } from "../../types/User";
@@ -87,6 +88,10 @@ export const useUserData = () => {
     [dispatch]
   );
 
+  const updateUserStreak = useCallback(() => {
+    dispatch(updateUserStreakAction({ email }));
+  }, [dispatch]);
+
   const setLocalHasCompletedOnboardingFlag = useCallback(
     (hasCompletedOnboarding: boolean) => {
       dispatch(setOnboardingStatusAction(hasCompletedOnboarding));
@@ -124,6 +129,7 @@ export const useUserData = () => {
     hasCompletedOnboarding,
     fetchUserData,
     setUserData,
+    updateUserStreak,
     setLocalHasCompletedOnboardingFlag,
     decrementCoffees,
     cancelUserSubscription,

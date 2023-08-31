@@ -7,7 +7,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { differenceInDays, addMonths } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import { User, UserUpdate } from "../../types/User";
 import { AppState } from "..";
 import { cancelUserSubscription } from "@/utils/endpoints";
@@ -26,6 +26,42 @@ export const fetchUserDataAction = createAsyncThunk<
   } else {
     return null;
   }
+});
+
+export const updateUserStreakAction = createAsyncThunk<
+  { streak: number; longestStreak: number },
+  { email: string }
+>("user/updateUserStreak", async ({ email }) => {
+  const db = getFirestore();
+  const userRef = doc(db, USERS_COLLECTION, email);
+  const userSnapshot = await getDoc(userRef);
+
+  const userDataDB = userSnapshot.data();
+  const userLastLoginDate = new Date(userDataDB.lastUse.seconds * 1000);
+  const currentDate = new Date();
+  let dayDifference = differenceInCalendarDays(currentDate, userLastLoginDate);
+  let streak = userDataDB.streak || 0;
+  let longestStreak = userDataDB.longestStreak || 0;
+
+  // Si el último inicio de sesión fue ayer, incrementa la racha.
+  if (dayDifference === 1) {
+    streak += 1;
+  } else if (dayDifference > 1) {
+    // Si la diferencia es más de un día, reinicia la racha.
+    streak = 1;
+  }
+
+  // Actualizar la racha más larga si la racha actual es más grande.
+  if (streak > longestStreak) {
+    longestStreak = streak;
+  }
+  await updateDoc(userRef, {
+    ...userDataDB,
+    streak,
+    longestStreak,
+    lastUse: currentDate,
+  });
+  return { streak, longestStreak };
 });
 
 export const updateUserInitialDataAction = createAsyncThunk<
@@ -48,26 +84,15 @@ export const updateUserInitialDataAction = createAsyncThunk<
       const userLastLoginDate = new Date(userDataDB.lastLogin.seconds * 1000);
       // const oneMonthAgo = new Date("2023-07-20T16:29:18.075-04:00");
       const currentDate = new Date();
-      let dayDifference = differenceInDays(currentDate, userLastLoginDate);
+      let dayDifference = differenceInCalendarDays(
+        currentDate,
+        userLastLoginDate
+      );
+      console.log(dayDifference);
       let coffees =
         userSnapshot.data().coffees !== undefined
           ? userSnapshot.data().coffees
           : 3;
-      let streak = userDataDB.streak || 0;
-      let longestStreak = userDataDB.longestStreak || 0;
-
-      // Si el último inicio de sesión fue ayer, incrementa la racha.
-      if (dayDifference === 1) {
-        streak += 1;
-      } else if (dayDifference > 1) {
-        // Si la diferencia es más de un día, reinicia la racha.
-        streak = 0;
-      }
-
-      // Actualizar la racha más larga si la racha actual es más grande.
-      if (streak > longestStreak) {
-        longestStreak = streak;
-      }
 
       if (!userLastLoginDate || dayDifference !== 0) {
         userDataModified = {
@@ -76,16 +101,12 @@ export const updateUserInitialDataAction = createAsyncThunk<
           hasCompletedOnboarding,
           lastLogin: serverTimestamp(),
           coffees: 3,
-          streak,
-          longestStreak,
         };
       } else {
         userDataModified = {
           ...userData,
           ...userDataDB,
           hasCompletedOnboarding,
-          streak,
-          longestStreak,
           coffees,
         };
       }
