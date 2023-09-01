@@ -18,6 +18,7 @@ import {
   selectSubscriptionStatus,
   selectExpirationDateSubscription,
   selectTestEmail,
+  selectEmailMP,
 } from "./selectors";
 import {
   cancelSubscriptionAction,
@@ -38,6 +39,7 @@ export const useUserData = () => {
   const loadingStatus = useSelector(selectStatus);
   const userData = useSelector(selectUserState);
   const email = useSelector(selectEmail);
+  const emailMP = useSelector(selectEmailMP);
   const testEmail = useSelector(selectTestEmail);
   const chats = useSelector(selectChats);
   const username = useSelector(selectUsername);
@@ -114,6 +116,7 @@ export const useUserData = () => {
     userData,
     chats,
     email,
+    emailMP,
     testEmail,
     username,
     level,

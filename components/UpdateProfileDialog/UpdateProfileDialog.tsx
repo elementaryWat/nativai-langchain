@@ -22,11 +22,13 @@ interface UpdateDialogProps {
   onUpdate: (
     username: string,
     level: UserLevel,
-    objective: UserObjective
+    objective: UserObjective,
+    emailMP: string
   ) => void;
   defaultUsername: string;
   defaultLevel: UserLevel | "";
   defaultObjective: UserObjective | "";
+  defaultEmailMercadoPago: string | "";
 }
 
 const UpdateDialog: React.FC<UpdateDialogProps> = ({
@@ -36,16 +38,21 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
   defaultUsername,
   defaultLevel,
   defaultObjective,
+  defaultEmailMercadoPago,
 }) => {
   const [updatedUsername, setUpdatedUsername] = useState(defaultUsername);
   const [updatedLevel, setUpdatedLevel] = useState(defaultLevel);
   const [updatedObjective, setUpdatedObjective] = useState(defaultObjective);
+  const [updatedEmailMercadoPago, setUpdatedEmailMercadoPago] = useState(
+    defaultEmailMercadoPago
+  );
 
   const handleUpdate = () => {
     onUpdate(
       updatedUsername || defaultUsername,
       updatedLevel || defaultLevel,
-      updatedObjective || defaultObjective
+      updatedObjective || defaultObjective,
+      updatedEmailMercadoPago || defaultEmailMercadoPago
     );
   };
 
@@ -59,6 +66,13 @@ const UpdateDialog: React.FC<UpdateDialogProps> = ({
           label="Username"
           value={updatedUsername || defaultUsername}
           onChange={(e) => setUpdatedUsername(e.target.value)}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Email Mercado Pago"
+          value={updatedEmailMercadoPago || defaultEmailMercadoPago}
+          onChange={(e) => setUpdatedEmailMercadoPago(e.target.value)}
         />
         <Select
           fullWidth

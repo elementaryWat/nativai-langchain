@@ -489,11 +489,7 @@ export default function FeedbackUser() {
           Iniciar otra conversación
         </FeedbackButton>
       </FeedbackSection>
-      <ProModal
-        isOpen={showProModal}
-        onClose={() => setShowProModal(false)}
-        userEmail={session?.user.email}
-      />
+      <ProModal isOpen={showProModal} onClose={() => setShowProModal(false)} />
     </FeedbackContainer>
   );
 }

@@ -15,6 +15,11 @@ export const selectEmail = createSelector(
   (user) => user.email
 );
 
+export const selectEmailMP = createSelector(
+  selectUserState,
+  (user) => user.emailMP
+);
+
 export const selectTestEmail = createSelector(
   selectUserState,
   (user) => user.testEmail

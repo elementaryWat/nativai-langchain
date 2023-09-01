@@ -15,18 +15,23 @@ const USERS_COLLECTION = "users";
 
 export const fetchUserDataAction = createAsyncThunk<
   User,
-  { userName: string; userEmail: string; image: string }
->("user/fetchUserData", async ({ userEmail }, { rejectWithValue }) => {
-  const db = getFirestore();
-  const userRef = doc(db, USERS_COLLECTION, userEmail);
-  const userSnapshot = await getDoc(userRef);
+  { userName: string; userEmail: string; image: string },
+  { rejectValue: any; state: AppState }
+>(
+  "user/fetchUserData",
+  async ({ userEmail }, { rejectWithValue, getState }) => {
+    const db = getFirestore();
+    const userRef = doc(db, USERS_COLLECTION, userEmail);
+    const userSnapshot = await getDoc(userRef);
+    let userData = getState().user.userData;
 
-  if (userSnapshot.exists()) {
-    return userSnapshot.data() as User;
-  } else {
-    return null;
+    if (userSnapshot.exists()) {
+      return { ...userData, ...userSnapshot.data() } as User;
+    } else {
+      return null;
+    }
   }
-});
+);
 
 export const updateUserStreakAction = createAsyncThunk<
   { streak: number; longestStreak: number },
