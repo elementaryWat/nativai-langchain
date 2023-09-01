@@ -13,6 +13,7 @@ export const ANALYTICS_EVENTS = {
   CLOSE_FEEDBACK: "close_feedback",
   END_CONVERSATION: "end_conversation",
   CLICK_SUBSCRIPTION_BTN: "click_subscription_btn",
+  WELCOME_SUBSCRIPTION_PAGE: "welcome_subscription_page",
   CANCEL_SUBSCRIPTION: "cancel_subscription",
 };
 
