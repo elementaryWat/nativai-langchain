@@ -24,9 +24,9 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these field paths in all actions
-        ignoredActionPaths: ["payload.lastLogin"],
+        ignoredActionPaths: ["payload.lastLogin", "payload.lastUse"],
         // Ignore these paths in the state
-        ignoredPaths: ["user.userData.lastLogin"],
+        ignoredPaths: ["user.userData.lastLogin", "user.userData.lastUse"],
       },
     }),
 });
