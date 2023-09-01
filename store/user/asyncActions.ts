@@ -89,6 +89,7 @@ export const updateUserInitialDataAction = createAsyncThunk<
       const userDataDB = userSnapshot.data();
       const hasCompletedOnboarding = userDataDB.hasCompletedOnboarding || false;
       const userLastLoginDate = new Date(userDataDB.lastLogin.seconds * 1000);
+      const userEmailMp = userDataDB.emailMp || userDataDB.email;
       // const oneMonthAgo = new Date("2023-07-20T16:29:18.075-04:00");
       const currentDate = new Date();
       let dayDifference = differenceInCalendarDays(
@@ -100,20 +101,21 @@ export const updateUserInitialDataAction = createAsyncThunk<
         userSnapshot.data().coffees !== undefined
           ? userSnapshot.data().coffees
           : 3;
-
+      userDataModified = {
+        ...userData,
+        ...userDataDB,
+        hasCompletedOnboarding,
+        emailMP: userEmailMp,
+      };
       if (!userLastLoginDate || dayDifference !== 0) {
         userDataModified = {
-          ...userData,
-          ...userDataDB,
-          hasCompletedOnboarding,
+          ...userDataModified,
           lastLogin: serverTimestamp(),
           coffees: 3,
         };
       } else {
         userDataModified = {
-          ...userData,
-          ...userDataDB,
-          hasCompletedOnboarding,
+          ...userDataModified,
           coffees,
         };
       }
@@ -124,6 +126,7 @@ export const updateUserInitialDataAction = createAsyncThunk<
           ...userData,
           name: userName, // Use email prefix as default name
           email: userEmail,
+          emailMP: userEmail,
           image,
           accountCreated: serverTimestamp(),
           hasCompletedOnboarding: false,

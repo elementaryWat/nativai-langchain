@@ -38,6 +38,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   const onSubscribe = async () => {
     try {
       setLoading(true);
+      trackEvent(ANALYTICS_EVENTS.CLICK_SUBSCRIPTION_BTN);
       if (!emailMP || emailMP === "") {
         setSnackbarOpen(true);
       }
@@ -61,7 +62,6 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
         };
 
         await addSubscriptionIfNotExists(subscriptionDetails);
-        trackEvent(ANALYTICS_EVENTS.CLICK_SUBSCRIPTION_BTN);
 
         window.location.href = data.init_point;
       } else {
