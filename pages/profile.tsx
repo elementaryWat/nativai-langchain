@@ -121,7 +121,10 @@ const ProfilePage: React.FC = () => {
       style={{ margin: ".5rem 0" }}
       startIcon={<ProIcon />}
       variant="contained"
-      disabled={!isExpired || loadingStatus === "loading"}
+      disabled={
+        (!isExpired && subscriptionStatus === "cancelled") ||
+        loadingStatus === "loading"
+      }
       onClick={openProModal}
     >
       Actualizar a Pro

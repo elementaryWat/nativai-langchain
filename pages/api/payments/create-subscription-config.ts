@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       .status(400)
       .json({ message: "Payer Email parameter is missing" });
   }
-
+  console.log(payer_email);
   const dollarRate = await fetchDollarRate();
   const transactionAmountUSD = 0.99;
   const transactionAmountARS = transactionAmountUSD * dollarRate;
