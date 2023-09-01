@@ -10,27 +10,26 @@ import {
   Card,
   CardContent,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { tools } from "../../constants";
 import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
 import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
 import StopWatchTimer from "./StopwatchTimer";
+import { useUserData } from "@/store/user/useUserData";
 // import { useUserData } from "@/store/user/useUserData";
 
 interface ProModalProps {
   isOpen: boolean;
   onClose: () => void;
-  userEmail: string;
 }
 
-export const ProModal: React.FC<ProModalProps> = ({
-  isOpen,
-  onClose,
-  userEmail,
-}) => {
+export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-  // const { testEmail } = useUserData();
+  const { emailMP, email } = useUserData();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
   const discountPrice = 0.99;
@@ -39,10 +38,14 @@ export const ProModal: React.FC<ProModalProps> = ({
   const onSubscribe = async () => {
     try {
       setLoading(true);
+      if (!emailMP || emailMP === "") {
+        setSnackbarOpen(true);
+      }
+
       const response = await axios.post(
         "/api/payments/create-subscription-config",
         {
-          payer_email: userEmail,
+          payer_email: emailMP,
         }
       );
 
@@ -50,7 +53,7 @@ export const ProModal: React.FC<ProModalProps> = ({
 
       if (data && data.id) {
         const subscriptionDetails = {
-          userId: userEmail,
+          userId: email,
           // userIdTest: TEST_USER,
           subscriptionStatus: data.status,
           subscriptionId: data.id,
@@ -265,6 +268,19 @@ export const ProModal: React.FC<ProModalProps> = ({
             />
           </Button>
         </Card>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={() => setSnackbarOpen(false)}
+        >
+          <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="warning"
+            sx={{ width: "100%" }}
+          >
+            Agregar el mail de Mercado Pago
+          </Alert>
+        </Snackbar>
       </DialogContent>
     </Dialog>
   );

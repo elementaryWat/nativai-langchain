@@ -37,6 +37,7 @@ export type SubscriptionState =
   | "cancelled";
 export interface User {
   email: string;
+  emailMP?: string;
   name: string;
   image?: string;
   testEmail?: string;
@@ -59,6 +60,7 @@ export interface User {
 
 export interface UserUpdate {
   email?: string;
+  emailMP?: string;
   name?: string;
   image?: string;
   testEmail?: string;

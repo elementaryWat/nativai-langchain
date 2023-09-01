@@ -52,6 +52,7 @@ const ProfilePage: React.FC = () => {
     username,
     objective,
     email,
+    emailMP,
     level,
     longestStreak,
     subscriptionStatus,
@@ -72,12 +73,14 @@ const ProfilePage: React.FC = () => {
   const handleUpdate = async (
     updatedUsername: string,
     updatedLevel: UserLevel,
-    updatedObjective: UserObjective
+    updatedObjective: UserObjective,
+    updatedEmailMP: string
   ) => {
     await setUserData({
       name: updatedUsername,
       level: updatedLevel,
       objective: updatedObjective,
+      emailMP: updatedEmailMP,
     });
     handleClose();
   };
@@ -242,6 +245,14 @@ const ProfilePage: React.FC = () => {
               style={{ color: "#777", fontWeight: "800", fontSize: "15px" }}
               variant="h6"
             >
+              Email Mercado Pago: {emailMP}
+            </Typography>
+          </SectionDato>
+          <SectionDato>
+            <Typography
+              style={{ color: "#777", fontWeight: "800", fontSize: "15px" }}
+              variant="h6"
+            >
               Nivel: {level}
             </Typography>
           </SectionDato>
@@ -280,12 +291,9 @@ const ProfilePage: React.FC = () => {
         defaultUsername={username}
         defaultLevel={level}
         defaultObjective={objective}
+        defaultEmailMercadoPago={emailMP}
       />
-      <ProModal
-        isOpen={showProModal}
-        onClose={() => setShowProModal(false)}
-        userEmail={email}
-      />
+      <ProModal isOpen={showProModal} onClose={() => setShowProModal(false)} />
     </PerfilContainer>
   );
 };
