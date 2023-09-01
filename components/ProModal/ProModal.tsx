@@ -75,7 +75,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Dialog style={{height:'auto'}} open={isOpen} onClose={onClose}>
+    <Dialog style={{ height: "auto" }} open={isOpen} onClose={onClose}>
       <DialogContent
         style={{
           display: "flex",
@@ -83,8 +83,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
           justifyContent: "space-between",
           alignItems: "center",
           textAlign: "center",
-          height:'auto',
-          
+          height: "auto",
         }}
       >
         <div
@@ -103,7 +102,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             borderRadius: "100%",
             padding: "70px",
             color: "#fff",
-            transform:'scale(.5)'
+            transform: "scale(.5)",
           }}
         >
           NATIV
@@ -221,7 +220,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
               fontWeight: "500",
               color: "#673ab7",
               textTransform: "uppercase",
-              transform:'scale(.7)'
+              transform: "scale(.7)",
             }}
           >
             Oferta de lanzamiento!!!
@@ -231,7 +230,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             style={{
               textDecoration: "line-through",
               color: "#888",
-              transform:'scale(.5)' 
+              transform: "scale(.5)",
             }}
           >
             U$D{originalPrice}/Mes
@@ -241,7 +240,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             style={{
               color: "green",
               marginTop: "0.5rem",
-              transform:'scale(.7)'
+              transform: "scale(.7)",
             }}
           >
             U$D {discountPrice}/Mes
@@ -252,7 +251,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
               color: "red",
               fontStyle: "bold",
               fontSize: "1.2rem",
-              transform:'scale(.7)'
+              transform: "scale(.7)",
             }}
           >
             (Oferta x tiempo limitado -93.3% off!)
@@ -285,7 +284,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             severity="warning"
             sx={{ width: "100%" }}
           >
-            Agregar el mail de Mercado Pago
+            Modificar el mail de su cuenta Mercado Pago en el perfil
           </Alert>
         </Snackbar>
       </DialogContent>
