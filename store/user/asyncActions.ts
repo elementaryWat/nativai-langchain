@@ -34,7 +34,7 @@ export const fetchUserDataAction = createAsyncThunk<
 );
 
 export const updateUserStreakAction = createAsyncThunk<
-  { streak: number; longestStreak: number },
+  { streak: number; longestStreak: number; lastUse: Date },
   { email: string }
 >("user/updateUserStreak", async ({ email }) => {
   const db = getFirestore();
@@ -47,6 +47,8 @@ export const updateUserStreakAction = createAsyncThunk<
   let dayDifference = differenceInCalendarDays(currentDate, userLastLoginDate);
   let streak = userDataDB.streak || 0;
   let longestStreak = userDataDB.longestStreak || 0;
+  console.log(currentDate);
+  console.log(dayDifference);
 
   // Si el último inicio de sesión fue ayer, incrementa la racha.
   if (dayDifference === 1) {
@@ -66,7 +68,7 @@ export const updateUserStreakAction = createAsyncThunk<
     longestStreak,
     lastUse: currentDate,
   });
-  return { streak, longestStreak };
+  return { streak, longestStreak, lastUse: currentDate };
 });
 
 export const updateUserInitialDataAction = createAsyncThunk<
@@ -126,6 +128,7 @@ export const updateUserInitialDataAction = createAsyncThunk<
           accountCreated: serverTimestamp(),
           hasCompletedOnboarding: false,
           lastLogin: serverTimestamp(),
+          lastUse: serverTimestamp(),
           chats: [],
           coffees: 3,
         };
