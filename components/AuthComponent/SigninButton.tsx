@@ -12,7 +12,7 @@ const SignInComponent = () => {
   const handleClick = async () => {
     signIn("google");
 
-    router.push("/");
+    // router.push("/");
   };
 
   return (
