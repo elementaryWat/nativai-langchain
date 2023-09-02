@@ -64,6 +64,7 @@ const Chat: React.FC = () => {
   }, [messages]);
 
   const handleSubmit = async (message: string, edit?: boolean) => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     if (!edit) {
       addMessage({
         role: "user",
@@ -94,6 +95,7 @@ const Chat: React.FC = () => {
         // audioUrl,
       });
       setLoadingStatus(false);
+      stream.getTracks().forEach((track) => track.stop());
 
       const { feedback } = await requestLocalFeedback(
         edit
