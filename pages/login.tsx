@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     }
   }, [session]);
 
-  return <SignInComponent />;
+  return <SignInComponent />
 };
 
 export default Login;
