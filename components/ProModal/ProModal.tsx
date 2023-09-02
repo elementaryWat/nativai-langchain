@@ -10,27 +10,26 @@ import {
   Card,
   CardContent,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { tools } from "../../constants";
 import { addSubscriptionIfNotExists } from "../../utils/firebaseFunctions";
 import { ANALYTICS_EVENTS, trackEvent } from "@/utils/analyticsMethods";
 import StopWatchTimer from "./StopwatchTimer";
+import { useUserData } from "@/store/user/useUserData";
 // import { useUserData } from "@/store/user/useUserData";
 
 interface ProModalProps {
   isOpen: boolean;
   onClose: () => void;
-  userEmail: string;
 }
 
-export const ProModal: React.FC<ProModalProps> = ({
-  isOpen,
-  onClose,
-  userEmail,
-}) => {
+export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   //   const proModal = useProModal();
   const [loading, setLoading] = useState(false);
-  // const { testEmail } = useUserData();
+  const { emailMP, email } = useUserData();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
   const discountPrice = 0.99;
@@ -39,10 +38,15 @@ export const ProModal: React.FC<ProModalProps> = ({
   const onSubscribe = async () => {
     try {
       setLoading(true);
+      trackEvent(ANALYTICS_EVENTS.CLICK_SUBSCRIPTION_BTN);
+      if (!emailMP || emailMP === "") {
+        setSnackbarOpen(true);
+      }
+
       const response = await axios.post(
         "/api/payments/create-subscription-config",
         {
-          payer_email: userEmail,
+          payer_email: emailMP,
         }
       );
 
@@ -50,7 +54,7 @@ export const ProModal: React.FC<ProModalProps> = ({
 
       if (data && data.id) {
         const subscriptionDetails = {
-          userId: userEmail,
+          userId: email,
           // userIdTest: TEST_USER,
           subscriptionStatus: data.status,
           subscriptionId: data.id,
@@ -58,7 +62,6 @@ export const ProModal: React.FC<ProModalProps> = ({
         };
 
         await addSubscriptionIfNotExists(subscriptionDetails);
-        trackEvent(ANALYTICS_EVENTS.CLICK_SUBSCRIPTION_BTN);
 
         window.location.href = data.init_point;
       } else {
@@ -72,7 +75,7 @@ export const ProModal: React.FC<ProModalProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog style={{ height: "auto" }} open={isOpen} onClose={onClose}>
       <DialogContent
         style={{
           display: "flex",
@@ -80,6 +83,7 @@ export const ProModal: React.FC<ProModalProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           textAlign: "center",
+          height: "auto",
         }}
       >
         <div
@@ -98,6 +102,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             borderRadius: "100%",
             padding: "70px",
             color: "#fff",
+            transform: "scale(.5)",
           }}
         >
           NATIV
@@ -117,7 +122,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             flexDirection: "column",
             gap: "1rem",
             paddingBottom: "1rem",
-            marginTop: "60px",
+            marginTop: "30px",
           }}
         >
           <div
@@ -196,7 +201,7 @@ export const ProModal: React.FC<ProModalProps> = ({
         </Typography>
         <Card
           style={{
-            marginTop: "1rem",
+            // marginTop: "1rem",
             padding: "1rem",
             display: "flex",
             flexDirection: "column",
@@ -215,6 +220,7 @@ export const ProModal: React.FC<ProModalProps> = ({
               fontWeight: "500",
               color: "#673ab7",
               textTransform: "uppercase",
+              transform: "scale(.7)",
             }}
           >
             Oferta de lanzamiento!!!
@@ -224,6 +230,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             style={{
               textDecoration: "line-through",
               color: "#888",
+              transform: "scale(.5)",
             }}
           >
             U$D{originalPrice}/Mes
@@ -233,6 +240,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             style={{
               color: "green",
               marginTop: "0.5rem",
+              transform: "scale(.7)",
             }}
           >
             U$D {discountPrice}/Mes
@@ -243,6 +251,7 @@ export const ProModal: React.FC<ProModalProps> = ({
               color: "red",
               fontStyle: "bold",
               fontSize: "1.2rem",
+              transform: "scale(.7)",
             }}
           >
             (Oferta x tiempo limitado -93.3% off!)
@@ -265,6 +274,19 @@ export const ProModal: React.FC<ProModalProps> = ({
             />
           </Button>
         </Card>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={() => setSnackbarOpen(false)}
+        >
+          <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="warning"
+            sx={{ width: "100%" }}
+          >
+            Modificar el mail de su cuenta Mercado Pago en el perfil
+          </Alert>
+        </Snackbar>
       </DialogContent>
     </Dialog>
   );

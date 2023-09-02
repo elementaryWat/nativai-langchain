@@ -15,6 +15,11 @@ export const selectEmail = createSelector(
   (user) => user.email
 );
 
+export const selectEmailMP = createSelector(
+  selectUserState,
+  (user) => user.emailMP
+);
+
 export const selectTestEmail = createSelector(
   selectUserState,
   (user) => user.testEmail
@@ -76,7 +81,10 @@ export const selectIsProMember = createSelector(
   (subscriptionStatus, expirationDateSubscription) => {
     const currentDate = new Date();
     const expirationDate = new Date(expirationDateSubscription);
-    return subscriptionStatus === "authorized" || currentDate < expirationDate;
+    return (
+      subscriptionStatus === "authorized" ||
+      (subscriptionStatus === "cancelled" && currentDate < expirationDate)
+    );
   }
 );
 

@@ -119,11 +119,7 @@ const TopicSelection: React.FC = () => {
           Iniciar conversación
         </Button>
       </Grid>
-      <ProModal
-        isOpen={showProModal}
-        onClose={() => setShowProModal(false)}
-        userEmail={email}
-      />
+      <ProModal isOpen={showProModal} onClose={() => setShowProModal(false)} />
     </Grid>
   );
 };
