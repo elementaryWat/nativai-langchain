@@ -32,8 +32,8 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
-  const discountPrice = 4.99;
-  const expirationOffer = new Date(Date.UTC(2023, 8, 11, 3, 0, 0));
+  const discountPrice = 0.99;
+  const expirationOffer = new Date(Date.UTC(2023, 8, 5, 3, 0, 0));
 
   const onSubscribe = async () => {
     try {
@@ -254,7 +254,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
               transform: "scale(.7)",
             }}
           >
-            (Oferta x tiempo limitado -67% off!)
+            (Oferta x tiempo limitado -93.3% off!)
           </Typography>
           <StopWatchTimer expiryTimestamp={expirationOffer} />
           <Button
