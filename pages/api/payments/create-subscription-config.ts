@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
   console.log(payer_email);
   const dollarRate = await fetchDollarRate();
-  const transactionAmountUSD = 15;
+  const transactionAmountUSD = 5;
   const transactionAmountARS = transactionAmountUSD * dollarRate;
 
   try {
