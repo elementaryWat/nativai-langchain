@@ -16,23 +16,21 @@ export default NextAuth({
     signIn: "/auth/signin", //custom sign-in page
   },
   session: {
-    strategy: "jwt",
-    maxAge: 30 * 60, // 30 minutos
+    // strategy: "jwt",
+    maxAge: 2 * 60, // 30 minutos
   },
-  callbacks: {
-    async session(session, token) {
-      // Al iniciar sesión, configuramos un temporizador para cerrar la sesión después de un tiempo de inactividad
-      const inactivityTimeout = 30 * 60 * 1000 // 30 minutos en milisegundos
-      inactivityTimer = setTimeout(() => {
-        // Cierra la sesión después del tiempo de inactividad
-        session.accessToken = null
-      }, inactivityTimeout)
-      return session
-    },
-    async jwt(token, user) {
-      // Restablece el temporizador de inactividad cada vez que se realiza una acción que requiera autenticación
-      clearTimeout(inactivityTimer)
-      return token
-    },
-  },
+  // callbacks: {
+  //   async session(session, token) {
+  //     // Al iniciar sesión, configuramos un temporizador para cerrar la sesión después de un tiempo de inactividad
+  //     const inactivityTimeout = 30 * 60 * 1000 // 30 minutos en milisegundos
+  //     inactivityTimer = setTimeout(() => {
+  //       // Cierra la sesión después del tiempo de inactividad
+  //       session.accessToken = null
+  //     }, inactivityTimeout)
+  //     return session
+  //   },
+  //   async jwt(token, user) {
+  //     return token
+  //   },
+  // },
 });
