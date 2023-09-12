@@ -32,8 +32,8 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const TEST_USER = testEmail || "test_user_784417862@testuser.com";
   const originalPrice = 14.99;
-  // const discountPrice = 4.99;
-  // const expirationOffer = new Date(Date.UTC(2023, 8, 11, 3, 0, 0));
+  const discountPrice = 4.99;
+  // const expirationOffer = new Date(Date.UTC(2023, 9, 1, 3, 0, 0));
 
   const onSubscribe = async () => {
     try {
@@ -211,7 +211,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             background: "linear-gradient(to top, #673ab7, #ffffff)",
           }}
         >
-          {/* <Typography
+          <Typography
             variant="h6"
             gutterBottom
             style={{
@@ -234,7 +234,7 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
             }}
           >
             U$D{originalPrice}/Mes
-          </Typography> */}
+          </Typography>
           <Typography
             variant="h4"
             style={{
@@ -243,9 +243,9 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
               transform: "scale(.7)",
             }}
           >
-            U$D {originalPrice}/Mes
+            U$D {discountPrice}/Mes
           </Typography>
-          {/* <Typography
+          <Typography
             variant="body2"
             style={{
               color: "red",
@@ -254,8 +254,8 @@ export const ProModal: React.FC<ProModalProps> = ({ isOpen, onClose }) => {
               transform: "scale(.7)",
             }}
           >
-            (Oferta x tiempo limitado -67% off!)
-          </Typography> */}
+            (Oferta a los primeros 50: -67% off!)
+          </Typography>
           {/* <StopWatchTimer expiryTimestamp={expirationOffer} /> */}
           <Button
             color="success"
