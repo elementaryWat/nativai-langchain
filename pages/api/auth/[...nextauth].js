@@ -1,95 +1,38 @@
-import NextAuth from "next-auth"
-import Providers from "next-auth/providers"
-
-const GOOGLE_AUTHORIZATION_URL =
-  "https://accounts.google.com/o/oauth2/v2/auth?" +
-  new URLSearchParams({
-    prompt: "consent",
-    access_type: "offline",
-    response_type: "code",
-  })
-
-/**
- * Takes a token, and returns a new token with updated
- * `accessToken` and `accessTokenExpires`. If an error occurs,
- * returns the old token and an error property
- */
-async function refreshAccessToken(token) {
-  try {
-    const url =
-      "https://oauth2.googleapis.com/token?" +
-      new URLSearchParams({
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        grant_type: "refresh_token",
-        refresh_token: token.refreshToken,
-      })
-
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      method: "POST",
-    })
-
-    const refreshedTokens = await response.json()
-
-    if (!response.ok) {
-      throw refreshedTokens
-    }
-
-    return {
-      ...token,
-      accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
-    }
-  } catch (error) {
-    console.log(error)
-
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    }
-  }
-}
+// pages/api/auth/[...nextauth].js
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+// import FacebookProvider from "next-auth/providers/facebook";
 
 export default NextAuth({
   providers: [
-    Providers.Google({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorizationUrl: GOOGLE_AUTHORIZATION_URL,
+      redirectUrl: "/login?callbackUrl=/",
     }),
   ],
+  secret: process.env.SECRET,
+  pages: {
+    signIn: "/auth/signin", //custom sign-in page
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 60, // 30 minutos
+  },
   callbacks: {
-    async jwt(token, user, account) {
-      // Initial sign in
-      if (account && user) {
-        return {
-          accessToken: account.accessToken,
-          accessTokenExpires: Date.now() + account.expires_in * 1000,
-          refreshToken: account.refresh_token,
-          user,
-        }
-      }
-
-      // Return previous token if the access token has not expired yet
-      if (Date.now() < token.accessTokenExpires) {
-        return token
-      }
-
-      // Access token has expired, try to update it
-      return refreshAccessToken(token)
-    },
     async session(session, token) {
-      if (token) {
-        session.user = token.user
-        session.accessToken = token.accessToken
-        session.error = token.error
-      }
-
+      // Al iniciar sesión, configuramos un temporizador para cerrar la sesión después de un tiempo de inactividad
+      const inactivityTimeout = 30 * 60 * 1000 // 30 minutos en milisegundos
+      inactivityTimer = setTimeout(() => {
+        // Cierra la sesión después del tiempo de inactividad
+        session.accessToken = null
+      }, inactivityTimeout)
       return session
     },
+    async jwt(token, user) {
+      // Restablece el temporizador de inactividad cada vez que se realiza una acción que requiera autenticación
+      clearTimeout(inactivityTimer)
+      return token
+    },
   },
-})
+});
