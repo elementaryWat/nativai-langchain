@@ -38,7 +38,7 @@ import { updateUsageStatistics } from "../../utils/userUsageUpdate";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import { ProModal } from "../ProModal/ProModal";
 import { useUserData } from "../../store/user/useUserData";
-import { addFeedbackIfNotExists } from "../../utils/firebaseFunctions";
+import { addFeedbackIfNotExists,addChatIfNotExists, addMessage } from "../../utils/firebaseFunctions";
 import { requestFinalFeedback } from "@/utils/endpoints";
 // import { BsPencilFill } from "react-icons/bs";
 
@@ -86,6 +86,14 @@ export default function FeedbackUser() {
     updateUserStreak,
   } = useUserData();
 
+
+  // useEffect(() => {
+  //     addMessage( chatId, messages, username,topicConversation);
+  // },[])
+
+
+
+  
   useEffect(() => {
     if (messages.length > 0 && session) {
       generateFinalFeedback();

@@ -21,17 +21,17 @@ import { ProModal } from "./ProModal/ProModal";
 
 const StyledTypographH4 = styled(Typography)`
   color: #000;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   text-align: center;
   font-weight: 600;
-  font-size: 34px;
+  font-size: 28px;
   font-style: normal;
   line-height: 22px;
 `;
 
 const StyledGrid = styled(Grid)`
   width: 100%;
-  height: 100%;
+  height: 80%;
   padding: 1rem 0rem;
   display: flex;
   flex-wrap: wrap;
@@ -83,7 +83,7 @@ const TopicSelection: React.FC = () => {
       borderRadius="50px"
       justifyContent="center"
       alignItems="center"
-      height={"100%"}
+      height={"75vh"}
       width="100%"
       pt="1rem"
       margin={"0 0 5rem 0"}

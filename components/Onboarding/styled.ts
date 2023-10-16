@@ -73,7 +73,7 @@ export const StyledRadioButtonTopic = styled(Button)<
   margin: "5px",
   width: "40%",
   borderRadius: "30px",
-  height: "100px",
+  height: "75px",
   "&:hover": {
     backgroundColor: selected
       ? theme.palette.secondary.dark

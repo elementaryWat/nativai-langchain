@@ -19,6 +19,7 @@ import { Grid } from "@mui/material";
 import ChatMenuBar from "../components/base/Header";
 import { INTERACTIONS_LIMIT } from "../constants";
 import { useUserData } from "../store/user/useUserData";
+import { addChatIfNotExists } from "@/utils/firebaseFunctions";
 
 const Chat: React.FC = () => {
   const {
@@ -40,6 +41,17 @@ const Chat: React.FC = () => {
   const [reachedFeedbackLimit, setReachedFeedbackLimit] = useState(false);
   const [interactionsRemaining, setInteractionsRemaining] =
     useState(INTERACTIONS_LIMIT);
+
+  useEffect(() => {
+    addChatIfNotExists(
+      chatId,
+      messages,
+      username,
+      email,
+      level,
+      topicConversation
+    );
+  }, []);
 
   useEffect(() => {
     if (messages.length === 0) {
