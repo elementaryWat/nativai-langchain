@@ -11,9 +11,8 @@ import { FeedbackType } from "@/types/Message";
 export const makeFeedbackChain = (feedbackType: FeedbackType) => {
   const model = new OpenAI({
     modelName: "gpt-3.5-turbo",
-    temperature: 0,
-    topP: 1,
-    timeout: 20000,
+    temperature: 0.7,
+    timeout: 50000,
   });
   const prompt = PromptTemplate.fromTemplate(
     feedbackType === "final"
