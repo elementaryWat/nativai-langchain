@@ -64,6 +64,8 @@ const Chat: React.FC = () => {
   }, [messages]);
 
   const handleSubmit = async (message: string, edit?: boolean) => {
+    //Permite el uso del microfono, si no lo tiene aun pide la autorizacion al usuario
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     if (!edit) {
       addMessage({
         role: "user",
@@ -94,6 +96,8 @@ const Chat: React.FC = () => {
         // audioUrl,
       });
       setLoadingStatus(false);
+      //Apaga y quita el permiso del micro para que no siga grabando
+      stream.getTracks().forEach((track) => track.stop());
 
       const { feedback } = await requestLocalFeedback(
         edit
